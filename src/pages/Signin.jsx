@@ -21,8 +21,7 @@ function Signin() {
   };
 
   const handleGoogleSignin = () => {
-    console.log('Google Sign-in');
-    // Send request to the backend here
+    window.location.href = 'http://localhost:3333/api/auth/google';
   };
 
   return (
@@ -87,7 +86,7 @@ function Signin() {
       </button>
       <footer className='absolute bottom-8'>
         <div className='text-gray-400 text-sm'>
-          <a href='/terms' className='hover:underline'>Terms of Use</a> | <a href='/privacy' className='hover:underline'>Privacy Policy</a>
+          <a href='/terms' className='hover:underline'>Terms of Use</a> <span className='mx-5'>|</span> <a href='/privacy' className='hover:underline'>Privacy Policy</a>
         </div>
       </footer>
     </div>
