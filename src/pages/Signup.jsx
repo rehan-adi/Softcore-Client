@@ -5,7 +5,6 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [profilePic, setProfilePic] = useState('');
   const [bio, setBio] = useState('');
 
   const handleSubmit = async (e) => {
@@ -15,7 +14,6 @@ function Signup() {
         username,
         email,
         password,
-        profilePic,
         bio
       });
       if (response.data.success) {
@@ -31,7 +29,7 @@ function Signup() {
   };
 
   return (
-    <div className='bg-[#0A090F] w-full max-h-fit relative pb-36 flex flex-col items-center'>
+    <div className='bg-[#0A090F] w-full max-h-fit relative pb-40 lg:pb-36 flex flex-col items-center'>
       <nav className='w-full flex py-12 justify-center items-center'>
         <svg width="48" height="48" className='text-white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 187.47 94.63">
           <g fill="currentColor">
@@ -46,7 +44,7 @@ function Signup() {
         </svg>
       </nav>
       <form className='w-full mt-4 max-w-xs' onSubmit={handleSubmit} encType='multipart/form-data' >
-        <div className='mb-6'>
+        <div className='mb-4'>
           <input
             className='shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
             id='username'
@@ -56,7 +54,7 @@ function Signup() {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className='mb-6'>
+        <div className='mb-4'>
           <input
             className='shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
             id='email'
@@ -66,7 +64,7 @@ function Signup() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div className='mb-6'>
+        <div className='mb-4'>
           <input
             className='shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
             id='password'
@@ -77,18 +75,8 @@ function Signup() {
           />
         </div>
         <div className='mb-6'>
-          <input
-            className='shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
-            id='profilePic'
-            type='file'
-            placeholder='Profile Picture URL'
-            value={profilePic}
-            onChange={(e) => setProfilePic(e.target.value)}
-          />
-        </div>
-        <div className='mb-6'>
           <textarea
-            className='shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
+            className='shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 pb-10 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline'
             id='bio'
             placeholder='Bio'
             value={bio}
@@ -113,7 +101,7 @@ function Signup() {
         <hr className='border-t border-opacity-15 border-white w-[137px]  flex-grow' />
       </div>
       <button
-        className='bg-white w-full max-w-xs text-black font-medium text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline mt-2 flex items-center justify-start'
+        className='bg-white w-full max-w-xs text-black font-medium text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-start'
         onClick={handleGoogleSignin}
       >
         <img src='/images/google.svg' alt='Google Logo' className='w-6 h-6 mr-5' />
