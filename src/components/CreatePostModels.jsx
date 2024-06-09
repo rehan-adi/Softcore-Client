@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 function CreatePostModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState("");
@@ -8,26 +9,12 @@ function CreatePostModal({ onClose, onSubmit }) {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const tagList = tags.split(",").map(tag => tag.trim());
-  //  const response = axios.post('http://localhost:3333/api/blogs/create', tagList,{
-  //   withCredentials: true,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`, // Optional if also sending token in header
-  //   },
-  // }).then(response => {
-  //   console.log(response.data);
-  // }).catch(error => {
-  //   console.error('Error:', error);
-  // });
-  //  console.log(response);
-  //   onSubmit({ title, content, category, tags: tagList, image });
-  // };
+  const cookies = new Cookies();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = cookies.get('token');
+    console.log("Token:", token);
     if (!token) {
       console.error('No authentication token found. Please login.');
       return;

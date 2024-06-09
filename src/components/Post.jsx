@@ -163,7 +163,7 @@ function Post() {
                 </div>
                 <img
                   className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                  src={`http://localhost:3333/${blog.image.replace("\\", "/")}`}
+                  src={`http://localhost:3333/${blog.image}`}
                   alt={blog.title}
                 />
                 <h2 className="mt-4 text-xl font-semibold">{blog.title}</h2>
