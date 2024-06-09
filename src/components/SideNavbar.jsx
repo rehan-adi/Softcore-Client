@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
+import CreatePostModal from "./CreatePostModels";
 
 function SideNavbar() {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
+  const handleSubmit = (postData) => {
+    // Send postData to backend
+    console.log("Posting data to backend:", postData);
+    // Close the modal
+    closeModal();
+  };
+
   return (
-    <div className="h-screen bg-[#0A090F] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-1/5">
-      <nav className="w-full flex border-b border-white border-opacity-20 pl-24 py-5 justify-start items-center">
+    <div className="min-h-screen z-50 fixed bg-[#0A090F] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-1/5">
+      <nav className="w-full flex border-b border-white border-opacity-20 pl-24 py-3 justify-start items-center">
         <svg
           width="56"
           height="56"
@@ -109,6 +123,13 @@ function SideNavbar() {
             <span className="font-semibold text-xl">Message</span>
           </li>
         </ul>
+      </div>
+      <div className="flex justify-center mt-44 items-center text-white">
+      <button onClick={openModal} className="py-3 px-5 bg-black border font-semibold border-white border-opacity-40 rounded-full">Create a Post</button>
+      {/* Modal */}
+      {showModal && (
+        <CreatePostModal onClose={closeModal} onSubmit={handleSubmit} />
+      )}
       </div>
     </div>
   );

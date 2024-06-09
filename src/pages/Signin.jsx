@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; 
 
 function Signin() {
   const [email, setEmail] = useState('');
@@ -15,11 +15,15 @@ function Signin() {
       });
       if (response.data.success) {
         window.location.href = '/';
+      } else {
+        alert(response.data.message || 'Error signing in');
       }
     } catch (error) {
       console.error('Error signing in:', error);
+      alert(error.response?.data?.message || 'Error signing in');
     }
   };
+  
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);

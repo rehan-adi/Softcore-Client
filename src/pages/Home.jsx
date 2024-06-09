@@ -5,9 +5,9 @@ import BottomNavbar from "../components/BottomNavbar";
 
 function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-black">
+    <div className="relative">
       <SideNavbar />
-      <div className="flex-1 ml-52 p-5">
+      <div className="absolute bg-[#0A090F] text-white min-h-screen top-0 w-full lg:w-[80vw] right-0">
         <Outlet />
       </div>
       <BottomNavbar />

@@ -4,7 +4,7 @@ import { IoSearch } from "react-icons/io5";
 
 function BottomNavbar() {
   return (
-    <div className="lg:hidden fixed bottom-0 w-full bg-[#0A090F] border-t border-white border-opacity-25 flex justify-around items-center py-4 px-3">
+    <div className="lg:hidden fixed bottom-0 w-full z-50 bg-[#0A090F] border-t border-white border-opacity-25 flex justify-around items-center py-4 px-3">
       <nav className="flex justify-between w-full max-w-sm mx-auto">
         {/* Home icon */}
         <button className="text-white">
