@@ -20,8 +20,11 @@ function CreatePostModal({ onClose, onSubmit }) {
       return;
     }
     const postData = {
-      title: 'Sample Title',
-      content: 'Sample Content',
+      title,
+      content,
+      category,
+      tags,
+      image,
     };
 
     try {
@@ -36,15 +39,12 @@ function CreatePostModal({ onClose, onSubmit }) {
         }
       );
       console.log('Post created:', response.data);
+      onClose(); 
     } catch (error) {
       console.error('Error creating post:', error);
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -116,9 +116,8 @@ function CreatePostModal({ onClose, onSubmit }) {
             <input
               type="file"
               id="image"
-              accept="image/*"
               className="form-input mt-1 block"
-              onChange={handleImageChange}
+              onChange={(e) => setImage(e.target.files[0])}
             />
           </div>
           </div>

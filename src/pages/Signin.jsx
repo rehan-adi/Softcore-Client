@@ -12,7 +12,7 @@ function Signin() {
       const response = await axios.post('http://localhost:3333/api/auth/signin', {
         email,
         password
-      });
+      },{ withCredentials: true });
       if (response.data.success) {
         window.location.href = '/';
       } else {

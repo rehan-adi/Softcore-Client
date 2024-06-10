@@ -7,6 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import { LuSend } from "react-icons/lu";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import Cookies from 'universal-cookie';
 
 function Post() {
   const [blogs, setBlogs] = useState([]);
@@ -38,7 +39,8 @@ function Post() {
   }, []);
 
   const getToken = () => {
-    return localStorage.getItem('token');
+    const cookies = new Cookies();
+    return cookies.get('token');
   };
 
   const handleLike = async (postId) => {
