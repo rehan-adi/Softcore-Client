@@ -11,7 +11,6 @@ function Profile() {
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem("token");
-
         if (!token) {
           console.error("Token not available");
           setLoading(false);
@@ -29,7 +28,7 @@ function Profile() {
 
         const response = await axios.get(`http://localhost:3333/api/profile/${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Send token for authorization
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -70,17 +69,22 @@ function Profile() {
   }
 
   return (
-    <div className="w-full text-white py-6 px-6 h-screen">
+    <div>
+       <div className="w-[50vw] z-10 border-r border-white border-opacity-20 text-white py-6 px-6 h-screen">
       {profileData ? (
         <div className="text-white">
-          <h2>User Profile</h2>
+          <nav>
           <p>Name: {profileData.username}</p>
+          </nav>
+          <h2>User Profile</h2>
+          <p>{profileData.username}</p>
           <p>Bio: {profileData.bio}</p>
           {/* Render other profile data */}
         </div>
       ) : (
         <p>No profile data available</p>
       )}
+    </div>
     </div>
   );
 }

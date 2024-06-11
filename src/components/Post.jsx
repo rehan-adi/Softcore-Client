@@ -7,7 +7,7 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import { LuSend } from "react-icons/lu";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import Cookies from 'universal-cookie';
+import { toast } from "react-hot-toast";
 
 function Post() {
   const [blogs, setBlogs] = useState([]);
@@ -39,8 +39,8 @@ function Post() {
   }, []);
 
   const getToken = () => {
-    const cookies = new Cookies();
-    return cookies.get('token');
+    const token = localStorage.getItem("token");
+    return token;
   };
 
   const handleLike = async (postId) => {
@@ -69,6 +69,9 @@ function Post() {
   };
 
   const handleDelete = async (postId) => {
+    // const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    // if (!confirmDelete) return;
+
     try {
       const token = getToken();
       await axios.delete(
@@ -81,8 +84,18 @@ function Post() {
       );
       setBlogs(blogs.filter((blog) => blog._id !== postId));
       setSelectedBlog(null);
+      toast.success("Post deleted successfully!");
     } catch (error) {
-      console.error("Error deleting post:", error);
+      if (error.response) {
+        console.error("Error deleting post:", error.response.data.message);
+        toast.error(error.response.data.message);
+      } else if (error.request) {
+        console.error("Error deleting post: No response received", error.request);
+        toast.error("Error deleting post. Please try again.");
+      } else {
+        console.error("Error deleting post:", error.message);
+        toast.error("Error deleting post. Please try again.");
+      }
     }
   };
 

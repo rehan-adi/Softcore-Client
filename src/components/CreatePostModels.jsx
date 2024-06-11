@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "universal-cookie";
+import { toast } from "react-hot-toast";
 
 function CreatePostModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState("");
@@ -9,14 +9,15 @@ function CreatePostModal({ onClose, onSubmit }) {
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
 
-  const cookies = new Cookies();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = cookies.get('token');
+    const token = localStorage.getItem('token');
     console.log("Token:", token);
     if (!token) {
       console.error('No authentication token found. Please login.');
+      toast.error("Please login to create a post");
+      onClose();
       return;
     }
     const postData = {
@@ -29,7 +30,7 @@ function CreatePostModal({ onClose, onSubmit }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:3333/api/create-post',
+        'http://localhost:3333/api/blogs/create',
         postData,
         {
           headers: {
@@ -39,9 +40,13 @@ function CreatePostModal({ onClose, onSubmit }) {
         }
       );
       console.log('Post created:', response.data);
+      toast.success("Post created successfully!");
       onClose(); 
     } catch (error) {
       console.error('Error creating post:', error);
+      toast.error(
+        error.response?.data?.message || "Error creating post. Please try again."
+      );
     }
   };
 

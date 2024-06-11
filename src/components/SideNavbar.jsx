@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
+import { MdLogout, MdLogin } from "react-icons/md";
 import CreatePostModal from "./CreatePostModels";
+import { toast } from "react-hot-toast";
 
 function SideNavbar() {
-
   const [showModal, setShowModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   const handleSubmit = (postData) => {
-    // Send postData to backend
     console.log("Posting data to backend:", postData);
-    // Close the modal
     closeModal();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    toast.success("You are Logout Now");
   };
 
   return (
@@ -122,14 +133,37 @@ function SideNavbar() {
             </span>
             <span className="font-semibold text-xl">Message</span>
           </li>
+          <li className="flex gap-3 items-center">
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="flex items-center text-white gap-3"
+              >
+                <MdLogout className="text-2xl mr-2" />
+                <span className="font-semibold text-xl">Logout</span>
+              </button>
+            ) : (
+              <Link to="/signin">
+                <button className="flex items-center text-white gap-3">
+                  <MdLogin className="text-2xl mr-2" />
+                  <span className="font-semibold text-xl">Login</span>
+                </button>
+              </Link>
+            )}
+          </li>
         </ul>
       </div>
-      <div className="flex justify-center mt-44 items-center text-white">
-      <button onClick={openModal} className="py-3 px-5 bg-black border font-semibold border-white border-opacity-40 rounded-full">Create a Post</button>
-      {/* Modal */}
-      {showModal && (
-        <CreatePostModal onClose={closeModal} onSubmit={handleSubmit} />
-      )}
+      <div className="flex justify-center mt-36 items-center text-white">
+        <button
+          onClick={openModal}
+          className="py-3 px-5 bg-black border font-semibold border-white border-opacity-40 rounded-full"
+        >
+          Create a Post
+        </button>
+        {/* Modal */}
+        {showModal && (
+          <CreatePostModal onClose={closeModal} onSubmit={handleSubmit} />
+        )}
       </div>
     </div>
   );
