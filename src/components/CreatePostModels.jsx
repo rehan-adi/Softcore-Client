@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 function CreatePostModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState("");
@@ -8,14 +9,14 @@ function CreatePostModal({ onClose, onSubmit }) {
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [image, setImage] = useState(null);
-
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     console.log("Token:", token);
     if (!token) {
-      console.error('No authentication token found. Please login.');
+      console.error("No authentication token found. Please login.");
       toast.error("Please login to create a post");
       onClose();
       return;
@@ -28,9 +29,11 @@ function CreatePostModal({ onClose, onSubmit }) {
       image,
     };
 
+    setLoading(true);
+
     try {
       const response = await axios.post(
-        'http://localhost:3333/api/blogs/create',
+        "http://localhost:3333/api/blogs/create",
         postData,
         {
           headers: {
@@ -39,17 +42,19 @@ function CreatePostModal({ onClose, onSubmit }) {
           withCredentials: true,
         }
       );
-      console.log('Post created:', response.data);
+      console.log("Post created:", response.data);
       toast.success("Post created successfully!");
-      onClose(); 
+      onClose();
     } catch (error) {
-      console.error('Error creating post:', error);
+      console.error("Error creating post:", error);
       toast.error(
-        error.response?.data?.message || "Error creating post. Please try again."
+        error.response?.data?.message ||
+          "Error creating post. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
-
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -73,9 +78,11 @@ function CreatePostModal({ onClose, onSubmit }) {
             </svg>
           </button>
         </div>
-        <form onSubmit={handleSubmit} encType="multipart/form-data" >
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-300">Title</label>
+            <label htmlFor="title" className="block text-gray-300">
+              Title
+            </label>
             <input
               type="text"
               id="title"
@@ -85,7 +92,9 @@ function CreatePostModal({ onClose, onSubmit }) {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="content" className="block text-gray-300">Content</label>
+            <label htmlFor="content" className="block text-gray-300">
+              Content
+            </label>
             <textarea
               id="content"
               className="form-textarea bg-[#0A090F] focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md mt-1 block w-full"
@@ -96,38 +105,44 @@ function CreatePostModal({ onClose, onSubmit }) {
             ></textarea>
           </div>
           <div className="flex justify-between items-center">
-          <div className="mb-4">
-            <label htmlFor="category" className="block text-gray-300">Category</label>
-            <select
-              id="category"
-              className="form-select bg-[#0A090F] border border-white border-opacity-20 px-3 py-3 rounded-md focus:outline-none mt-1 block w-[278px] "
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">Select category...</option>
-              <option value="development">Development</option>
-              <option value="frontend">Frontend</option>
-              <option value="backend">Backend</option>
-              <option value="news">News</option>
-              <option value="trending">Trending</option>
-              <option value="blockchain">Blockchain</option>
-              <option value="politics">Politics</option>
-              <option value="AI">AI</option>
-              {/* Add more categories here */}
-            </select>
+            <div className="mb-4">
+              <label htmlFor="category" className="block text-gray-300">
+                Category
+              </label>
+              <select
+                id="category"
+                className="form-select bg-[#0A090F] border border-white border-opacity-20 px-3 py-3 rounded-md focus:outline-none mt-1 block w-[278px] "
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Select category...</option>
+                <option value="development">Development</option>
+                <option value="frontend">Frontend</option>
+                <option value="backend">Backend</option>
+                <option value="news">News</option>
+                <option value="trending">Trending</option>
+                <option value="blockchain">Blockchain</option>
+                <option value="politics">Politics</option>
+                <option value="AI">AI</option>
+                {/* Add more categories here */}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="image" className="block text-gray-300">
+                Image
+              </label>
+              <input
+                type="file"
+                id="image"
+                className="form-input mt-1 block"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="image" className="block text-gray-300">Image</label>
-            <input
-              type="file"
-              id="image"
-              className="form-input mt-1 block"
-              onChange={(e) => setImage(e.target.files[0])}
-            />
-          </div>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="tags" className="block text-gray-300">Tags</label>
+            <label htmlFor="tags" className="block text-gray-300">
+              Tags
+            </label>
             <input
               type="text"
               id="tags"
@@ -138,8 +153,16 @@ function CreatePostModal({ onClose, onSubmit }) {
             />
           </div>
           <div className="flex justify-start mt-10">
-            <button type="submit" className="bg-[#0A090F] border border-white border-opacity-40 text-white font-bold py-3 px-6 rounded-full">
-              Submit Post
+            <button
+              className="bg-[#0A090F] border border-white border-opacity-40 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center" content horizontally
+              style={{ minWidth: "150px" }}
+              disabled={loading}
+            >
+              {loading ? (
+                <ClipLoader size={24} color="#ffffff" />
+              ) : (
+                "Submit Post"
+              )}
             </button>
           </div>
         </form>

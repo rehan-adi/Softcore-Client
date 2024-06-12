@@ -20,7 +20,9 @@ function Post() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/api/blogs/allblogs");
+        const response = await axios.get(
+          "http://localhost:3333/api/blogs/allblogs"
+        );
         const { data } = response.data;
         if (data && data.blogPost) {
           setBlogs(data.blogPost);
@@ -74,14 +76,11 @@ function Post() {
 
     try {
       const token = getToken();
-      await axios.delete(
-        `http://localhost:3333/api/blogs/delete/${postId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:3333/api/blogs/delete/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setBlogs(blogs.filter((blog) => blog._id !== postId));
       setSelectedBlog(null);
       toast.success("Post deleted successfully!");
@@ -90,7 +89,10 @@ function Post() {
         console.error("Error deleting post:", error.response.data.message);
         toast.error(error.response.data.message);
       } else if (error.request) {
-        console.error("Error deleting post: No response received", error.request);
+        console.error(
+          "Error deleting post: No response received",
+          error.request
+        );
         toast.error("Error deleting post. Please try again.");
       } else {
         console.error("Error deleting post:", error.message);
@@ -153,7 +155,10 @@ function Post() {
                       <div className="absolute right-0 top-0">
                         <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
                           <div className="py-2 flex flex-col gap-1">
-                            <button onClick={closeModel} className="absolute top-2 right-4">
+                            <button
+                              onClick={closeModel}
+                              className="absolute top-2 right-4"
+                            >
                               <span className="text-gray-400 text-2xl hover:text-gray-700">
                                 &times;
                               </span>
@@ -162,13 +167,15 @@ function Post() {
                               onClick={() => handleEdit(blog._id)}
                               className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
                             >
-                              <MdOutlineEdit className="mr-2 text-2xl" /> Edit Post
+                              <MdOutlineEdit className="mr-2 text-2xl" /> Edit
+                              Post
                             </button>
                             <button
                               onClick={() => handleDelete(blog._id)}
                               className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
                             >
-                              <RiDeleteBin6Line className="mr-2 text-xl" /> Delete Post
+                              <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
+                              Delete Post
                             </button>
                           </div>
                         </div>
@@ -176,11 +183,13 @@ function Post() {
                     )}
                   </div>
                 </div>
-                <img
-                  className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                  src={`http://localhost:3333/${blog.image}`}
-                  alt={blog.title}
-                />
+                {blog.image && (
+                  <img
+                    className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                    src={`http://localhost:3333/${blog.image}`}
+                    alt={blog.title}
+                  />
+                )}
                 <h2 className="mt-4 text-xl font-semibold">{blog.title}</h2>
                 <p className="mt-2 text-gray-400">{blog.content}</p>
                 <div className="mt-7">
