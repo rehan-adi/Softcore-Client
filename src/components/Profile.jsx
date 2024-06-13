@@ -3,12 +3,17 @@ import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { BsThreeDots } from "react-icons/bs";
+import { MdOutlineEdit } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 function Profile() {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -61,6 +66,20 @@ function Profile() {
       console.error("Error decoding token:", error);
       return null;
     }
+  };
+
+  const closeModel = () => {
+    setSelectedBlog(null);
+  };
+
+  const handleEdit = (blogId) => {
+    console.log("Edit blog with ID:", blogId);
+    // Implement your edit logic here
+  };
+
+  const handleDelete = (blogId) => {
+    console.log("Delete blog with ID:", blogId);
+    // Implement your delete logic here
   };
 
   if (loading) {
@@ -126,7 +145,56 @@ function Profile() {
                 {posts.length > 0 ? (
                   posts.map((post) => (
                     <div key={post._id} className="bg-[#0A090F] border border-white border-opacity-20 p-4 rounded-lg mb-4">
-                      <h2 className="text-lg font-semibold">{post.title}</h2>
+                        <div className="flex justify-between items-center">
+                       <div className="flex gap-3 items-center justify-start">
+                        {post.author && post.author.profilePicture && (
+                          <img
+                            src={post.author.profilePicture}
+                            alt={post.author.username}
+                            className="w-8 h-8 rounded-full mr-1"
+                          />
+                        )}
+                        <p className="font-bold">{post.author.fullname}</p>
+                        <p className="opacity-40">{post.author.username}</p>
+                        </div>
+                        <div className="relative">
+                          <button
+                            onClick={() => setSelectedBlog(post._id)}
+                            className="text-gray-700 font-semibold cursor-pointer"
+                          >
+                            <BsThreeDots className="text-2xl" />
+                          </button>
+                          {selectedBlog === post._id && (
+                            <div className="absolute right-0 top-0">
+                              <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
+                                <div className="py-2 flex flex-col gap-1">
+                                  <button
+                                    onClick={closeModel}
+                                    className="absolute top-2 right-4"
+                                  >
+                                    <span className="text-gray-400 text-2xl hover:text-gray-700">
+                                      &times;
+                                    </span>
+                                  </button>
+                                  <button
+                                    onClick={() => handleEdit(post._id)}
+                                    className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                  >
+                                    <MdOutlineEdit className="mr-2 text-2xl" /> Edit Post
+                                  </button>
+                                  <button
+                                    onClick={() => handleDelete(post._id)}
+                                    className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                  >
+                                    <RiDeleteBin6Line className="mr-2 text-xl" /> Delete Post
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                       </div>
+                      <h2 className="text-lg mt-4 font-semibold">{post.title}</h2>
                       <p className="text-base mt-5">{post.content}</p>
                       {post.image && <img src={post.image} alt={post.title} className="mt-2 rounded" />}
                       <p className="text-base text text-[#1D9BF0] mt-6">{post.tags.join(' ')}</p>

@@ -130,16 +130,21 @@ function Post() {
                 className="bg-[#0A090F] border-white border border-opacity-20 z-10 rounded-lg shadow-lg lg:w-[44vw] lg:p-6 p-5 relative"
               >
                 <div className="flex justify-between items-center mb-8">
-                  <div className="flex items-center">
+                  <div className="flex gap-3 items-center">
                     {blog.author && blog.author.profilePicture && (
                       <img
                         src={blog.author.profilePicture}
                         alt={blog.author.username}
-                        className="w-8 h-8 rounded-full mr-4"
+                        className="w-8 h-8 rounded-full mr-1"
                       />
                     )}
                     {blog.author && (
-                      <p className="text-gray-700 font-semibold">
+                      <p className="font-bold">
+                        {blog.author.fullname}
+                      </p>
+                    )}
+                     {blog.author && (
+                      <p className="opacity-40 font-semibold">
                         {blog.author.username}
                       </p>
                     )}
