@@ -16,6 +16,11 @@ function Post() {
   const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    title: "",
+    content: "",
+    tags: [],
+  });
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -48,7 +53,6 @@ function Post() {
   const handleLike = async (postId) => {
     try {
       const token = getToken();
-      console.log(token);
       const response = await axios.post(
         `http://localhost:3333/api/like/${postId}`,
         {},
@@ -101,14 +105,58 @@ function Post() {
     }
   };
 
-  const handleEdit = (postId) => {
-    setSelectedBlog(postId);
+  const handleEdit = (blog) => {
+    const tags = blog.tags ? blog.tags.join(", ") : "";
+    setEditFormData({
+      title: blog.title,
+      content: blog.content,
+      tags: tags,
+    });
+    setSelectedBlog(blog);
+    setShowModal(true); // Add this line to open the modal
   };
+  
+  
 
   const closeModel = () => {
     setShowModal(false);
     setSelectedBlog(null);
   };
+
+  const handleEditFormChange = (e) => {
+    setEditFormData({
+      ...editFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = getToken();
+      const postId = selectedBlog._id;
+      const response = await axios.patch(
+        `http://localhost:3333/api/blogs/update/${postId}`,
+        editFormData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const updatedBlog = response.data.updatedBlog;
+      setBlogs((prevBlogs) =>
+        prevBlogs.map((blog) =>
+          blog._id === postId ? { ...blog, ...updatedBlog } : blog
+        )
+      );
+      setShowModal(false);
+      toast.success("Post updated successfully!");
+    } catch (error) {
+      // Handle error
+    }
+  };
+  
 
   return (
     <div className="flex relative z-10">
@@ -151,12 +199,12 @@ function Post() {
                   </div>
                   <div className="relative">
                     <button
-                      onClick={() => setSelectedBlog(blog._id)}
+                      onClick={() => handleEdit(blog)}
                       className="text-gray-700 font-semibold cursor-pointer"
                     >
                       <BsThreeDots className="text-2xl" />
                     </button>
-                    {selectedBlog === blog._id && (
+                    {selectedBlog && selectedBlog._id === blog._id && (
                       <div className="absolute right-0 top-0">
                         <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
                           <div className="py-2 flex flex-col gap-1">
@@ -169,7 +217,7 @@ function Post() {
                               </span>
                             </button>
                             <button
-                              onClick={() => handleEdit(blog._id)}
+                               onClick={() => handleEdit(blog)} 
                               className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
                             >
                               <MdOutlineEdit className="mr-2 text-2xl" /> Edit
@@ -241,6 +289,36 @@ function Post() {
           </div>
         )}
       </div>
+      {showModal && (
+      <div className="modal">
+        <div className="modal-content">
+          <form onSubmit={handleEditFormSubmit}>
+            <input
+              type="text"
+              name="title"
+              value={editFormData.title}
+              onChange={handleEditFormChange}
+              placeholder="Title"
+            />
+            <textarea
+              name="content"
+              value={editFormData.content}
+              onChange={handleEditFormChange}
+              placeholder="Content"
+            />
+            <input
+              type="text"
+              name="tags"
+              value={editFormData.tags}
+              onChange={handleEditFormChange}
+              placeholder="Tags (comma-separated)"
+            />
+            <button type="submit">Save Changes</button>
+          </form>
+          <button onClick={closeModel}>Close</button>
+        </div>
+      </div>
+    )}
     </div>
   );
 }

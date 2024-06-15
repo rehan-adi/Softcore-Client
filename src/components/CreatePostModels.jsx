@@ -21,13 +21,12 @@ function CreatePostModal({ onClose, onSubmit }) {
       onClose();
       return;
     }
-    const postData = {
-      title,
-      content,
-      category,
-      tags,
-      image,
-    };
+    const postData = new FormData();
+    postData.append("title", title);
+    postData.append("content", content);
+    postData.append("category", category);
+    postData.append("tags", tags);
+    postData.append("image", image);
 
     setLoading(true);
 
@@ -137,6 +136,8 @@ function CreatePostModal({ onClose, onSubmit }) {
                 className="form-input mt-1 block"
                 onChange={(e) => setImage(e.target.files[0])}
               />
+              {console.log("Selected Image:", image)
+              }
             </div>
           </div>
           <div className="mb-4">
@@ -154,7 +155,9 @@ function CreatePostModal({ onClose, onSubmit }) {
           </div>
           <div className="flex justify-start mt-10">
             <button
-              className="bg-[#0A090F] border border-white border-opacity-40 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center" content horizontally
+              className="bg-[#0A090F] border border-white border-opacity-40 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center"
+              content
+              horizontally
               style={{ minWidth: "150px" }}
               disabled={loading}
             >
