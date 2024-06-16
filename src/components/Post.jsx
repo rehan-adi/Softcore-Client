@@ -75,8 +75,6 @@ function Post() {
   };
 
   const handleDelete = async (postId) => {
-    // const confirmDelete = window.confirm("Are you sure you want to delete this post?");
-    // if (!confirmDelete) return;
 
     try {
       const token = getToken();
@@ -113,7 +111,7 @@ function Post() {
       tags: tags,
     });
     setSelectedBlog(blog);
-    setShowModal(true); // Add this line to open the modal
+    setShowModal(true);
   };
   
   
@@ -132,8 +130,8 @@ function Post() {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
+    const token = getToken();
     try {
-      const token = getToken();
       const postId = selectedBlog._id;
       const response = await axios.patch(
         `http://localhost:3333/api/blogs/update/${postId}`,
@@ -153,10 +151,19 @@ function Post() {
       setShowModal(false);
       toast.success("Post updated successfully!");
     } catch (error) {
-      // Handle error
+      if (error.response) {
+        console.error("Server Error:", error.response.data);
+        toast.error("An error occurred. Please try again later.");
+      } else if (error.request) {
+        console.error("No response from server:", error.request);
+        toast.error("No response from server. Please try again later.");
+      } else {
+        console.error("Error:", error.message);
+        toast.error("An error occurred. Please try again later.");
+      }
     }
   };
-  
+
 
   return (
     <div className="flex relative z-10">
@@ -199,7 +206,7 @@ function Post() {
                   </div>
                   <div className="relative">
                     <button
-                      onClick={() => handleEdit(blog)}
+                       onClick={() => setSelectedBlog(blog)}
                       className="text-gray-700 font-semibold cursor-pointer"
                     >
                       <BsThreeDots className="text-2xl" />
@@ -290,34 +297,53 @@ function Post() {
         )}
       </div>
       {showModal && (
-      <div className="modal">
-        <div className="modal-content">
-          <form onSubmit={handleEditFormSubmit}>
-            <input
-              type="text"
-              name="title"
-              value={editFormData.title}
-              onChange={handleEditFormChange}
-              placeholder="Title"
-            />
-            <textarea
-              name="content"
-              value={editFormData.content}
-              onChange={handleEditFormChange}
-              placeholder="Content"
-            />
-            <input
-              type="text"
-              name="tags"
-              value={editFormData.tags}
-              onChange={handleEditFormChange}
-              placeholder="Tags (comma-separated)"
-            />
-            <button type="submit">Save Changes</button>
-          </form>
-          <button onClick={closeModel}>Close</button>
-        </div>
-      </div>
+         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
+         <div className="bg-[#0A090F] border border-opacity-20 w-[35vw] h-[66vh] border-white p-6 rounded-lg">
+           <h2 className="text-2xl mb-4">Edit Post</h2>
+           <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
+             <div className="mb-4">
+               <label className="block text-sm font-bold mb-2" htmlFor="username">
+                 Title 
+               </label>
+               <input
+                 type="text"
+                 id="title"
+                 name="Title"
+                 value={editFormData.title}
+                 onChange={handleEditFormChange}
+                 className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
+               />
+             </div>
+             <div className="mb-4">
+               <label className="block text-sm font-bold mb-2" htmlFor="bio">
+                 Content
+               </label>
+               <textarea
+                 id="bio"
+                 name="content"
+                 value={editFormData.content}
+                 onChange={handleEditFormChange}
+                 className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-40 focus:shadow-outline"
+               />
+             </div>
+             <div className="flex mt-10 items-center justify-between">
+               <button
+                 type="submit"
+                 className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+               >
+                 Save Changes
+               </button>
+               <button
+                 type="button"
+                 onClick={closeModel}
+                 className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
+               >
+                 Cancel
+               </button>
+             </div>
+           </form>
+         </div>
+       </div>
     )}
     </div>
   );
