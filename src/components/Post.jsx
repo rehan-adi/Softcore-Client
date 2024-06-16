@@ -298,8 +298,8 @@ function Post() {
       </div>
       {showModal && (
          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-         <div className="bg-[#0A090F] border border-opacity-20 w-[35vw] h-[66vh] border-white p-6 rounded-lg">
-           <h2 className="text-2xl mb-4">Edit Post</h2>
+         <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[58vh] lg:h-[66vh] border-white p-6 rounded-lg">
+           <h2 className="text-2xl mb-8 lg:mb-4">Edit Post</h2>
            <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
              <div className="mb-4">
                <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -308,7 +308,7 @@ function Post() {
                <input
                  type="text"
                  id="title"
-                 name="Title"
+                 name="title"
                  value={editFormData.title}
                  onChange={handleEditFormChange}
                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"

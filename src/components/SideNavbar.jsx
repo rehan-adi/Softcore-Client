@@ -83,11 +83,6 @@ function SideNavbar() {
           <Link to="profile" className="font-semibold text-xl">
             <li className="flex gap-3 items-center">
               <span className="mr-2">
-                {/* <svg viewBox="0 0 24 24" fill="white" aria-hidden="true" className="w-6 h-6">
-            <g>
-              <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-            </g>
-          </svg> */}
                 <LuUser2 className="text-2xl" />
               </span>
               <span className="font-semibold text-xl">Profile</span>

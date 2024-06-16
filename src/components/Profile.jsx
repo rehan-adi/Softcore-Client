@@ -20,6 +20,12 @@ function Profile() {
     bio: "",
     profilePicture: "",
   });
+  const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false);
+  const [editPostFormData, setEditPostFormData] = useState({
+    title: "",
+    content: "",
+  });
+
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -103,8 +109,8 @@ function Profile() {
       const formData = new FormData();
       formData.append("username", editFormData.username);
       formData.append("bio", editFormData.bio);
-      formData.append("profilePicture", editFormData.profilePicture); 
-      
+      formData.append("profilePicture", editFormData.profilePicture);
+
       const response = await axios.patch(
         `http://localhost:3333/api/profile/${id}`,
         formData,
@@ -141,6 +147,58 @@ function Profile() {
     return token;
   };
 
+  const handleEditPost = (postId) => {
+    const post = posts.find((post) => post._id === postId);
+    setEditPostFormData({
+      title: post.title,
+      content: post.content,
+    });
+    setSelectedPost(postId); // Update this line
+    setIsEditPostModalOpen(true);
+  };
+
+
+
+  const handleEditPostFormChange = (e) => {
+    setEditPostFormData({
+      ...editPostFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEditPostFormSubmit = async (e) => {
+    e.preventDefault();
+    const token = getToken();
+    try {
+      const formData = new FormData();
+      formData.append("title", editPostFormData.title);
+      formData.append("content", editPostFormData.content);
+  
+      const response = await axios.patch(
+        `http://localhost:3333/api/blogs/update/${selectedPost}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+  
+      // Update the post data after editing
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === selectedPost ? { ...post, ...response.data.updatedPost } : post
+        )
+      );
+  
+      setIsEditPostModalOpen(false);
+      toast.success("Post updated successfully!");
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+  
 
   const handleDelete = async (postId) => {
     try {
@@ -171,12 +229,11 @@ function Profile() {
   };
 
 
-
   const closeModel = () => {
     // setShowModal(false);
     setSelectedPost(null);
   };
-    
+
 
   if (loading) {
     return (
@@ -195,7 +252,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="w-[50vw] z-10 border-r border-white border-opacity-20 pb-3 text-white min-h-screen">
+      <div className="lg:w-[50vw] z-10 border-r border-white border-opacity-20 pb-3 text-white min-h-screen">
         {profileData ? (
           <div className="text-white">
             <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-[#0A090F] z-40 fixed top-0 border-b border-r border-white w-full flex gap-10 lg:w-[50vw] border-opacity-20">
@@ -209,7 +266,7 @@ function Profile() {
                 <p className="text-sm font-normal">{posts.length} posts</p>
               </div>
             </nav>
-            <div className="pt-28 px-8">
+            <div className="pt-28 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
                   src={profileData.profilePicture || 'default-profile.png'}
@@ -228,7 +285,7 @@ function Profile() {
                 <p className="text-sm opacity-50 font-normal">{profileData.username}</p>
               </div>
               <div className="mt-5">
-                <p className="text-base w-[31vw] font-normal">{profileData.bio}</p>
+                <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
               <div className="mt-5 flex gap-7">
                 <p className="text-base font-normal">
@@ -267,42 +324,42 @@ function Profile() {
                               <BsThreeDots className="text-2xl" />
                             </button>
                             {selectedPost === post._id && (
-                      <div className="absolute right-0 top-0">
-                        <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
-                          <div className="py-2 flex flex-col gap-1">
-                            <button
-                              onClick={closeModel}
-                              className="absolute top-2 right-4"
-                            >
-                              <span className="text-gray-400 text-2xl hover:text-gray-700">
-                                &times;
-                              </span>
-                            </button>
-                            <button
-                              onClick={() => handleEdit(post._id)}
-                              className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
-                            >
-                              <MdOutlineEdit className="mr-2 text-2xl" /> Edit
-                              Post
-                            </button>
-                            <button
-                              onClick={() => handleDelete(post._id)}
-                              className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
-                            >
-                              <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
-                              Delete Post
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                              <div className="absolute right-0 top-0">
+                                <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
+                                  <div className="py-2 flex flex-col gap-1">
+                                    <button
+                                      onClick={closeModel}
+                                      className="absolute top-2 right-4"
+                                    >
+                                      <span className="text-gray-400 text-2xl hover:text-gray-700">
+                                        &times;
+                                      </span>
+                                    </button>
+                                    <button
+                                      onClick={() => handleEditPost(post._id)}
+                                      className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                    >
+                                      <MdOutlineEdit className="mr-2 text-2xl" /> Edit
+                                      Post
+                                    </button>
+                                    <button
+                                      onClick={() => handleDelete(post._id)}
+                                      className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                    >
+                                      <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
+                                      Delete Post
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                         <h2 className="text-lg mt-4 font-semibold">{post.title}</h2>
                         <p className="text-base mt-5">{post.content}</p>
-                        <img src={post.image} alt={post.title} className="mt-2 rounded" />
-                        {/* {post.image && (
-                        )} */}
+                        {post.image && (
+                          <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
+                        )}
                         <p className="text-base text text-[#1D9BF0] mt-6">
                           {post.tags.join(' ')}
                         </p>
@@ -322,8 +379,8 @@ function Profile() {
 
       {isEditModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 w-[35vw] h-[66vh] border-white p-6 rounded-lg">
-            <h2 className="text-2xl mb-4">Edit Profile</h2>
+          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[64vh] lg:h-[70vh] border-white p-6 rounded-lg">
+            <h2 className="text-2xl mb-8 lg:mb-4">Edit Profile</h2>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -347,7 +404,7 @@ function Profile() {
                   name="bio"
                   value={editFormData.bio}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
@@ -355,10 +412,10 @@ function Profile() {
                   Profile Picture URL
                 </label>
                 <input
-                   type="file"
-                   id="profilePicture"
-                   name="profilePicture"
-                   onChange={handleFileChange}
+                  type="file"
+                  id="profilePicture"
+                  name="profilePicture"
+                  onChange={handleFileChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
@@ -372,6 +429,56 @@ function Profile() {
                 <button
                   type="button"
                   onClick={handleCloseEditModal}
+                  className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {isEditPostModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
+          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[55vh] lg:h-[64vh] border-white p-6 rounded-lg">
+            <h2 className="text-2xl mb-10 lg:mb-8">Edit Post</h2>
+            <form encType="multipart/form-data">
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="title">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={editPostFormData.title}
+                  onChange={handleEditPostFormChange}
+                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="content">
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  name="content"
+                  value={editPostFormData.content}
+                  onChange={handleEditPostFormChange}
+                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight lg:h-28 h-28 focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="flex mt-10 items-center justify-between">
+                <button
+                  type="button"
+                  onClick={handleEditPostFormSubmit}
+                  className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditPostModalOpen(false)}
                   className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   Cancel
