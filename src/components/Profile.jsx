@@ -18,7 +18,7 @@ function Profile() {
   const [editFormData, setEditFormData] = useState({
     username: "",
     bio: "",
-    profilePicture: "",
+    image: "",
   });
   const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false);
   const [editPostFormData, setEditPostFormData] = useState({
@@ -109,7 +109,7 @@ function Profile() {
       const formData = new FormData();
       formData.append("username", editFormData.username);
       formData.append("bio", editFormData.bio);
-      formData.append("profilePicture", editFormData.profilePicture);
+      formData.append("image", editFormData.profilePicture);
 
       const response = await axios.patch(
         `http://localhost:3333/api/profile/${id}`,
@@ -123,6 +123,7 @@ function Profile() {
       );
       setProfileData(response.data.profile);
       setIsEditModalOpen(false);
+      toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -134,7 +135,7 @@ function Profile() {
       try {
         setEditFormData((prevData) => ({
           ...prevData,
-          profilePicture: file, // Set the file directly, not in a nested object
+          profilePicture: file,
         }));
       } catch (error) {
         console.error("Error handling file:", error);
@@ -153,7 +154,7 @@ function Profile() {
       title: post.title,
       content: post.content,
     });
-    setSelectedPost(postId); // Update this line
+    setSelectedPost(postId);
     setIsEditPostModalOpen(true);
   };
 
@@ -252,7 +253,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="lg:w-[50vw] z-10 border-r border-white border-opacity-20 pb-3 text-white min-h-screen">
+      <div className="lg:w-[50vw] z-10 border-r border-white border-opacity-20 lg:pb-3 pb-28 text-white min-h-screen">
         {profileData ? (
           <div className="text-white">
             <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-[#0A090F] z-40 fixed top-0 border-b border-r border-white w-full flex gap-10 lg:w-[50vw] border-opacity-20">
@@ -269,7 +270,7 @@ function Profile() {
             <div className="pt-28 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
-                  src={profileData.profilePicture || 'default-profile.png'}
+                  src={`http://localhost:3333/${profileData.profilePicture}`}
                   alt="Profile"
                   className="w-28 h-28 rounded-full"
                 />
@@ -308,7 +309,7 @@ function Profile() {
                           <div className="flex gap-3 items-center justify-start">
                             {post.author && post.author.profilePicture && (
                               <img
-                                src={post.author.profilePicture}
+                                src={`http://localhost:3333/${profileData.profilePicture}`}
                                 alt={post.author.username}
                                 className="w-8 h-8 rounded-full mr-1"
                               />
@@ -408,13 +409,13 @@ function Profile() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="profilePicture">
+                <label className="block text-sm font-bold mb-2" htmlFor="image">
                   Profile Picture URL
                 </label>
                 <input
                   type="file"
-                  id="profilePicture"
-                  name="profilePicture"
+                  id="image"
+                  name="image"
                   onChange={handleFileChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
