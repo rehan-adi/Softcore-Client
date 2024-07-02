@@ -113,8 +113,8 @@ function Post() {
     setSelectedBlog(blog);
     setShowModal(true);
   };
-  
-  
+
+
 
   const closeModel = () => {
     setShowModal(false);
@@ -186,19 +186,26 @@ function Post() {
               >
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
-                    {blog.author && blog.author.profilePicture && (
+                    {console.log(blog.author.profilePicture)}
+                    {blog.author && blog.author.profilePicture ? (
+                       <img
+                       src={blog.author.profilePicture}
+                       alt={blog.author.username}
+                       className="w-8 h-8 rounded-full mr-1"
+                     />
+                    ) : (
                       <img
-                        src={blog.author.profilePicture}
-                        alt={blog.author.username}
-                        className="w-8 h-8 rounded-full mr-1"
-                      />
+                      src={`http://localhost:3333/${blog.author.profilePicture}`}
+                      alt={blog.author.username}
+                      className="w-8 h-8 rounded-full mr-1"
+                    />
                     )}
                     {blog.author && (
                       <p className="font-bold">
                         {blog.author.fullname}
                       </p>
                     )}
-                     {blog.author && (
+                    {blog.author && (
                       <p className="opacity-40 font-semibold">
                         {blog.author.username}
                       </p>
@@ -206,7 +213,7 @@ function Post() {
                   </div>
                   <div className="relative">
                     <button
-                       onClick={() => setSelectedBlog(blog)}
+                      onClick={() => setSelectedBlog(blog)}
                       className="text-gray-700 font-semibold cursor-pointer"
                     >
                       <BsThreeDots className="text-2xl" />
@@ -224,7 +231,7 @@ function Post() {
                               </span>
                             </button>
                             <button
-                               onClick={() => handleEdit(blog)} 
+                              onClick={() => handleEdit(blog)}
                               className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
                             >
                               <MdOutlineEdit className="mr-2 text-2xl" /> Edit
@@ -297,54 +304,54 @@ function Post() {
         )}
       </div>
       {showModal && (
-         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-         <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[58vh] lg:h-[66vh] border-white p-6 rounded-lg">
-           <h2 className="text-2xl mb-8 lg:mb-4">Edit Post</h2>
-           <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
-             <div className="mb-4">
-               <label className="block text-sm font-bold mb-2" htmlFor="username">
-                 Title 
-               </label>
-               <input
-                 type="text"
-                 id="title"
-                 name="title"
-                 value={editFormData.title}
-                 onChange={handleEditFormChange}
-                 className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
-               />
-             </div>
-             <div className="mb-4">
-               <label className="block text-sm font-bold mb-2" htmlFor="bio">
-                 Content
-               </label>
-               <textarea
-                 id="bio"
-                 name="content"
-                 value={editFormData.content}
-                 onChange={handleEditFormChange}
-                 className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-40 focus:shadow-outline"
-               />
-             </div>
-             <div className="flex mt-10 items-center justify-between">
-               <button
-                 type="submit"
-                 className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
-               >
-                 Save Changes
-               </button>
-               <button
-                 type="button"
-                 onClick={closeModel}
-                 className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
-               >
-                 Cancel
-               </button>
-             </div>
-           </form>
-         </div>
-       </div>
-    )}
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
+          <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[58vh] lg:h-[66vh] border-white p-6 rounded-lg">
+            <h2 className="text-2xl mb-8 lg:mb-4">Edit Post</h2>
+            <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="username">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={editFormData.title}
+                  onChange={handleEditFormChange}
+                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-bold mb-2" htmlFor="bio">
+                  Content
+                </label>
+                <textarea
+                  id="bio"
+                  name="content"
+                  value={editFormData.content}
+                  onChange={handleEditFormChange}
+                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-40 focus:shadow-outline"
+                />
+              </div>
+              <div className="flex mt-10 items-center justify-between">
+                <button
+                  type="submit"
+                  className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModel}
+                  className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
