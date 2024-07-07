@@ -12,8 +12,8 @@ const NewsPost = () => {
             try {
                 const response = await axios.get('https://newsapi.org/v2/everything', {
                     params: {
-                        q: 'tesla',
-                        from: '2024-06-02',
+                        q: 'tesla, google',
+                        from: '2024-07-4',
                         sortBy: 'publishedAt',
                         apiKey: '36b7f1cc43e24cf3b6ba8f7bb2446061'
                     }

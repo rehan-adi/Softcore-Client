@@ -50,11 +50,21 @@ function Post() {
     return token;
   };
 
+
+  useEffect(() => {
+    const storedLikedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
+    setLikedPosts(storedLikedPosts);
+  }, []);
+  
   const handleLike = async (postId) => {
     try {
       const token = getToken();
+      if (likedPosts.includes(postId)) {
+        toast.error("You have already liked this post.");
+        return;
+      }
       const response = await axios.post(
-        `http://localhost:3333/api/like/${postId}`,
+        `http://localhost:3333/api/likes/${postId}`,
         {},
         {
           headers: {
@@ -63,16 +73,23 @@ function Post() {
         }
       );
       const updatedBlog = response.data.post;
+      // Update blogs with new like count
       setBlogs((prevBlogs) =>
         prevBlogs.map((blog) =>
           blog._id === postId ? { ...blog, likes: updatedBlog.likes } : blog
         )
       );
+      // Update likedPosts state
       setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
+      // Update localStorage with updated likedPosts
+      localStorage.setItem("likedPosts", JSON.stringify([...likedPosts, postId]));
+      toast.success("Post liked successfully!");
     } catch (error) {
       console.error("Error liking post:", error);
+      toast.error("Error liking post. Please try again.");
     }
   };
+    
 
   const handleDelete = async (postId) => {
 
@@ -186,19 +203,18 @@ function Post() {
               >
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
-                    {console.log(blog.author.profilePicture)}
                     {blog.author && blog.author.profilePicture ? (
-                       <img
-                       src={blog.author.profilePicture}
-                       alt={blog.author.username}
-                       className="w-8 h-8 rounded-full mr-1"
-                     />
+                      <img
+                        src={blog.author.profilePicture}
+                        alt={blog.author.username}
+                        className="w-8 h-8 rounded-full mr-1"
+                      />
                     ) : (
                       <img
-                      src={`http://localhost:3333/${blog.author.profilePicture}`}
-                      alt={blog.author.username}
-                      className="w-8 h-8 rounded-full mr-1"
-                    />
+                        src={`http://localhost:3333/${blog.author.profilePicture}`}
+                        alt={blog.author.username}
+                        className="w-8 h-8 rounded-full mr-1"
+                      />
                     )}
                     {blog.author && (
                       <p className="font-bold">
@@ -270,15 +286,20 @@ function Post() {
                   ))}
                 </div>
                 <div className="mt-8 flex justify-between items-center">
+                  {console.log(likedPosts)}
                   <button
                     onClick={() => handleLike(blog._id)}
-                    className="text-gray-700 font-semibold cursor-pointer"
+                    className={`text-gray-700 font-semibold cursor-pointer ${likedPosts.includes(blog._id) ? "text-blue-500" : "text-gray-500"
+                      }`}
                   >
-                    <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                    <span className={`flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center`}>
                       <span>
-                        <MdOutlineThumbUpOffAlt className="inline-block text-2xl" />
+                        <MdOutlineThumbUpOffAlt
+                          className={`inline-block text-2xl ${likedPosts.includes(blog._id) ? "text-blue-500" : "text-gray-500"
+                            }`}
+                        />
                       </span>
-                      <span className="mt-1">Like</span>
+                      <span className="">{blog.likes.length}</span>
                     </span>
                   </button>
                   <button className="text-gray-700 font-semibold cursor-pointer">

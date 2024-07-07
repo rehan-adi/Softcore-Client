@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import ClipLoader from "react-spinners/ClipLoader"; 
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -28,6 +29,8 @@ function Signin() {
         console.log(response.data);
         const { token } = response.data;
         localStorage.setItem("token", token);
+        localStorage.removeItem("likedPosts");
+        setLikedPosts([]);
         toast.success("Sign in successful!");
         navigate("/");
       } else {
@@ -121,7 +124,7 @@ function Signin() {
           </button>
         </div>
         <div className="flex items-center mt-6 justify-between">
-        <button
+          <button
             className='text-black bg-white font-bold w-full py-3 px-4 rounded-full focus:outline-none focus:shadow-outline'
             type='submit'
           >

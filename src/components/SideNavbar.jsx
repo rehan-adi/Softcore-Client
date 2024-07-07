@@ -25,6 +25,7 @@ function SideNavbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("likedPosts");
     setIsLoggedIn(false);
     toast.success("You are Logout Now");
   };
