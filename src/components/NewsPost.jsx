@@ -31,7 +31,7 @@ const NewsPost = () => {
 
     return (
         <div className='absolute bg-[#0A090F] w-[30vw] h-[200vh] text-white right-0'>
-            <nav className="py-6 lg:px-10 px-3 bg-[#0A090F] z-50 fixed border-b border-r border-white w-full lg:w-[50vw] border-opacity-20">
+            <nav className="py-6 lg:px-10 px-3 bg-[#0A090F] z-20 fixed border-b border-r border-white w-full lg:w-[50vw] border-opacity-20">
                 <h2 className='font-semibold text-2xl'>Latest News</h2>
             </nav>
             {loading && (

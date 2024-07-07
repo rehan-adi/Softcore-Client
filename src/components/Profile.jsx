@@ -379,8 +379,8 @@ function Profile() {
       </div>
 
       {isEditModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[64vh] lg:h-[70vh] border-white p-6 rounded-lg">
+        <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
+          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[65vh] lg:h-[70vh] border-white p-6 rounded-lg">
             <h2 className="text-2xl mb-8 lg:mb-4">Edit Profile</h2>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
