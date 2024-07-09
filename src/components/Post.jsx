@@ -51,11 +51,6 @@ function Post() {
   };
 
 
-  useEffect(() => {
-    const storedLikedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-    setLikedPosts(storedLikedPosts);
-  }, []);
-  
   const handleLike = async (postId) => {
     try {
       const token = getToken();
@@ -81,15 +76,13 @@ function Post() {
       );
       // Update likedPosts state
       setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
-      // Update localStorage with updated likedPosts
-      localStorage.setItem("likedPosts", JSON.stringify([...likedPosts, postId]));
       toast.success("Post liked successfully!");
     } catch (error) {
       console.error("Error liking post:", error);
       toast.error("Error liking post. Please try again.");
     }
   };
-    
+
 
   const handleDelete = async (postId) => {
 
@@ -286,20 +279,15 @@ function Post() {
                   ))}
                 </div>
                 <div className="mt-8 flex justify-between items-center">
-                  {console.log(likedPosts)}
                   <button
                     onClick={() => handleLike(blog._id)}
-                    className={`text-gray-700 font-semibold cursor-pointer ${likedPosts.includes(blog._id) ? "text-blue-500" : "text-gray-500"
-                      }`}
+                    className="text-gray-700 font-semibold cursor-pointer"
                   >
-                    <span className={`flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center`}>
+                    <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                       <span>
-                        <MdOutlineThumbUpOffAlt
-                          className={`inline-block text-2xl ${likedPosts.includes(blog._id) ? "text-blue-500" : "text-gray-500"
-                            }`}
-                        />
+                        <MdOutlineThumbUpOffAlt className="inline-block text-2xl" />
                       </span>
-                      <span className="">{blog.likes.length}</span>
+                      <span>{blog.likes.length}</span>
                     </span>
                   </button>
                   <button className="text-gray-700 font-semibold cursor-pointer">

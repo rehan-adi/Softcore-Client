@@ -9,7 +9,6 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [likedPosts, setLikedPosts] = useState([]);
 
   const navigate = useNavigate();
 
@@ -29,8 +28,6 @@ function Signin() {
         console.log(response.data);
         const { token } = response.data;
         localStorage.setItem("token", token);
-        localStorage.removeItem("likedPosts");
-        setLikedPosts([]);
         toast.success("Sign in successful!");
         navigate("/");
       } else {
