@@ -21,6 +21,10 @@ function Post() {
     content: "",
     tags: [],
   });
+  const [showCommentModal, setShowCommentModal] = useState(false);
+  const [commentFormData, setCommentFormData] = useState({ content: "" });
+  const [comments, setComments] = useState([]);
+
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -125,7 +129,6 @@ function Post() {
   };
 
 
-
   const closeModel = () => {
     setShowModal(false);
     setSelectedBlog(null);
@@ -173,6 +176,64 @@ function Post() {
       }
     }
   };
+
+
+  const toggleCommentModal = () => {
+    setShowCommentModal(!showCommentModal);
+    if (!showCommentModal && selectedBlog && selectedBlog._id) {
+      fetchComments(selectedBlog._id);
+    }
+  }; 
+
+  // const fetchComments = async (postId) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:3333/api/comments/${postId}`);
+  //     const { data } = response.data;
+  //     if (data && data.comments) {
+  //       setComments(data.comments);
+  //     } else {
+  //       throw new Error("No comments found in response data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching comments:", error);
+  //     toast.error("Error fetching comments.");
+  //   }
+  // };
+
+
+  const handleCommentChange = (e) => {
+    setCommentFormData({
+      ...commentFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    const token = getToken();
+    try {
+      const postId = selectedBlog._id;
+      console.log(postId);
+      const response = await axios.post(
+        `http://localhost:3333/api/comments/post/${postId}/comments`,
+        commentFormData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const newComment = response.data.comment;
+      setComments([...comments, newComment]);
+      setCommentFormData({ content: "" });
+      toast.success("Comment added successfully!");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+      toast.error("Error adding comment. Please try again.");
+    }
+  };
+  
 
 
   return (
@@ -290,7 +351,9 @@ function Post() {
                       <span>{blog.likes.length}</span>
                     </span>
                   </button>
-                  <button className="text-gray-700 font-semibold cursor-pointer">
+                  <button className="text-gray-700 font-semibold cursor-pointer"
+                    onClick={toggleCommentModal}
+                  >
                     <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                       <span>
                         <FaRegCommentDots className="inline-block text-2xl" />
@@ -361,6 +424,47 @@ function Post() {
           </div>
         </div>
       )}
+      {showCommentModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
+          <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[40vh] lg:h-[50vh] border-white p-6 rounded-lg">
+            <h2 className="text-2xl mb-8 lg:mb-4">Comments</h2>
+            <div className="overflow-y-auto max-h-[50vh]">
+              {comments.map((comment, index) => (
+                <div key={index} className="mb-4">
+                  <p className="text-white">{comment.content}</p>
+                  <p className="text-gray-400">{comment.author}</p>
+                </div>
+              ))}
+            </div>
+            <form onSubmit={handleCommentSubmit}>
+              <textarea
+                id="comment"
+                name="content"
+                value={commentFormData.content}
+                onChange={handleCommentChange}
+                className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-44 focus:shadow-outline"
+                placeholder="Write a comment..."
+              />
+              <div className="flex items-center mt-7 justify-start">
+                <button
+                  type="submit"
+                  className="text-white font-bold py-2 px-4 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                >
+                  Comment
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleCommentModal}
+                  className="bg-white text-black font-bold py-2 px-4 rounded-full ml-4 focus:outline-none focus:shadow-outline"
+                >
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
