@@ -47,7 +47,7 @@ function Profile() {
         }
 
         const response = await axios.get(
-          `http://localhost:3333/api/profile/${userId}`,
+          `http://localhost:3333/api/v1/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ function Profile() {
       formData.append("image", editFormData.profilePicture);
 
       const response = await axios.patch(
-        `http://localhost:3333/api/profile/${id}`,
+        `http://localhost:3333/api/v1/profile/${id}`,
         formData,
         {
           headers: {

@@ -19,7 +19,7 @@ function Signup() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/auth/signup",
+        "http://localhost:3333/api/v1/auth/signup",
         {
           username,
           fullname,
@@ -40,7 +40,7 @@ function Signup() {
   };
   
   const handleGoogleSignin = () => {
-    window.location.href = "http://localhost:3333/api/auth/google";
+    window.location.href = "http://localhost:3333/api/v1/auth/google";
   };
   
 

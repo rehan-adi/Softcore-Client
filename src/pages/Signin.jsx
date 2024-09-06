@@ -17,7 +17,7 @@ function Signin() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/auth/signin",
+        "http://localhost:3333/api/v1/auth/signin",
         {
           email,
           password,
@@ -45,7 +45,7 @@ function Signin() {
   };
 
   const handleGoogleSignin = () => {
-    window.location.href = "http://localhost:3333/api/auth/google";
+    window.location.href = "http://localhost:3333/api/v1/auth/google";
   };
 
   return (
