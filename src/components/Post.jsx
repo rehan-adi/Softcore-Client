@@ -30,7 +30,7 @@ function Post() {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3333/api/blogs/allblogs"
+          "http://localhost:3333/api/v1/blogs/allblogs"
         );
         const { data } = response.data;
         if (data && data.blogPost) {
@@ -63,7 +63,7 @@ function Post() {
         return;
       }
       const response = await axios.post(
-        `http://localhost:3333/api/likes/${postId}`,
+        `http://localhost:3333/api/v1/likes/${postId}`,
         {},
         {
           headers: {
@@ -92,7 +92,7 @@ function Post() {
 
     try {
       const token = getToken();
-      await axios.delete(`http://localhost:3333/api/blogs/delete/${postId}`, {
+      await axios.delete(`http://localhost:3333/api/v1/blogs/delete/${postId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -147,7 +147,7 @@ function Post() {
     try {
       const postId = selectedBlog._id;
       const response = await axios.patch(
-        `http://localhost:3333/api/blogs/update/${postId}`,
+        `http://localhost:3333/api/v1/blogs/update/${postId}`,
         editFormData,
         {
           headers: {
@@ -216,7 +216,7 @@ function Post() {
       const postId = selectedBlog._id;
       console.log(postId);
       const response = await axios.post(
-        `http://localhost:3333/api/comments/post/${postId}/comments`,
+        `http://localhost:3333/api/v1/comments/post/${postId}/comments`,
         commentFormData,
         {
           headers: {
