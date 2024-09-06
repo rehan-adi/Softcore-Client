@@ -32,7 +32,7 @@ function CreatePostModal({ onClose, onSubmit }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/blogs/create",
+        "http://localhost:3333/api/v1/blogs/create",
         postData,
         {
           headers: {
