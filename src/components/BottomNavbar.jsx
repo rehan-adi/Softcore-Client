@@ -1,20 +1,26 @@
 import React from "react";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function BottomNavbar() {
+  const location = useLocation();
+
+  const getActiveClass = (path) => {
+    return location.pathname === path ? "bg-[#27272A] text-white rounded-lg px-3 py-2" : "text-white rounded-lg hover:bg-[#27272A] px-3 py-2";
+  };
+
   return (
-    <div className="lg:hidden fixed bottom-0 w-full z-50 bg-[#0A090F] border-t border-white border-opacity-25 flex justify-around items-center py-4 px-3">
-      <nav className="flex justify-between w-full max-w-sm mx-auto">
+    <div className="md:hidden fixed bottom-0 w-full z-50 bg-[#0A090F] bg-opacity-90 border-t border-white border-opacity-25 shadow-lg flex justify-around items-center py-3 px-5">
+      <nav className="flex justify-between items-center w-full max-w-sm mx-auto">
         {/* Home icon */}
         <Link to="/">
-          <button className="text-white">
+          <button className={getActiveClass("/")}>
             <svg
               viewBox="0 0 24 24"
-              fill="white"
+              fill="currentColor"
               aria-hidden="true"
-              className="w-7 h-7"
+              className="lg:w-7 lg:h-7 w-6 h-6"
             >
               <g>
                 <path d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z"></path>
@@ -24,22 +30,22 @@ function BottomNavbar() {
         </Link>
 
         {/* Search icon */}
-        <Link to="">
-          <button className="text-white">
-            <IoSearch className="text-3xl" />
+        <Link to="/search">
+          <button className={getActiveClass("/search")}>
+            <IoSearch className="lg:text-3xl text-2xl" />
           </button>
         </Link>
 
         {/* Profile icon */}
-        <Link to="profile">
-          <button className="text-white">
-            <LuUser2 className="text-3xl" />
+        <Link to="/profile">
+          <button className={getActiveClass("/profile")}>
+            <LuUser2 className="lg:text-3xl text-2xl" />
           </button>
         </Link>
 
         {/* Premium icon */}
         <Link to="/premium">
-          <button className="text-white">
+          <button className={getActiveClass("/premium")}>
             <svg
               width="29"
               height="29"
@@ -62,19 +68,19 @@ function BottomNavbar() {
         </Link>
 
         {/* Message icon */}
-        <Link >
-        <button className="text-white">
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            fill="white"
-            className="w-7 h-7"
-          >
-            <g>
-              <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
-            </g>
-          </svg>
-        </button>
+        <Link to="/messages">
+          <button className={getActiveClass("/messages")}>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="white"
+              className="lg:w-7 lg:h-7 w-6 h-6"
+            >
+              <g>
+                <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
+              </g>
+            </svg>
+          </button>
         </Link>
       </nav>
     </div>

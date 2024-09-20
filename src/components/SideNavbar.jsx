@@ -35,7 +35,7 @@ function SideNavbar() {
   const closeModal = () => setShowModal(false);
 
   return (
-    <div className="min-h-screen z-50 fixed bg-[#09090A] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-[16vw]">
+    <div className="min-h-screen z-50 fixed bg-[#09090A] md:flex md:flex-col hidden border-r border-white border-opacity-20 w-[250px]">
       <nav className="w-full flex border-b border-white border-opacity-20 py-4 justify-center items-center">
         <svg
           width="50"
