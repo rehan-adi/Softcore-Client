@@ -5,6 +5,7 @@ import CreatePostModal from "./CreatePostModels";
 import { MdLogout, MdLogin } from "react-icons/md";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { getToken, removeToken } from "../utils/token";
 
 function SideNavbar() {
 
@@ -15,12 +16,9 @@ function SideNavbar() {
   const isActive = (path) => location.pathname === path;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     setIsLoggedIn(!!token);
   }, []);
-
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
 
   const handleSubmit = (postData) => {
     console.log("Posting data to backend:", postData);
@@ -28,10 +26,13 @@ function SideNavbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    removeToken();
     setIsLoggedIn(false);
-    toast.success("You are Logout Now");
+    toast.success("You are logged out now");
   };
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
     <div className="min-h-screen z-50 fixed bg-[#09090A] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-[16vw]">
