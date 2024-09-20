@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
-import { MdLogout, MdLogin } from "react-icons/md";
 import CreatePostModal from "./CreatePostModels";
-import { toast } from "react-hot-toast";
+import { MdLogout, MdLogin } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 function SideNavbar() {
+
   const [showModal, setShowModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,11 +34,11 @@ function SideNavbar() {
   };
 
   return (
-    <div className="min-h-screen z-50 fixed bg-[#0A090F] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-1/5">
-      <nav className="w-full flex border-b border-white border-opacity-20 pl-24 py-3 justify-start items-center">
+    <div className="min-h-screen z-50 fixed bg-[#09090A] lg:flex lg:flex-col hidden border-r border-white border-opacity-20 w-[16vw]">
+      <nav className="w-full flex border-b border-white border-opacity-20 py-4 justify-center items-center">
         <svg
-          width="56"
-          height="56"
+          width="50"
+          height="50"
           className="text-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 187.47 94.63"
@@ -51,47 +55,58 @@ function SideNavbar() {
         </svg>
       </nav>
       <div className="flex justify-center py-10 items-center text-white">
-        <ul className="flex items-start flex-col px-6 gap-6">
+        <ul className="flex items-start flex-col px-2 gap-3">
           {/* Home item */}
-          <Link to="/" className="font-semibold text-xl">
-            <li className="flex gap-3 items-center">
+          <Link to="/"  className={`font-semibold text-base ${
+              isActive("/") ? "bg-[#27272A] pr-20" : ""
+            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
+            <li className="flex gap-1 items-center">
               <span className="mr-2">
                 <svg
                   viewBox="0 0 24 24"
                   fill="white"
                   aria-hidden="true"
-                  className="w-6 h-6"
+                  className="w-5 h-5"
                 >
                   <g>
                     <path d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z"></path>
                   </g>
                 </svg>
               </span>
-              <span className="font-semibold text-xl">Home</span>
+              <span className="font-semibold text-base">Home</span>
             </li>
           </Link>
+
 
           {/* Search item */}
-          <li className="flex gap-2 items-center">
-            <span className="mr-2">
+         <Link to="/search" className={`font-semibold text-sm ${
+              isActive("/search") ? "bg-[#27272A]" : ""
+            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
+         <li className="flex gap-1 items-center">
+            <span className="mr-1.5">
               <IoSearch className="text-2xl" />
             </span>
-            <span className="font-semibold text-xl">Search</span>
+            <span className="font-semibold text-base">Search</span>
           </li>
+         </Link>
 
           {/* Profile item */}
-          <Link to="profile" className="font-semibold text-xl">
-            <li className="flex gap-3 items-center">
-              <span className="mr-2">
+          <Link to="profile" className={`font-semibold text-sm ${
+              isActive("/profile") ? "bg-[#27272A]" : ""
+            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
+            <li className="flex gap-1 items-center">
+              <span className="mr-1.5">
                 <LuUser2 className="text-2xl" />
               </span>
-              <span className="font-semibold text-xl">Profile</span>
+              <span className="font-semibold text-base">Profile</span>
             </li>
           </Link>
 
-          <Link to="/premium">
+          <Link to="/premium" className={`font-semibold text-sm ${
+              isActive("/premium") ? "bg-[#27272A]" : ""
+            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
             <li className="flex gap-2 items-center">
-              <span className="mr-2">
+              <span className="mr-1">
                 <svg
                   width="24"
                   height="24"
@@ -111,53 +126,61 @@ function SideNavbar() {
                   </g>
                 </svg>
               </span>
-              <span className="font-semibold text-xl">Premium</span>
+              <span className="font-semibold text-base">Premium</span>
             </li>
           </Link>
 
-          <li className="flex gap-2 items-center">
-            <span className="mr-2">
+        <Link to="/message" className={`font-semibold text-sm ${
+              isActive("/message") ? "bg-[#27272A]" : ""
+            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
+        <li className="flex gap-1 items-center">
+            <span className="mr-2.5">
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden="true"
                 fill="white"
-                className="w-6 h-6"
+                className="w-5 h-5"
               >
                 <g>
                   <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
                 </g>
               </svg>
             </span>
-            <span className="font-semibold text-xl">Message</span>
+            <span className="font-semibold text-base">Message</span>
           </li>
+        </Link>
+
+
           <li className="flex gap-3 items-center">
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center text-white gap-3"
+                className="flex items-center text-base text-white gap-3"
               >
                 <MdLogout className="text-2xl mr-2" />
                 <span className="font-semibold text-xl">Logout</span>
               </button>
             ) : (
-              <Link to="/signin">
+              <Link to="/signin" className={`font-semibold text-sm ${
+                isActive("/signin") ? "bg-[#27272A]" : ""
+              } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
                 <button className="flex items-center text-white gap-3">
-                  <MdLogin className="text-2xl mr-2" />
-                  <span className="font-semibold text-xl">Login</span>
+                  <MdLogin className="text-2xl " />
+                  <span className="font-semibold text-base">Login</span>
                 </button>
               </Link>
             )}
           </li>
         </ul>
       </div>
+
       <div className="flex justify-center mt-36 items-center text-white">
         <button
           onClick={openModal}
-          className="py-3 px-5 bg-black border font-semibold border-white border-opacity-40 rounded-full"
+          className="py-2 px-4 bg-white font-semibold text-black rounded-full"
         >
           Create a Post
         </button>
-        {/* Modal */}
         {showModal && (
           <CreatePostModal onClose={closeModal} onSubmit={handleSubmit} />
         )}
