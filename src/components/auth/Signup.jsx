@@ -26,7 +26,8 @@ function Signup() {
         navigate("/signin");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error signing up. Please try again later.");
+      const message = error.response?.data?.message || "Error signing up. Please try again later.";
+      toast.error(message);
       console.error("Error signing up:", error);
     } finally {
       setLoading(false);
@@ -69,7 +70,7 @@ function Signup() {
             id="username"
             type="text"
             placeholder="Username"
-            {...register('username', { required: 'Username is required' })}
+            {...register('username')}
             disabled={loading}
           />
           {errors.username && <p className="text-red-500">{errors.username.message}</p>}
@@ -80,7 +81,7 @@ function Signup() {
             id="fullname"
             type="text"
             placeholder="FullName"
-            {...register('fullname', { required: 'Full Name is required' })}
+            {...register('fullname')}
             disabled={loading}
           />
           {errors.fullname && <p className="text-red-500">{errors.fullname.message}</p>}
@@ -91,7 +92,7 @@ function Signup() {
             id="email"
             type="email"
             placeholder="Email"
-            {...register('email', { required: 'Email is required' })}
+            {...register('email')}
             disabled={loading}
           />
           {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -102,7 +103,7 @@ function Signup() {
             id="password"
             type="password"
             placeholder="Password"
-            {...register('password', { required: 'Password is required' })}
+            {...register('password')}
             disabled={loading}
           />
           {errors.password && <p className="text-red-500">{errors.password.message}</p>}
@@ -133,12 +134,24 @@ function Signup() {
         onClick={handleGoogleSignin}
         disabled={loading}
       >
-        <img
+        {loading ?
+          <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> <img
           src="/images/google.svg"
           alt="Google Logo"
           className="w-6 h-6 mr-5"
         />
-        Continue with Google
+        Continue with Google...
+       </>
+          :
+          <>
+            <img
+              src="/images/google.svg"
+              alt="Google Logo"
+              className="w-6 h-6 mr-5"
+            />
+            Continue with Google
+          </>
+        }
       </button>
       <footer className="absolute bottom-8">
         <div className="text-gray-400 text-sm">
