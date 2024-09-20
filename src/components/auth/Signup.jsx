@@ -1,48 +1,37 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { Loader } from 'lucide-react'
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
 
 function Signup() {
-  const [username, setUsername] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [bio, setBio] = useState("");
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/v1/auth/signup",
-        {
-          username,
-          fullname,
-          email,
-          password,
-          bio,
-        }
-      );
+        "http://localhost:3333/api/v1/auth/signup", data);
       if (response.data.success) {
         toast.success("Sign Up successful!");
         navigate("/signin");
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error signing up");
+      toast.error(error.response?.data?.message || "Error signing up. Please try again later.");
       console.error("Error signing up:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
-  
+
   const handleGoogleSignin = () => {
     window.location.href = "http://localhost:3333/api/v1/auth/google";
   };
-  
 
   return (
     <div className="bg-[#0A090F] w-full max-h-fit relative pb-40 lg:pb-36 flex flex-col items-center">
@@ -67,7 +56,7 @@ function Signup() {
       </nav>
       <form
         className="w-full mt-4 max-w-xs"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
         <div className="mb-4">
@@ -76,9 +65,10 @@ function Signup() {
             id="username"
             type="text"
             placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            {...register('username', { required: 'Username is required' })}
+            disabled={loading}
           />
+          {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </div>
         <div className="mb-4">
           <input
@@ -86,9 +76,10 @@ function Signup() {
             id="fullname"
             type="text"
             placeholder="FullName"
-            value={fullname}
-            onChange={(e) => setFullname(e.target.value)}
+            {...register('fullname', { required: 'Full Name is required' })}
+            disabled={loading}
           />
+          {errors.fullname && <p className="text-red-500">{errors.fullname.message}</p>}
         </div>
         <div className="mb-4">
           <input
@@ -96,9 +87,10 @@ function Signup() {
             id="email"
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register('email', { required: 'Email is required' })}
+            disabled={loading}
           />
+          {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </div>
         <div className="mb-4">
           <input
@@ -106,18 +98,10 @@ function Signup() {
             id="password"
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password', { required: 'Password is required' })}
+            disabled={loading}
           />
-        </div>
-        <div className="mb-6">
-          <textarea
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 pb-10 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
-            id="bio"
-            placeholder="Bio"
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </div>
         <div className="flex items-center mt-6 justify-between">
           <button
@@ -125,7 +109,7 @@ function Signup() {
             type="submit"
             disabled={loading}
           >
-            {loading ? <ClipLoader color="#000000" /> : "Sign Up"}
+            {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Signing Up... </> : "Sign Up"}
           </button>
         </div>
       </form>
@@ -143,6 +127,7 @@ function Signup() {
       <button
         className="bg-white w-full max-w-xs text-black font-medium text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-start"
         onClick={handleGoogleSignin}
+        disabled={loading}
       >
         <img
           src="/images/google.svg"
