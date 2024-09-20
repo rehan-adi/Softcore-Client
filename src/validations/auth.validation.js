@@ -14,3 +14,12 @@ export const SignupValidation = z.object({
     .min(1, "Password must be needed")
     .max(6, "Password must be at most 6 characters"),
 });
+
+export const SigninValidation = z.object({
+  email: z.string()
+    .email("Invalid email address")
+    .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
+  password: z.string()
+    .min(1, "Password must be needed")
+    .max(6, "Password must be at most 6 characters"),
+});
