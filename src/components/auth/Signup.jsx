@@ -1,22 +1,26 @@
 import axios from "axios";
 import { Loader } from 'lucide-react'
-import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SignupValidation } from "../../validations/auth.validation";
 
 function Signup() {
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(SignupValidation),
+    mode: "onChange"
+  });
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const onSubmit = async (data) => {
+  const onSubmit = useCallback(async (data) => {
     setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:3333/api/v1/auth/signup", data);
+      const response = await axios.post("http://localhost:3333/api/v1/auth/signup", data);
       if (response.data.success) {
         toast.success("Sign Up successful!");
         navigate("/signin");
@@ -27,11 +31,11 @@ function Signup() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate]);
 
-  const handleGoogleSignin = () => {
+  const handleGoogleSignin = useCallback(() => {
     window.location.href = "http://localhost:3333/api/v1/auth/google";
-  };
+  }, []);
 
   return (
     <div className="bg-[#0A090F] w-full max-h-fit relative pb-40 lg:pb-36 flex flex-col items-center">
