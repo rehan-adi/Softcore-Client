@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ClipLoader } from "react-spinners";
-import { MdOutlineThumbUpOffAlt } from "react-icons/md";
-import { BsThreeDots } from "react-icons/bs";
-import { FaRegCommentDots } from "react-icons/fa6";
+import { Loader } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
+import { toast } from "react-hot-toast";
+import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { toast } from "react-hot-toast";
+import { FaRegCommentDots } from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
+import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
+
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +34,7 @@ function Post() {
         const response = await axios.get(
           "http://localhost:3333/api/v1/blogs/allblogs"
         );
+        console.log(response);
         const { data } = response.data;
         if (data && data.blogPost) {
           setBlogs(data.blogPost);
@@ -233,18 +236,27 @@ function Post() {
       toast.error("Error adding comment. Please try again.");
     }
   };
-  
-
 
   return (
     <div className="flex relative z-10">
-      <nav className="py-6 lg:px-10 px-3 bg-[#0A090F] z-50 fixed border-b border-r border-white w-full lg:w-[50vw] border-opacity-20">
-        <h1 className="text-2xl font-semibold">Posts</h1>
-      </nav>
-      <div className="lg:w-[50vw] w-full border-r border-white border-opacity-20">
+      <div className="w-full flex justify-center items-center min-h-screen border-white border-opacity-20">
         {loading ? (
-          <div className="w-full h-screen flex justify-center items-center">
-            <ClipLoader color="#ffffff" />
+          <div className="min-h-screen flex w-[70vw] flex-col justify-center items-center">
+             {[1, 2, 3].map((_, i) => (
+           <div key={i} className="p-6 border rounded-lg shadow-lg bg-white dark:bg-black border-gray-200 dark:border-white dark:border-opacity-25 animate-pulse">
+             <div className="flex justify-between items-center mb-2">
+               <div className="flex items-center gap-2">
+                 <div className="h-5 w-5 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                 <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+               </div>
+               <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+             </div>
+             <div className="mt-5 space-y-3">
+               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+             </div>
+           </div>
+         ))}
           </div>
         ) : error ? (
           <div>Error: {error}</div>
