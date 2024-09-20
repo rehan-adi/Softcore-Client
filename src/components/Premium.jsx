@@ -1,65 +1,53 @@
 import React from "react";
-import { FaCheck } from "react-icons/fa6";
 import { GiCheckMark } from "react-icons/gi";
 
 function Premium() {
   return (
-    <div className="min-h-screen lg:px-10 px-8 py-12 w-full bg-black text-white">
-      <h1 className=";g:text-5xl text-3xl text-center font-bold">Upgrade to Premium</h1>
-      <div className="flex mt-20 justify-center lg:flex-row flex-col-reverse items-center gap-16 lg:gap-12">
-        <div className="lg:w-[20vw] w-full rounded-md px-6 py-7 lg:h-[58vh] h-[61vh] shadow-2xl shadow-[#111112] bg-[#111112]">
+    <div className="min-h-screen px-4 py-12 w-full bg-black text-white">
+      <h1 className="text-3xl lg:text-5xl text-center font-bold">Upgrade to Premium</h1>
+      <div className="flex flex-col-reverse md:flex-row mt-10 md:mt-20 justify-center items-center gap-14 md:gap-12">
+        {/* Basic Plan */}
+        <div className="w-full md:w-[22%] rounded-md px-6 py-10 shadow-2xl shadow-[#111112] bg-[#111112] flex flex-col">
           <h1 className="font-normal tracking-tight mb-4 text-2xl">Basic</h1>
           <span className="text-3xl font-semibold">₹0</span>
-          <ul className="mt-7 flex flex-col gap-3">
-            <li>
-              <span>
+          <ul className="mt-7 flex flex-col gap-3 flex-grow">
+            {[
+              "Needs to be Sign in",
+              "Limited Access",
+              "Create post",
+              "Edit post",
+              "Delete post",
+              "Comment",
+              "Like",
+            ].map((item) => (
+              <li key={item} className="flex items-center">
                 <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>
-              Needs to be Signin
-            </li>
-            <li>
-              <span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>
-              Limited Access
-            </li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Create post</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Edit post</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Delete post</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Comment</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Like</li>
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
-        <div className="lg:w-[20vw] w-full px-6 py-7 rounded-md lg:h-[58vh] h-[60vh] shadow-2xl shadow-[#0c8ded] bg-[#0c8ded]">
+
+        {/* Premium Plan */}
+        <div className="w-full md:w-[22%] rounded-md px-6 py-12 shadow-2xl shadow-[#0c8ded] bg-[#0c8ded] flex flex-col">
           <h1 className="font-normal tracking-tight mb-4 text-2xl">Premium</h1>
           <span className="text-3xl font-semibold">
-            ₹10 <span className="text-sm">/ Annualy</span>
+            ₹10 <span className="text-sm">/ Annually</span>
           </span>
-          <ul className="mt-7 flex flex-col gap-3">
-            <li><span>
+          <ul className="mt-7 flex flex-col gap-3 flex-grow">
+            {[
+              "Small reply boost",
+              "Longer posts",
+              "Unlimited posts",
+              "Chat with AI",
+            ].map((item) => (
+              <li key={item} className="flex items-center">
                 <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Small reply boost</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Longer posts</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Unlimited posts</li>
-            <li><span>
-                <GiCheckMark className="inline-block text-lg mr-2" />
-              </span>Chat with AI</li>
+                {item}
+              </li>
+            ))}
           </ul>
-          <button className="px-7 py-2 lg:mt-16 mt-10 rounded-full w-full bg-white text-black font-semibold">Subscribe</button>
+          <button className="px-7 py-2 mt-10 rounded-full w-full bg-white text-black font-semibold">Subscribe</button>
         </div>
       </div>
     </div>
