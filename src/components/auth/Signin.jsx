@@ -1,40 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Loader } from 'lucide-react'
 import { toast } from "react-hot-toast";
-import ClipLoader from "react-spinners/ClipLoader";
+import { useForm } from "react-hook-form";
+import {setToken} from '../../utils/token'
+import { useNavigate } from "react-router-dom";
+import React, { useState, useCallback } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SigninValidation } from "../../validations/auth.validation";
 
 function Signin() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(SigninValidation),
+    mode: "onChange"
+  });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3333/api/v1/auth/signin",
-        {
-          email,
-          password,
-        },
+        "http://localhost:3333/api/v1/auth/signin", data,
         { withCredentials: true }
       );
       if (response.data.success) {
-        console.log(response.data);
         const { token } = response.data;
-        localStorage.setItem("token", token);
-        toast.success("Sign in successful!");
+        setToken(token)
+        toast.success("Sign in successfull");
         navigate("/");
-      } else {
-        toast.error("Error signing in")
-      }
+      } 
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error signing in");
+      const message = error.response?.data?.message || "Something went wrong. Please try again.";
+      toast.error(message);
       console.error("Error signing in:", error);
     }
     setLoading(false);
@@ -69,25 +69,26 @@ function Signin() {
           </g>
         </svg>
       </nav>
-      <form className="w-full mt-4 max-w-xs" onSubmit={handleSubmit}>
+      <form className="w-full mt-4 max-w-xs" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 relative">
           <input
             className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
-            id="email"
             type="email"
             placeholder="Email*"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register('email')}
+            disabled={loading}
+            autoComplete="off"
           />
+          {errors.email && <p className="text-red-500 mt-3">{errors.email.message}</p>}
         </div>
-        <div className="mb-6 relative">
+        <div className="relative">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
-            id="password"
+            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline"
             type={showPassword ? "text" : "password"}
             placeholder="Password*"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register('password')}
+            disabled={loading}
+            autoComplete="off"
           />
           <button
             type="button"
@@ -114,18 +115,22 @@ function Signin() {
                 fill="white"
                 aria-hidden="true"
               >
-                <path d="M22.207 2.824a1 1 0 1 0-1.414-1.414L17.15 5.053C15.621 4.363 13.92 4 12 4 8.671 4 5.996 5.091 3.742 7.089c-.896.794-2.3 2.353-3.381 4.453L.125 12l.236.458c1.082 2.1 2.485 3.659 3.381 4.453.278.246.562.479.853.697L1.793 20.41a1 1 0 1 0 1.414 1.414l3.126-3.126.003.002 1.503-1.503-.004-.001 1.73-1.73.004.001 1.567-1.567h-.004l4.68-4.681.001.004 1.595-1.595-.002-.003.11-.109.002.002 1.444-1.444-.003-.002 3.248-3.248zM14.884 7.32l-5.57 5.57A4.035 4.035 0 0 1 8.113 10c0-2.23 1.761-4 3.886-4 1.137 0 2.17.506 2.884 1.319zM7.9 14.304l-1.873 1.873a11.319 11.319 0 0 1-.957-.763C4.396 14.818 3.3 13.621 2.387 12c.913-1.62 2.01-2.818 2.683-3.414.519-.46 1.061-.863 1.634-1.204A6.073 6.073 0 0 0 6.113 10c0 1.681.682 3.21 1.786 4.304zm11.568-5.2 1.415-1.415a16.503 16.503 0 0 1 2.756 3.853l.236.458-.236.458c-1.082 2.1-2.485 3.659-3.381 4.453C18.004 18.908 15.328 20 12 20a13.22 13.22 0 0 1-3.08-.348l1.726-1.726c.435.05.886.074 1.354.074 2.833 0 5.037-.907 6.931-2.586.674-.596 1.77-1.793 2.683-3.414a14.515 14.515 0 0 0-2.146-2.896z" />
+                <path d="M22.207 2.824a1 1 0 1 0-1.414-1.414L17.15 5.053C15.621 4.363 13.92 4 12 4 8.671 4 5.996 5.091 3.742 7.089c-.896.794-2.3 2.353-3.381 4.453L.125 12l.236.458c1.082 2.1 2.485 3.659 3.381 4.453.278.246.562.479.853.697L1.793 20.41a1 1 0 1 0 1.414 1.414l3.126-3.126.003.002 1.503-1.503-.004-.001 1.73-1.73.004.001 1.567-1.567h-.004l4.68-4.681.001.004 1.595-1.595-.002-.003.11-.109.002.002 1.444-1.444-.003-.002 3.248-3.248zM14.884 7.32l-5.57 5.57A4.035 4.035 0 0 1 8.113 10c0-2.23 1.761-4 3.886-4 1.137 0 2.17.506 2.884 1.319zM7.9 14.304l-1.873 1.873a11.319 11.319 0 0 1-.957-.763C4.396 14.8
+                
+                18 3.3 13.621 2.387 12c.913-1.62 2.01-2.818 2.683-3.414.519-.46 1.061-.863 1.634-1.204A6.073 6.073 0 0 0 6.113 10c0 1.681.682 3.21 1.786 4.304zm11.568-5.2 1.415-1.415a16.503 16.503 0 0 1 2.756 3.853l.236.458-.236.458c-1.082 2.1-2.485 3.659-3.381 4.453C18.004 18.908 15.328 20 12 20a13.22 13.22 0 0 1-3.08-.348l1.726-1.726c.435.05.886.074 1.354.074 2.833 0 5.037-.907 6.931-2.586.674-.596 1.77-1.793 2.683-3.414a14.515 14.515 0 0 0-2.146-2.896z" />
                 <path d="M17.843 10.729c-.328 2.755-2.494 4.956-5.24 5.24l5.24-5.24z" />
               </svg>
             )}
           </button>
         </div>
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         <div className="flex items-center mt-6 justify-between">
           <button
             className='text-black bg-white font-bold w-full py-3 px-4 rounded-full focus:outline-none focus:shadow-outline'
             type='submit'
+            disabled={loading}
           >
-            {loading ? <ClipLoader color="#000000" /> : 'Login'}
+              {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Signing In... </> : "Sign In"}
           </button>
         </div>
       </form>
