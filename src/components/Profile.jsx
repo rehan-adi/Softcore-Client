@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ClipLoader } from "react-spinners";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import { Loader, X } from 'lucide-react'
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { toast } from "react-hot-toast";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import React, { useState, useEffect } from "react";
+import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
+
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -26,26 +29,26 @@ function Profile() {
     content: "",
   });
 
-
   useEffect(() => {
     const fetchProfileData = async () => {
+      setLoading(true); 
       try {
-        const token = localStorage.getItem("token");
+        const token = getToken("token");
         if (!token) {
-          console.error("Token not available");
+          toast.error("Token not available. Please log in again.");
           setLoading(false);
           return;
         }
-
+  
         // Decode the token to get user ID
         const userId = getUserIdFromToken(token);
-
+  
         if (!userId) {
-          console.error("User ID not available in token");
+          toast.error("User ID not found in token. Please log in again.");
           setLoading(false);
           return;
         }
-
+  
         const response = await axios.get(
           `http://localhost:3333/api/v1/profile/${userId}`,
           {
@@ -54,31 +57,22 @@ function Profile() {
             },
           }
         );
-
+  
         console.log("Profile data response:", response.data);
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
-        setLoading(false);
+        toast.success("Profile data fetched successfully!");
       } catch (error) {
         console.error("Error fetching profile data:", error);
-        setError("Error fetching profile data");
+        toast.error("Error fetching profile data. Please try again later.");
+      } finally {
         setLoading(false);
       }
     };
-
+  
     fetchProfileData();
   }, []);
 
-  // Function to extract user ID from token
-  const getUserIdFromToken = (token) => {
-    try {
-      const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      return decodedToken.id;
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return null;
-    }
-  };
 
   const handleEditProfile = () => {
     setEditFormData({
@@ -102,8 +96,9 @@ function Profile() {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken("token");
       const id = getUserIdFromToken(token);
 
       const formData = new FormData();
@@ -125,7 +120,14 @@ function Profile() {
       setIsEditModalOpen(false);
       toast.success("Profile updated successfully!");
     } catch (error) {
+      setLoading(false);
       console.error("Error updating profile:", error);
+      toast.error(
+        error.response?.data?.message ||
+          "Error updating profile. Please try again later."
+      );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -143,10 +145,6 @@ function Profile() {
     }
   };
 
-  const getToken = () => {
-    const token = localStorage.getItem("token");
-    return token;
-  };
 
   const handleEditPost = (postId) => {
     const post = posts.find((post) => post._id === postId);
@@ -157,7 +155,6 @@ function Profile() {
     setSelectedPost(postId);
     setIsEditPostModalOpen(true);
   };
-
 
 
   const handleEditPostFormChange = (e) => {
@@ -174,7 +171,7 @@ function Profile() {
       const formData = new FormData();
       formData.append("title", editPostFormData.title);
       formData.append("content", editPostFormData.content);
-  
+
       const response = await axios.patch(
         `http://localhost:3333/api/blogs/update/${selectedPost}`,
         formData,
@@ -185,21 +182,21 @@ function Profile() {
           },
         }
       );
-  
+
       // Update the post data after editing
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post._id === selectedPost ? { ...post, ...response.data.updatedPost } : post
         )
       );
-  
+
       setIsEditPostModalOpen(false);
       toast.success("Post updated successfully!");
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
-  
+
 
   const handleDelete = async (postId) => {
     try {
@@ -235,11 +232,10 @@ function Profile() {
     setSelectedPost(null);
   };
 
-
   if (loading) {
     return (
-      <div className="w-full h-screen flex justify-center items-center">
-        <ClipLoader color="#ffffff" />
+      <div className="w-full h-screen flex justify-center bg-black items-center">
+        <Loader className="h-6 w-6 animate-spin" />
       </div>
     );
   }
@@ -253,10 +249,10 @@ function Profile() {
 
   return (
     <div>
-      <div className="lg:w-[50vw] z-10 border-r border-white border-opacity-20 lg:pb-3 pb-28 text-white min-h-screen">
+      <div className="w-full md:px-60 z-10 lg:pb-3 pb-28 items-center bg-black text-white min-h-screen">
         {profileData ? (
           <div className="text-white">
-            <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-[#0A090F] z-40 fixed top-0 border-b border-r border-white w-full flex gap-10 lg:w-[50vw] border-opacity-20">
+            <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
               <Link to="/">
                 <span>
                   <FaArrowLeftLong className="text-xl inline-block" />
@@ -270,7 +266,8 @@ function Profile() {
             <div className="pt-28 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
-                  src={`http://localhost:3333/${profileData.profilePicture}`}
+                  src={`https://imgs.search.brave.com/n0K4wEQNjdf0w0xC1ACVJZROjRF78VjZD-P8zteUve0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjYv/NDE4LzcxOC9zbWFs/bC9tYW4tcHJvZmls/ZS1hY2NvdW50LXBp/Y3R1cmUtY2hhcmFj/dGVyLWZyZWUtcG5n/LnBuZw`}
+                  // src={`http://localhost:3333/${profileData.profilePicture}`}
                   alt="Profile"
                   className="w-28 h-28 rounded-full"
                 />
@@ -380,8 +377,17 @@ function Profile() {
 
       {isEditModalOpen && (
         <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[65vh] lg:h-[70vh] border-white p-6 rounded-lg">
-            <h2 className="text-2xl mb-8 lg:mb-4">Edit Profile</h2>
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[77vh] lg:h-[72vh] border-white p-6 rounded-lg">
+           <div className="flex justify-between  mb-5 lg:mb-8 items-center">
+           <h2 className="lg:text-2xl text-xl font-semibold">Edit Profile</h2>
+            <button
+                  type="button"
+                  onClick={handleCloseEditModal}
+                  className="bg-white text-black font-bold py-1 px-1 rounded-full focus:outline-none focus:shadow-outline"
+                >
+                  <X />
+                </button>
+           </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -393,7 +399,7 @@ function Profile() {
                   name="username"
                   value={editFormData.username}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 bg-black rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
@@ -405,7 +411,7 @@ function Profile() {
                   name="bio"
                   value={editFormData.bio}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
@@ -423,16 +429,11 @@ function Profile() {
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="submit"
-                  className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                  className="text-white font-semibold text-sm py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
                 >
-                  Save Changes
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCloseEditModal}
-                  className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
-                >
-                  Cancel
+                  { loading ? <>
+                   <Loader className="w-5 h-5 animate-spin mr-3 inline-block"/> saving....
+                  </> : "Save Changes" }
                 </button>
               </div>
             </form>
