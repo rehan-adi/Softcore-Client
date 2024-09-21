@@ -31,7 +31,7 @@ function Profile() {
 
   useEffect(() => {
     const fetchProfileData = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const token = getToken("token");
         if (!token) {
@@ -39,16 +39,16 @@ function Profile() {
           setLoading(false);
           return;
         }
-  
+
         // Decode the token to get user ID
         const userId = getUserIdFromToken(token);
-  
+
         if (!userId) {
           toast.error("User ID not found in token. Please log in again.");
           setLoading(false);
           return;
         }
-  
+
         const response = await axios.get(
           `http://localhost:3333/api/v1/profile/${userId}`,
           {
@@ -57,7 +57,7 @@ function Profile() {
             },
           }
         );
-  
+
         console.log("Profile data response:", response.data);
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
@@ -69,7 +69,7 @@ function Profile() {
         setLoading(false);
       }
     };
-  
+
     fetchProfileData();
   }, []);
 
@@ -124,7 +124,7 @@ function Profile() {
       console.error("Error updating profile:", error);
       toast.error(
         error.response?.data?.message ||
-          "Error updating profile. Please try again later."
+        "Error updating profile. Please try again later."
       );
     } finally {
       setLoading(false);
@@ -377,17 +377,17 @@ function Profile() {
 
       {isEditModalOpen && (
         <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[77vh] lg:h-[72vh] border-white p-6 rounded-lg">
-           <div className="flex justify-between  mb-5 lg:mb-8 items-center">
-           <h2 className="lg:text-2xl text-xl font-semibold">Edit Profile</h2>
-            <button
-                  type="button"
-                  onClick={handleCloseEditModal}
-                  className="bg-white text-black font-bold py-1 px-1 rounded-full focus:outline-none focus:shadow-outline"
-                >
-                  <X />
-                </button>
-           </div>
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-lg">
+            <div className="flex justify-between mb-5 lg:mb-6 items-center">
+              <h2 className="lg:text-2xl text-xl font-semibold">Edit Profile</h2>
+              <button
+                type="button"
+                onClick={handleCloseEditModal}
+                className="bg-white text-black font-bold py-1 px-1 rounded-full focus:outline-none focus:shadow-outline"
+              >
+                <X />
+              </button>
+            </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="username">
@@ -414,26 +414,41 @@ function Profile() {
                   className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="image">
-                  Profile Picture URL
+              <div className="flex flex-col items-center">
+                <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-lg cursor-pointer hover:border-gray-400 transition-colors">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                  <div className="flex flex-col items-center justify-center">
+                    <svg
+                      className="w-12 h-12 text-gray-400 mb-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M3 16l3-3m0 0l3 3m-3-3v8m13-12a2 2 0 00-2-2h-3.5a2 2 0 01-1.41-.59l-1.5-1.5A2 2 0 0010 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2v-5a2 2 0 00-2-2h-5.5"
+                      ></path>
+                    </svg>
+                    <p className="text-gray-400">Click to browse files</p>
+                  </div>
                 </label>
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  onChange={handleFileChange}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
               </div>
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="submit"
                   className="text-white font-semibold text-sm py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
                 >
-                  { loading ? <>
-                   <Loader className="w-5 h-5 animate-spin mr-3 inline-block"/> saving....
-                  </> : "Save Changes" }
+                  {loading ? <>
+                    <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
+                  </> : "Save Changes"}
                 </button>
               </div>
             </form>
