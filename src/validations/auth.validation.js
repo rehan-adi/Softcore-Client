@@ -11,8 +11,8 @@ export const SignupValidation = z.object({
     .email("Invalid email address")
     .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
   password: z.string()
-    .min(1, "Password must be needed")
-    .max(6, "Password must be at most 6 characters"),
+    .min(6, "Password must be at least 6 characters")
+    .max(15, "Password must be at most 15 characters"),
 });
 
 export const SigninValidation = z.object({
@@ -20,6 +20,6 @@ export const SigninValidation = z.object({
     .email("Invalid email address")
     .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
   password: z.string()
-    .min(1, "Password must be needed")
-    .max(6, "Password must be at most 6 characters"),
+    .min(6, "Password must be at least 6 characters")
+    .max(15, "Password must be at most 15 characters"),
 });
