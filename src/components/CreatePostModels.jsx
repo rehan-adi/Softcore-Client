@@ -1,32 +1,33 @@
-import React, { useState } from "react";
 import axios from "axios";
+import { Loader } from 'lucide-react';
+import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { ClipLoader } from "react-spinners";
+import { getToken } from "../utils/token";
+import { useForm } from "react-hook-form";
 
 function CreatePostModal({ onClose, onSubmit }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [category, setCategory] = useState("");
-  const [tags, setTags] = useState("");
-  const [image, setImage] = useState(null);
+
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const token = localStorage.getItem("token");
-    console.log("Token:", token);
+  const onSubmitForm = async (data) => {
+    const token = getToken('token');
+
     if (!token) {
-      console.error("No authentication token found. Please login.");
       toast.error("Please login to create a post");
       onClose();
       return;
     }
-    const postData = new FormData();
-    postData.append("title", title);
-    postData.append("content", content);
-    postData.append("category", category);
-    postData.append("tags", tags);
-    postData.append("image", image);
+
+        // If you're sending image as base64, handle conversion here
+        const imageBase64 = data.image?.[0] ? await convertImageToBase64(data.image[0]) : null;
+
+        const postData = {
+          content: data.content,
+          category: data.category,
+          tags: data.tags,
+          image: imageBase64,
+        };
 
     setLoading(true);
 
@@ -57,7 +58,7 @@ function CreatePostModal({ onClose, onSubmit }) {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="w-[45vw] bg-[#0A090F] border border-white border-opacity-20 shadow-white shadow-md p-6 rounded-lg">
+      <div className="md:w-[45vw] bg-black border border-white border-opacity-20 shadow-white shadow-md p-6 rounded-lg">
         <div className="flex items-center mb-7 justify-between">
           <h2 className="text-xl font-semibold text-white">Create a Post</h2>
           <button className=" text-white" onClick={onClose}>
@@ -77,31 +78,19 @@ function CreatePostModal({ onClose, onSubmit }) {
             </svg>
           </button>
         </div>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <form onSubmit={handleSubmit(onSubmitForm)} encType="multipart/form-data">
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-300">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              className="form-input bg-[#0A090F] focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md mt-1 block w-full"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="content" className="block text-gray-300">
+            <label htmlFor="content" className="block mb-3 text-gray-300">
               Content
             </label>
             <textarea
               id="content"
-              className="form-textarea bg-[#0A090F] focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md mt-1 block w-full"
-              rows="4"
+              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md mt-1 block w-full placeholder:text-white"
+              rows="5"
               placeholder="What do you want to talk about ?"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              {...register("content", { required: "Content is required" })}
             ></textarea>
+             {errors.content && <span className="text-red-500">{errors.content.message}</span>}
           </div>
           <div className="flex justify-between items-center">
             <div className="mb-4">
@@ -110,9 +99,8 @@ function CreatePostModal({ onClose, onSubmit }) {
               </label>
               <select
                 id="category"
-                className="form-select bg-[#0A090F] border border-white border-opacity-20 px-3 py-3 rounded-md focus:outline-none mt-1 block w-[278px] "
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                className="form-select bg-black border border-white border-opacity-20 px-3 py-3 rounded-md focus:outline-none mt-1 block w-[278px] "
+                {...register("category")}
               >
                 <option value="">Select category...</option>
                 <option value="development">Development</option>
@@ -125,6 +113,7 @@ function CreatePostModal({ onClose, onSubmit }) {
                 <option value="AI">AI</option>
                 {/* Add more categories here */}
               </select>
+              {errors.category && <span className="text-red-500">{errors.category.message}</span>}
             </div>
             <div className="mb-4">
               <label htmlFor="image" className="block text-gray-300">
@@ -134,10 +123,10 @@ function CreatePostModal({ onClose, onSubmit }) {
                 type="file"
                 id="image"
                 className="form-input mt-1 block"
-                onChange={(e) => setImage(e.target.files[0])}
+                {...register("image")}
+                onChange={(e) => setValue("image", e.target.files)}
               />
-              {console.log("Selected Image:", image)
-              }
+              {console.log("Selected Image:", watch('image'))}
             </div>
           </div>
           <div className="mb-4">
@@ -147,22 +136,19 @@ function CreatePostModal({ onClose, onSubmit }) {
             <input
               type="text"
               id="tags"
-              className="form-input mt-1 bg-[#0A090F] focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md block w-full"
+              className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md block w-full"
               placeholder="Separate tags with commas and tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              {...register("tags")}
             />
           </div>
           <div className="flex justify-start mt-10">
             <button
               className="bg-[#0A090F] border border-white border-opacity-40 text-white font-bold py-3 px-6 rounded-full flex items-center justify-center"
-              content
-              horizontally
               style={{ minWidth: "150px" }}
               disabled={loading}
             >
               {loading ? (
-                <ClipLoader size={24} color="#ffffff" />
+                <><Loader className="w-5 h-5 animate-spin" /> Submiting.....</>
               ) : (
                 "Submit Post"
               )}
