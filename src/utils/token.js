@@ -19,3 +19,13 @@ export const removeToken = () => {
     localStorage.removeItem("token");
   }
 };
+
+export const getUserIdFromToken = (token) => {
+  try {
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    return decodedToken.id;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+};
