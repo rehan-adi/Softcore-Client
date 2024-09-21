@@ -14,6 +14,7 @@ function Signup() {
     mode: "onChange"
   });
   const [loading, setLoading] = useState(false);
+  const [gitHubloading, setGitHubloading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -66,7 +67,7 @@ function Signup() {
       >
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="username"
             type="text"
             placeholder="Username"
@@ -77,7 +78,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="fullname"
             type="text"
             placeholder="FullName"
@@ -88,7 +89,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="email"
             type="email"
             placeholder="Email"
@@ -99,7 +100,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="password"
             type="password"
             placeholder="Password"
@@ -130,15 +131,15 @@ function Signup() {
         <hr className="border-t border-opacity-15 border-white w-[137px]  flex-grow" />
       </div>
       <button
-        className="bg-white w-full max-w-xs text-black font-medium text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-start"
+        className="bg-white w-full max-w-xs text-black font-semibold text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-center"
         onClick={handleGoogleSignin}
         disabled={loading}
       >
-        {loading ?
+        {gitHubloading ?
           <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> <img
           src="/images/google.svg"
           alt="Google Logo"
-          className="w-6 h-6 mr-5"
+          className="w-6 h-6 mr-4"
         />
         Continue with Google...
        </>
@@ -154,7 +155,7 @@ function Signup() {
         }
       </button>
       <footer className="absolute bottom-8">
-        <div className="text-gray-400 text-sm">
+        <div className="text-white text-sm">
           <a href="/terms" className="hover:underline">
             Terms of Use
           </a>{" "}

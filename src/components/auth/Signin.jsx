@@ -72,7 +72,7 @@ function Signin() {
       <form className="w-full mt-4 max-w-xs" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 relative">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             type="email"
             placeholder="Email*"
             {...register('email')}
@@ -83,7 +83,7 @@ function Signin() {
         </div>
         <div className="relative">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             type={showPassword ? "text" : "password"}
             placeholder="Password*"
             {...register('password')}
@@ -146,18 +146,18 @@ function Signin() {
         <hr className="border-t border-opacity-15 border-white w-[137px]  flex-grow" />
       </div>
       <button
-        className="bg-white w-full max-w-xs text-black hover:opacity-80 font-medium text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline mt-2 flex items-center justify-start"
+        className="bg-white w-full max-w-xs text-black hover:opacity-80 font-semibold text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline mt-2 flex items-center justify-center"
         onClick={handleGoogleSignin}
       >
         <img
           src="/images/google.svg"
           alt="Google Logo"
-          className="w-6 h-6 mr-5"
+          className="w-6 h-6 mr-4"
         />
         Continue with Google
       </button>
       <footer className="absolute bottom-8">
-        <div className="text-gray-400 text-sm">
+        <div className="text-white text-sm">
           <a href="/terms" className="hover:underline">
             Terms of Use
           </a>{" "}
