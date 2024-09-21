@@ -152,14 +152,14 @@ function SideNavbar() {
         </Link>
 
 
-          <li className="flex gap-3 items-center">
+          <li className="flex gap-3 ml-1 items-center">
             {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center text-base text-white gap-3"
+                className="flex items-center text-base hover:bg-[#27272A] w-40 rounded-lg p-2 text-white gap-3"
               >
-                <MdLogout className="text-2xl mr-2" />
-                <span className="font-semibold text-xl">Logout</span>
+                <MdLogout className="text-xl mr-1" />
+                <span className="font-semibold text-base">Logout</span>
               </button>
             ) : (
               <Link to="/signin" className={`font-semibold text-sm ${
