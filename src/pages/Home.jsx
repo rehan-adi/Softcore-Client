@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className="relative">
       <SideNavbar />
-      <div className="absolute bg-[#0A090F] text-white min-h-screen top-0 w-full lg:w-[85vw] right-0">
+      <div className="absolute bg-black text-white min-h-screen top-0 w-full lg:w-[85vw] right-0">
         <Outlet />
       </div>
       {/* <div className="bg-red-600 lg:flex hidden absolute right-0">
