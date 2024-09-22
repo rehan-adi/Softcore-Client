@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Loader } from 'lucide-react';
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
 import { useForm } from "react-hook-form";

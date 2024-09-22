@@ -1,4 +1,3 @@
-import React from "react";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";

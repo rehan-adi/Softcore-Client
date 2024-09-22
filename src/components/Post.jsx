@@ -1,12 +1,11 @@
 import axios from "axios";
-import { Loader } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegCommentDots } from "react-icons/fa6";
-import React, { useEffect, useState } from "react";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
