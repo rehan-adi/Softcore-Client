@@ -49,7 +49,7 @@ function Signin() {
   };
 
   return (
-    <div className="bg-[#0A090F] w-full h-screen flex flex-col items-center">
+    <div className="bg-black w-full h-screen flex flex-col items-center">
       <nav className="w-full flex py-12 justify-center items-center">
         <svg
           width="48"
