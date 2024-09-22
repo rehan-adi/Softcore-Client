@@ -1,4 +1,5 @@
 import axios from "axios";
+import { X } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
@@ -396,22 +397,17 @@ function Post() {
       </div>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[58vh] lg:h-[66vh] border-white p-6 rounded-lg">
-            <h2 className="text-2xl mb-8 lg:mb-4">Edit Post</h2>
+          <div className="bg-black border border-opacity-20 lg:w-[35vw] w-[90vw] h-[60vh] lg:h-[58vh] border-white p-6 rounded-lg">
+            <div className="flex justify-between items-start">
+            <h2 className="text-2xl font-semibold mb-8 lg:mb-4">Edit Post</h2>
+            <button
+                  type="button"
+                  onClick={closeModel}
+                >
+                  < X />
+                </button>
+            </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="username">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={editFormData.title}
-                  onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="bio">
                   Content
@@ -419,24 +415,18 @@ function Post() {
                 <textarea
                   id="bio"
                   name="content"
+                  rows='8'
                   value={editFormData.content}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-40 focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
-              <div className="flex mt-10 items-center justify-between">
+              <div className="flex lg:mt-10 mt-8 items-center justify-between">
                 <button
                   type="submit"
-                  className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   Save Changes
-                </button>
-                <button
-                  type="button"
-                  onClick={closeModel}
-                  className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
-                >
-                  Cancel
                 </button>
               </div>
             </form>
