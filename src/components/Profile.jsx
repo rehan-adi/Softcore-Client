@@ -250,6 +250,7 @@ function Profile() {
   return (
     <div>
       <div className="w-full md:px-60 z-10 lg:pb-3 pb-28 items-center bg-black text-white min-h-screen">
+       {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
             <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
@@ -263,7 +264,7 @@ function Profile() {
                 <p className="text-sm font-normal">{posts.length} posts</p>
               </div>
             </nav>
-            <div className="pt-28 lg:px-8 px-5">
+            <div className="lg:pt-20 pt-28 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
                   src={`https://imgs.search.brave.com/n0K4wEQNjdf0w0xC1ACVJZROjRF78VjZD-P8zteUve0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjYv/NDE4LzcxOC9zbWFs/bC9tYW4tcHJvZmls/ZS1hY2NvdW50LXBp/Y3R1cmUtY2hhcmFj/dGVyLWZyZWUtcG5n/LnBuZw`}
@@ -280,7 +281,7 @@ function Profile() {
               </div>
               <div className="mt-6">
                 <p className="text-xl font-semibold">{profileData.fullname}</p>
-                <p className="text-sm opacity-50 font-normal">{profileData.username}</p>
+                <p className="text-sm text-gray-400 font-normal">{profileData.username}</p>
               </div>
               <div className="mt-5">
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
@@ -300,7 +301,7 @@ function Profile() {
                     posts.map((post) => (
                       <div
                         key={post._id}
-                        className="bg-[#0A090F] border border-white border-opacity-20 p-4 rounded-lg mb-4"
+                        className="bg-black border border-white border-opacity-25 p-4 rounded-lg mb-4"
                       >
                         <div className="flex justify-between items-center">
                           <div className="flex gap-3 items-center justify-start">
@@ -311,13 +312,15 @@ function Profile() {
                                 className="w-8 h-8 rounded-full mr-1"
                               />
                             )}
-                            <p className="font-bold">{post.author.fullname}</p>
-                            <p className="opacity-40">{post.author.username}</p>
+                            <div>
+                              <p className="font-bold">{post.author.fullname}</p>
+                              <p className="text-gray-300 text-sm">{post.author.username}</p>
+                            </div>
                           </div>
                           <div className="relative">
                             <button
                               onClick={() => setSelectedPost(post._id === selectedPost ? null : post._id)}
-                              className="text-gray-700 font-semibold cursor-pointer"
+                              className="font-semibold cursor-pointer"
                             >
                               <BsThreeDots className="text-2xl" />
                             </button>
@@ -375,6 +378,7 @@ function Profile() {
         )}
       </div>
 
+      {/* Edit profile  */}
       {isEditModalOpen && (
         <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
           <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-lg">
@@ -455,24 +459,21 @@ function Profile() {
           </div>
         </div>
       )}
+
+      {/* Edit Post model  */}
       {isEditPostModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 w-[90vw] lg:w-[35vw] h-[55vh] lg:h-[64vh] border-white p-6 rounded-lg">
-            <h2 className="text-2xl mb-10 lg:mb-8">Edit Post</h2>
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[55vh] lg:h-[59vh] border-white p-6 rounded-lg">
+            <div className="flex justify-between items-start">
+            <h2 className="text-2xl font-semibold mb-10 lg:mb-6">Edit Post</h2>
+            <button
+                  type="button"
+                  onClick={() => setIsEditPostModalOpen(false)}
+                >
+                  < X />
+                </button>
+            </div>
             <form encType="multipart/form-data">
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="title">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={editPostFormData.title}
-                  onChange={handleEditPostFormChange}
-                  className="appearance-none border border-white border-opacity-20 bg-[#0A090F] rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
-                />
-              </div>
               <div className="mb-4">
                 <label className="block text-sm font-bold mb-2" htmlFor="content">
                   Content
@@ -480,25 +481,19 @@ function Profile() {
                 <textarea
                   id="content"
                   name="content"
+                  rows="7"
                   value={editPostFormData.content}
                   onChange={handleEditPostFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight lg:h-28 h-28 focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="button"
                   onClick={handleEditPostFormSubmit}
-                  className="text-white font-bold py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                   className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   Save Changes
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsEditPostModalOpen(false)}
-                  className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
-                >
-                  Cancel
                 </button>
               </div>
             </form>
