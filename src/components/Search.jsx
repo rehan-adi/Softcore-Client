@@ -13,17 +13,20 @@ function Search() {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3333/api/v1/search/user?query=${username}`);
+
       if (response.status === 200) {
         const users = response.data.user;
 
         if (users.length === 0) {
-          toast.info('No users found matching your search.');
+          toast.info('No users found.');
         }
 
         setSearchResults(users);
       }
     } catch (error) {
       console.error('Error fetching search results:', error);
+      const errorMessage = error.response?.data?.message || 'Error fetching search results';
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -73,7 +76,7 @@ function Search() {
           <button
             onClick={clearSearch}
             className="absolute right-5 top-3 text-white p-1 rounded-full  hover:bg-[#27272A]"
-            style={{ width: '28px', height: '28px' }} 
+            style={{ width: '28px', height: '28px' }}
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,8 +84,22 @@ function Search() {
       </div>
       <div className="w-full max-w-lg space-y-4">
         {loading && (
-          <div className="flex justify-center">
-            <Loader className="animate-spin" />
+          <div className="w-full max-w-3xl space-y-4 px-3">
+            {[1, 2, 3].map((_, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between px-4 py-3 bg-[#27272A] animate-pulse rounded-lg"
+              >
+                <div className="flex items-center">
+                  <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full mr-4"></div>
+                  <div className="flex flex-col">
+                    <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-1"></div>
+                    <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  </div>
+                </div>
+                <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
+              </div>
+            ))}
           </div>
         )}
 
@@ -97,15 +114,33 @@ function Search() {
         {!loading && searchResults.length > 0 && searchResults.map(user => (
           <div
             key={user.id}
-            className="flex items-center justify-between p-4 bg-gray-800 bg-opacity-50 rounded-lg hover:bg-opacity-75 transition"
+            className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] bg-gray-900 rounded-lg cursor-pointer"
           >
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold">{user.name}</span>
-              <span className="text-sm text-gray-400">{user.username}</span>
+            {/* Profile Picture */}
+            <div className="flex items-center">
+              <img
+                src={user.profilePicture}
+                alt={`${user.username}'s profile picture`}
+                className="w-8 h-8 rounded-full object-cover mr-4"
+              />
+
+              {/* User Info: Name, Username */}
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold">{user.fullname}</span>
+                <span className="text-xs text-gray-300">@{user.username}</span>
+              </div>
             </div>
-            <button className="text-sm text-blue-400 hover:underline">Follow</button>
+
+            {/* Follow Button */}
+            <button
+              disabled={loading}
+              className="text-sm text-blue-400 hover:underline"
+            >
+              Follow
+            </button>
           </div>
         ))}
+
       </div>
     </div>
   );
