@@ -186,7 +186,7 @@ function Post() {
     if (!showCommentModal && selectedBlog && selectedBlog._id) {
       fetchComments(selectedBlog._id);
     }
-  }; 
+  };
 
   // const fetchComments = async (postId) => {
   //   try {
@@ -211,7 +211,7 @@ function Post() {
     });
   };
 
-  
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     const token = getToken();
@@ -239,33 +239,39 @@ function Post() {
 
   return (
     <div className="flex relative z-10">
-      <div className="w-full flex justify-center items-center min-h-screen border-white border-opacity-20">
+      <div className="w-full flex justify-center items-center min-h-screen">
         {loading ? (
-          <div className="min-h-screen flex w-[70vw] flex-col justify-center items-center">
-             {[1, 2, 3].map((_, i) => (
-           <div key={i} className="p-6 border rounded-lg shadow-lg bg-white dark:bg-black border-gray-200 dark:border-white dark:border-opacity-25 animate-pulse">
-             <div className="flex justify-between items-center mb-2">
-               <div className="flex items-center gap-2">
-                 <div className="h-5 w-5 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
-                 <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
-               </div>
-               <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
-             </div>
-             <div className="mt-5 space-y-3">
-               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-               <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
-             </div>
-           </div>
-         ))}
+          <div className="min-h-screen flex w-full flex-col mt-20 space-y-6 justify-center items-center">
+            {[1, 2].map((_, i) => (
+              <div key={i} className="p-6 border border-white border-opacity-25 w-[45vw] rounded-lg space-y-6 animate-pulse">
+                <div className="flex justify-between items-center mb-8">
+                  <div className="flex gap-3 items-center">
+                    <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                    <div>
+                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                    </div>
+                  </div>
+                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                </div>
+                <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
+                <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
+                <div className="mt-4 space-x-2">
+                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                </div>
+                <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24"></div>
+              </div>
+            ))}
           </div>
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className="space-y-6 pt-32 lg:pb-9 pb-20 px-3 lg:px-12">
+          <div className="space-y-6 pt-20 lg:pb-9 pb-20 px-3 lg:px-12">
             {blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="bg-[#0A090F] border-white border border-opacity-20 z-10 rounded-lg shadow-lg lg:w-[44vw] lg:p-6 p-5 relative"
+                className="bg-black border-white border border-opacity-25 rounded-lg lg:w-[45vw] lg:p-6 p-5 relative"
               >
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
@@ -282,21 +288,23 @@ function Post() {
                         className="w-8 h-8 rounded-full mr-1"
                       />
                     )}
-                    {blog.author && (
-                      <p className="font-bold">
-                        {blog.author.fullname}
-                      </p>
-                    )}
-                    {blog.author && (
-                      <p className="opacity-40 font-semibold">
-                        {blog.author.username}
-                      </p>
-                    )}
+                    <div>
+                      {blog.author && (
+                        <p className="font-bold text-white">
+                          {blog.author.fullname}
+                        </p>
+                      )}
+                      {blog.author && (
+                        <p className="text-gray-300 text-sm font-semibold">
+                          {blog.author.username}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div className="relative">
                     <button
                       onClick={() => setSelectedBlog(blog)}
-                      className="text-gray-700 font-semibold cursor-pointer"
+                      className="text-white font-semibold cursor-pointer"
                     >
                       <BsThreeDots className="text-2xl" />
                     </button>
