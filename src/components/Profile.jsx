@@ -326,28 +326,28 @@ function Profile() {
                             </button>
                             {selectedPost === post._id && (
                               <div className="absolute right-0 top-0">
-                                <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
-                                  <div className="py-2 flex flex-col gap-1">
+                                <div className="w-56 pt-3 bg-black border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
+                                  <div className="py-2 flex flex-col justify-center items-center gap-1">
                                     <button
                                       onClick={closeModel}
-                                      className="absolute top-2 right-4"
+                                      className="absolute top-2 right-5"
                                     >
-                                      <span className="text-gray-400 text-2xl hover:text-gray-700">
+                                      <span className="text-white text-2xl">
                                         &times;
                                       </span>
                                     </button>
                                     <button
                                       onClick={() => handleEditPost(post._id)}
-                                      className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                      className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
                                     >
                                       <MdOutlineEdit className="mr-2 text-2xl" /> Edit
                                       Post
                                     </button>
                                     <button
                                       onClick={() => handleDelete(post._id)}
-                                      className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                                      className="px-4 py-2 text-sm rounded-lg hover:bg-[#27272A] text-white w-[90%] text-left flex items-center"
                                     >
-                                      <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
+                                      <RiDeleteBin6Line className="mr-2 ml-1 text-xl" />{" "}
                                       Delete Post
                                     </button>
                                   </div>
@@ -463,7 +463,7 @@ function Profile() {
       {/* Edit Post model  */}
       {isEditPostModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[55vh] lg:h-[59vh] border-white p-6 rounded-lg">
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[60vh] lg:h-[59vh] border-white p-6 rounded-lg">
             <div className="flex justify-between items-start">
             <h2 className="text-2xl font-semibold mb-10 lg:mb-6">Edit Post</h2>
             <button
@@ -491,7 +491,7 @@ function Profile() {
                 <button
                   type="button"
                   onClick={handleEditPostFormSubmit}
-                   className="bg-white text-black font-bold py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                   className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   Save Changes
                 </button>
