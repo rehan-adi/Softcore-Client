@@ -114,7 +114,8 @@ function Search() {
         {!loading && searchResults.length > 0 && searchResults.map(user => (
           <div
             key={user.id}
-            className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] bg-gray-900 rounded-lg cursor-pointer"
+            className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] rounded-lg cursor-pointer"
+            // bg-gray-900 change color for 
           >
             {/* Profile Picture */}
             <div className="flex items-center">
