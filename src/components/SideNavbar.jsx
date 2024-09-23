@@ -20,7 +20,7 @@ function SideNavbar() {
     setIsLoggedIn(!!token);
   }, []);
 
-  const handleSubmit = (postData) => {
+  const handleSubmit = () => {
     closeModal();
   };
 
