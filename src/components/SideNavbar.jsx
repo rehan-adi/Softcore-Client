@@ -21,7 +21,6 @@ function SideNavbar() {
   }, []);
 
   const handleSubmit = (postData) => {
-    console.log("Posting data to backend:", postData);
     closeModal();
   };
 
