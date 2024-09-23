@@ -243,7 +243,7 @@ function Post() {
         {loading ? (
           <div className="min-h-screen flex w-full flex-col mt-20 space-y-6 justify-center items-center">
             {[1, 2].map((_, i) => (
-              <div key={i} className="p-6 border border-white border-opacity-25 w-[45vw] rounded-lg space-y-6 animate-pulse">
+              <div key={i} className="p-6 border border-white border-opacity-25 md:w-[45vw] w-[90%] rounded-lg space-y-6 animate-pulse">
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
                     <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
