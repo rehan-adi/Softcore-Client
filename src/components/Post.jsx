@@ -188,20 +188,20 @@ function Post() {
     }
   };
 
-  // const fetchComments = async (postId) => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:3333/api/comments/${postId}`);
-  //     const { data } = response.data;
-  //     if (data && data.comments) {
-  //       setComments(data.comments);
-  //     } else {
-  //       throw new Error("No comments found in response data");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching comments:", error);
-  //     toast.error("Error fetching comments.");
-  //   }
-  // };
+  const fetchComments = async (postId) => {
+    try {
+      const response = await axios.get(`http://localhost:3333/api/comments/${postId}`);
+      const { data } = response.data;
+      if (data && data.comments) {
+        setComments(data.comments);
+      } else {
+        throw new Error("No comments found in response data");
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      toast.error("Error fetching comments.");
+    }
+  };
 
 
   const handleCommentChange = (e) => {

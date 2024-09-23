@@ -3,7 +3,7 @@ import { Loader } from 'lucide-react'
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupValidation } from "../../validations/auth.validation";
 
@@ -14,7 +14,7 @@ function Signup() {
     mode: "onChange"
   });
   const [loading, setLoading] = useState(false);
-  const [gitHubloading, setGitHubloading] = useState(false);
+  // const [gitHubloading, setGitHubloading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -135,7 +135,13 @@ function Signup() {
         onClick={handleGoogleSignin}
         disabled={loading}
       >
-        {gitHubloading ?
+       <img
+              src="/images/google.svg"
+              alt="Google Logo"
+              className="w-6 h-6 mr-5"
+            />
+            Continue with Google 
+        {/* {gitHubloading ?
           <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> <img
           src="/images/google.svg"
           alt="Google Logo"
@@ -152,7 +158,7 @@ function Signup() {
             />
             Continue with Google
           </>
-        }
+        } */}
       </button>
       <footer className="absolute bottom-8">
         <div className="text-white text-sm">

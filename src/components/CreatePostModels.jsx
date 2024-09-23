@@ -1,16 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
 import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createBlogValidation } from "../validations/blog.validation";
 
 function CreatePostModal({ onClose }) {
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-    resolver: zodResolver(createBlogValidation),
+  const { register, handleSubmit, formState: { errors } } = useForm({
   });
   const [loading, setLoading] = useState(false);
 
@@ -180,5 +178,10 @@ function CreatePostModal({ onClose }) {
     </div>
   );
 }
+
+CreatePostModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
+
 
 export default CreatePostModal;

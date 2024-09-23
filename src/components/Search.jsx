@@ -1,15 +1,15 @@
 import axios from 'axios';
 import debounce from "lodash/debounce";
 import { toast } from "react-hot-toast";
-import { Search as SearchIcon, Loader, X } from 'lucide-react';
-import React, { useCallback, useState, useEffect } from 'react';
+import { Search as SearchIcon, X } from 'lucide-react';
+import { useCallback, useState, useEffect } from 'react';
 
 function Search() {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchSearchResults = async (username) => {
+  const fetchSearchResults = useCallback(async (username) => {
     setLoading(true);
     try {
       const response = await axios.get(`http://localhost:3333/api/v1/search/user?query=${username}`);
@@ -30,9 +30,9 @@ function Search() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const debouncedFetch = useCallback(debounce(fetchSearchResults, 800), []);
+  const debouncedFetch = useCallback(debounce(fetchSearchResults, 800), [fetchSearchResults]);
 
   useEffect(() => {
     if (query.trim()) {

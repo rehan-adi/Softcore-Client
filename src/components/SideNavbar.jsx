@@ -1,9 +1,9 @@
 import { toast } from "react-hot-toast";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
+import  { useEffect, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
 import { MdLogout, MdLogin } from "react-icons/md";
-import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { getToken, removeToken } from "../utils/token";
 

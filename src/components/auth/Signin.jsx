@@ -1,10 +1,10 @@
 import axios from "axios";
+import { useState } from "react";
 import { Loader } from 'lucide-react'
 import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import {setToken} from '../../utils/token'
+import { setToken } from '../../utils/token'
 import { useNavigate } from "react-router-dom";
-import React, { useState, useCallback } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninValidation } from "../../validations/auth.validation";
 
@@ -31,7 +31,7 @@ function Signin() {
         setToken(token)
         toast.success("Sign in successfull");
         navigate("/");
-      } 
+      }
     } catch (error) {
       const message = error.response?.data?.message || "Something went wrong. Please try again.";
       toast.error(message);
@@ -123,19 +123,19 @@ function Signin() {
             )}
           </button>
         </div>
-          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+        {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         <div className="flex items-center mt-6 justify-between">
           <button
             className='text-black bg-white font-bold w-full py-3 px-4 rounded-full focus:outline-none focus:shadow-outline'
             type='submit'
             disabled={loading}
           >
-              {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Signing In... </> : "Sign In"}
+            {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Signing In... </> : "Sign In"}
           </button>
         </div>
       </form>
       <div className="text-white text-sm mt-7">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <a href="/signup" className="underline">
           Sign up
         </a>

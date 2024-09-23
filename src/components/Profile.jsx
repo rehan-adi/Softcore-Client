@@ -6,14 +6,13 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
 
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -238,10 +237,6 @@ function Profile() {
         <Loader className="h-6 w-6 animate-spin" />
       </div>
     );
-  }
-
-  if (error) {
-    return <p>{error}</p>;
   }
 
   const followersCount = profileData.followers ? profileData.followers.length : 0;
