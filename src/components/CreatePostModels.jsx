@@ -61,8 +61,8 @@ function CreatePostModal({ onClose }) {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="md:w-[45vw] bg-black border border-white border-opacity-20 shadow-white shadow-md p-6 rounded-lg">
-        <div className="flex items-center mb-5 justify-between">
+      <div className="md:w-[45vw] w-[90%] bg-black border border-white border-opacity-20 md:shadow-white shadow-md md:p-6 p-4 rounded-lg">
+        <div className="flex items-center md:mb-5 mb-4 justify-between">
           <h2 className="text-xl font-semibold text-white">Create a Post</h2>
           <button className=" text-white" onClick={onClose}>
             <svg
@@ -88,21 +88,21 @@ function CreatePostModal({ onClose }) {
             </label>
             <textarea
               id="content"
-              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md mt-1 block w-full placeholder:text-white"
+              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2 rounded-md mt-1 block w-full placeholder:text-white"
               rows="5"
               placeholder="What do you want to talk about ?"
               {...register("content", { required: "Content is required" })}
             ></textarea>
             {errors.content && <span className="text-red-500">{errors.content.message}</span>}
           </div>
-          <div className="flex justify-between lg:flex-row gap-5 flex-col mb-5 items-center">
+          <div className="flex justify-between lg:flex-row md:gap-5 gap-3 flex-col mb-5 items-center">
             <div className="w-full">
               <label htmlFor="category" className="block text-gray-300">
                 Category
               </label>
               <select
                 id="category"
-                className="form-select bg-black border border-white border-opacity-20 px-3 py-3 rounded-md focus:outline-none mt-1 block w-full"
+                className="form-select bg-black border text-white border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md focus:outline-none mt-1 block w-full"
                 {...register("category")}
               >
                 <option value="">Select category...</option>
@@ -125,7 +125,7 @@ function CreatePostModal({ onClose }) {
               <input
                 type="text"
                 id="tags"
-                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 py-3 rounded-md block placeholder:text-white w-full"
+                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md block placeholder:text-white w-full"
                 placeholder="Separate tags with commas ..."
                 {...register("tags")}
               />
@@ -142,7 +142,7 @@ function CreatePostModal({ onClose }) {
                 />
                 <div className="flex flex-col items-center justify-center">
                   <svg
-                    className="w-12 h-12 text-gray-400 mb-2"
+                    className="md:w-12 md:h-12 w-8 h-8 text-gray-400 mb-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
