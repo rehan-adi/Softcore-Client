@@ -271,7 +271,7 @@ function Post() {
             {blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="bg-black border-white border border-opacity-25 rounded-lg lg:w-[45vw] lg:p-6 p-5 relative"
+                className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
               >
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
