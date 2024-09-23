@@ -4,10 +4,14 @@ import { Loader } from 'lucide-react';
 import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createBlogValidation } from "../validations/blog.validation";
 
 function CreatePostModal({ onClose }) {
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+    resolver: zodResolver(createBlogValidation),
+  });
   const [loading, setLoading] = useState(false);
 
   const onSubmitForm = async (data) => {
@@ -112,7 +116,7 @@ function CreatePostModal({ onClose }) {
                 <option value="blockchain">Blockchain</option>
                 <option value="politics">Politics</option>
                 <option value="AI">AI</option>
-                <option value="AI">Hiring</option>
+                <option value="hiring">Hiring</option>
               </select>
               {errors.category && <span className="text-red-500">{errors.category.message}</span>}
             </div>
@@ -137,7 +141,6 @@ function CreatePostModal({ onClose }) {
                   accept="image/*"
                   className="hidden"
                   {...register("image")}
-                  onChange={(e) => setValue("image", e.target.files)}
                 />
                 <div className="flex flex-col items-center justify-center">
                   <svg
@@ -158,7 +161,6 @@ function CreatePostModal({ onClose }) {
                 </div>
               </label>
             </div>
-            {console.log("Selected Image:", watch('image'))}
           </div>
           <div className="flex justify-start mt-10">
             <button
