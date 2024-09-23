@@ -348,7 +348,7 @@ function Post() {
                   />
                 )}
                 <h2 className="mt-4 text-xl font-semibold">{blog.title}</h2>
-                <p className="mt-2 text-gray-400">{blog.content}</p>
+                <p className="mt-2 text-[#E7E9EA]">{blog.content}</p>
                 <div className="mt-7">
                   {blog.tags.map((tag, index) => (
                     <span
