@@ -144,7 +144,6 @@ function Profile() {
     }
   };
 
-
   const handleEditPost = (postId) => {
     const post = posts.find((post) => post._id === postId);
     setEditPostFormData({
@@ -154,7 +153,6 @@ function Profile() {
     setSelectedPost(postId);
     setIsEditPostModalOpen(true);
   };
-
 
   const handleEditPostFormChange = (e) => {
     setEditPostFormData({
@@ -168,11 +166,10 @@ function Profile() {
     const token = getToken();
     try {
       const formData = new FormData();
-      formData.append("title", editPostFormData.title);
       formData.append("content", editPostFormData.content);
 
       const response = await axios.patch(
-        `http://localhost:3333/api/blogs/update/${selectedPost}`,
+        `http://localhost:3333/api/v1/blogs/update/${selectedPost}`,
         formData,
         {
           headers: {
@@ -200,7 +197,7 @@ function Profile() {
   const handleDelete = async (postId) => {
     try {
       const token = getToken();
-      await axios.delete(`http://localhost:3333/api/blogs/delete/${postId}`, {
+      await axios.delete(`http://localhost:3333/api/v1/blogs/delete/${postId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -225,7 +222,6 @@ function Profile() {
     }
   };
 
-
   const closeModel = () => {
     // setShowModal(false);
     setSelectedPost(null);
@@ -245,7 +241,7 @@ function Profile() {
   return (
     <div>
       <div className="w-full md:px-60 z-10 lg:pb-3 pb-28 items-center bg-black text-white min-h-screen">
-       {/*  Profile and Profile Posts */}
+        {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
             <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
@@ -321,29 +317,27 @@ function Profile() {
                             </button>
                             {selectedPost === post._id && (
                               <div className="absolute right-0 top-0">
-                                <div className="w-56 pt-3 bg-black border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
-                                  <div className="py-2 flex flex-col justify-center items-center gap-1">
+                                <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
+                                  <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
                                     <button
                                       onClick={closeModel}
-                                      className="absolute top-2 right-5"
+                                      className="absolute top-0 right-3 transition-colors"
                                     >
-                                      <span className="text-white text-2xl">
-                                        &times;
-                                      </span>
+                                      <span className="text-white text-2xl">&times;</span>
                                     </button>
                                     <button
                                       onClick={() => handleEditPost(post._id)}
-                                      className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
+                                      className="w-[90%] px-4 py-3 mt-5 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                                     >
-                                      <MdOutlineEdit className="mr-2 text-2xl" /> Edit
-                                      Post
+                                      <MdOutlineEdit className="mr-2 text-2xl" />
+                                      <span className="text-base font-medium">Edit Post</span>
                                     </button>
                                     <button
                                       onClick={() => handleDelete(post._id)}
-                                      className="px-4 py-2 text-sm rounded-lg hover:bg-[#27272A] text-white w-[90%] text-left flex items-center"
+                                      className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                                     >
-                                      <RiDeleteBin6Line className="mr-2 ml-1 text-xl" />{" "}
-                                      Delete Post
+                                      <RiDeleteBin6Line className="mr-2 text-xl" />
+                                      <span className="text-base font-medium">Delete Post</span>
                                     </button>
                                   </div>
                                 </div>
@@ -460,13 +454,13 @@ function Profile() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
           <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[60vh] lg:h-[59vh] border-white p-6 rounded-lg">
             <div className="flex justify-between items-start">
-            <h2 className="text-2xl font-semibold mb-10 lg:mb-6">Edit Post</h2>
-            <button
-                  type="button"
-                  onClick={() => setIsEditPostModalOpen(false)}
-                >
-                  < X />
-                </button>
+              <h2 className="text-2xl font-semibold mb-10 lg:mb-6">Edit Post</h2>
+              <button
+                type="button"
+                onClick={() => setIsEditPostModalOpen(false)}
+              >
+                < X />
+              </button>
             </div>
             <form encType="multipart/form-data">
               <div className="mb-4">
@@ -486,7 +480,7 @@ function Profile() {
                 <button
                   type="button"
                   onClick={handleEditPostFormSubmit}
-                   className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   Save Changes
                 </button>

@@ -163,11 +163,10 @@ function CreatePostModal({ onClose }) {
           <div className="flex justify-start mt-10">
             <button
               className="bg-white text-black font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
-              style={{ minWidth: "150px" }}
               disabled={loading}
             >
               {loading ? (
-                <><Loader className="w-5 h-5 animate-spin" /> Submiting ...</>
+                <><Loader className="w-5 h-5 animate-spin inline-block mr-2" /> Submiting ...</>
               ) : (
                 "Submit Post"
               )}

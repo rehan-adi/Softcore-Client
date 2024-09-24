@@ -121,11 +121,8 @@ function Post() {
   };
 
   const handleEdit = (blog) => {
-    const tags = blog.tags ? blog.tags.join(", ") : "";
     setEditFormData({
-      title: blog.title,
       content: blog.content,
-      tags: tags,
     });
     setSelectedBlog(blog);
     setShowModal(true);
@@ -310,34 +307,33 @@ function Post() {
                     </button>
                     {selectedBlog && selectedBlog._id === blog._id && (
                       <div className="absolute right-0 top-0">
-                        <div className="w-56 pt-3 bg-black border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
-                          <div className="flex py-2 flex-col justify-center items-center">
+                        <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
+                          <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
                             <button
                               onClick={closeModel}
-                              className="absolute top-2 right-5"
+                              className="absolute top-0 right-3 transition-colors"
                             >
-                              <span className="text-white text-2xl ">
-                                &times;
-                              </span>
+                              <span className="text-white text-2xl">&times;</span>
                             </button>
                             <button
                               onClick={() => handleEdit(blog)}
-                              className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
+                              className="w-[90%] px-4 py-3 mt-5 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                             >
-                              <MdOutlineEdit className="mr-2 text-2xl" /> Edit
-                              Post
+                              <MdOutlineEdit className="mr-2 text-2xl" />
+                              <span className="text-base font-medium">Edit Post</span>
                             </button>
                             <button
                               onClick={() => handleDelete(blog._id)}
-                              className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
+                              className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                             >
-                              <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
-                              Delete Post
+                              <RiDeleteBin6Line className="mr-2 text-xl" />
+                              <span className="text-base font-medium">Delete Post</span>
                             </button>
                           </div>
                         </div>
                       </div>
                     )}
+
                   </div>
                 </div>
                 {blog.image && (
@@ -399,13 +395,13 @@ function Post() {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
           <div className="bg-black border border-opacity-20 lg:w-[35vw] w-[90vw] h-[60vh] lg:h-[58vh] border-white p-6 rounded-lg">
             <div className="flex justify-between items-start">
-            <h2 className="text-2xl font-semibold mb-8 lg:mb-4">Edit Post</h2>
-            <button
-                  type="button"
-                  onClick={closeModel}
-                >
-                  < X />
-                </button>
+              <h2 className="text-2xl font-semibold mb-8 lg:mb-4">Edit Post</h2>
+              <button
+                type="button"
+                onClick={closeModel}
+              >
+                < X />
+              </button>
             </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
