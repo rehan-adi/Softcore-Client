@@ -310,26 +310,26 @@ function Post() {
                     </button>
                     {selectedBlog && selectedBlog._id === blog._id && (
                       <div className="absolute right-0 top-0">
-                        <div className="w-56 pt-3 bg-[#0A090F] border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
-                          <div className="py-2 flex flex-col gap-1">
+                        <div className="w-56 pt-3 bg-black border border-white border-opacity-20 shadow-sm rounded-md shadow-white z-10 mt-2">
+                          <div className="flex py-2 flex-col justify-center items-center">
                             <button
                               onClick={closeModel}
-                              className="absolute top-2 right-4"
+                              className="absolute top-2 right-5"
                             >
-                              <span className="text-gray-400 text-2xl hover:text-gray-700">
+                              <span className="text-white text-2xl ">
                                 &times;
                               </span>
                             </button>
                             <button
                               onClick={() => handleEdit(blog)}
-                              className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                              className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
                             >
                               <MdOutlineEdit className="mr-2 text-2xl" /> Edit
                               Post
                             </button>
                             <button
                               onClick={() => handleDelete(blog._id)}
-                              className="px-4 py-2 text-sm text-white w-full text-left flex items-center"
+                              className="px-4 py-2 mt-3 text-sm text-white hover:bg-[#27272A] w-[90%] text-left flex rounded-lg items-center"
                             >
                               <RiDeleteBin6Line className="mr-2 text-xl" />{" "}
                               Delete Post

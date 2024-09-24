@@ -104,7 +104,7 @@ function Search() {
         )}
 
         {!loading && query === '' && (
-          <div className="text-center text-gray-400">Start typing to search users</div>
+          <div className="text-center text-gray-200">Start typing to search users</div>
         )}
 
         {!loading && query !== '' && searchResults.length === 0 && (
