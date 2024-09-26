@@ -132,13 +132,24 @@ function Signin() {
       <button
         className="bg-white w-full max-w-xs text-black hover:opacity-80 font-semibold text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline mt-2 flex items-center justify-center"
         onClick={handleGoogleSignin}
+        disabled={loading}
       >
-        <img
+        {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" />  <img
           src="/images/google.svg"
           alt="Google Logo"
           className="w-6 h-6 mr-4"
         />
-        Continue with Google
+          Continue with Google...
+        </>
+          : <>
+            <img
+              src="/images/google.svg"
+              alt="Google Logo"
+              className="w-6 h-6 mr-4"
+            />
+            Continue with Google
+          </>
+        }
       </button>
       <footer className="absolute bottom-8">
         <div className="text-white text-sm">
