@@ -3,7 +3,7 @@ import { Loader } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useCreatePost } from "../hooks/useCreatePost"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createBlogValidation } from '../validation/createBlogValidation';
+import { createBlogValidation } from '../validations/blog.validation';
 
 function CreatePostModal({ onClose }) {
 
