@@ -62,6 +62,7 @@ function Signup() {
             placeholder="Username"
             {...register('username')}
             disabled={loading}
+            autoComplete="username"
           />
           {errors.username && <p className="text-red-500">{errors.username.message}</p>}
         </div>
@@ -73,6 +74,7 @@ function Signup() {
             placeholder="FullName"
             {...register('fullname')}
             disabled={loading}
+            autoComplete="fullname"
           />
           {errors.fullname && <p className="text-red-500">{errors.fullname.message}</p>}
         </div>
@@ -84,6 +86,7 @@ function Signup() {
             placeholder="Email"
             {...register('email')}
             disabled={loading}
+            autoComplete="off"
           />
           {errors.email && <p className="text-red-500">{errors.email.message}</p>}
         </div>
@@ -95,6 +98,7 @@ function Signup() {
             placeholder="Password"
             {...register('password')}
             disabled={loading}
+            autoComplete="off"
           />
           {errors.password && <p className="text-red-500">{errors.password.message}</p>}
         </div>
