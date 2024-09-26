@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { useCallback, useState } from "react"; 
+import { useCallback, useState } from "react";
+import { BACKEND_API_URL } from '../constant.prod'
 
 export const useSignup = () => {
     const [loading, setLoading] = useState(false);
@@ -8,7 +9,7 @@ export const useSignup = () => {
     const onSubmit = useCallback(async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post("https://softcore.onrender.com/api/v1/auth/signup", data);
+            const response = await axios.post(`${BACKEND_API_URL}/auth/signin`, data);
             if (response.data.success) {
                 toast.success("Sign Up successful!");
                 return true;
