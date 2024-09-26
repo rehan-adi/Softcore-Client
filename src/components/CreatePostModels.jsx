@@ -1,62 +1,25 @@
-import axios from "axios";
-import { useState } from "react";
 import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
-import { toast } from "react-hot-toast";
-import { getToken } from "../utils/token";
 import { useForm } from "react-hook-form";
+import { useCreatePost } from "../hooks/useCreatePost"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createBlogValidation } from '../validation/createBlogValidation';
 
 function CreatePostModal({ onClose }) {
 
   const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: zodResolver(createBlogValidation),
+    defaultValues: {
+      content: '',
+      category: '',
+      tags: '',
+      image: null,
+  }
   });
-  const [loading, setLoading] = useState(false);
+  const { loading, onSubmitForm } = useCreatePost(); 
 
-  const onSubmitForm = async (data) => {
-    const token = getToken('token');
-
-    if (!token) {
-      toast.error("Please login to create a post");
-      onClose();
-      return;
-    }
-
-    const formData = new FormData();
-
-    formData.append("content", data.content);
-    formData.append("category", data.category);
-    const tagsArray = data.tags.split(',').map(tag => tag.trim());
-    tagsArray.forEach(tag => formData.append("tags[]", tag));
-    if (data.image?.[0]) {
-      formData.append("image", data.image[0]);
-    }
-
-
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3333/api/v1/blogs/create",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
-      console.log("Post created:", response.data);
-      toast.success("Post created successfully!");
-      onClose();
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-        "Error creating post. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
+  const handleFormSubmit = (data) => {
+    onSubmitForm(data, onClose); 
   };
 
   return (
@@ -81,7 +44,7 @@ function CreatePostModal({ onClose }) {
             </svg>
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmitForm)} encType="multipart/form-data">
+        <form onSubmit={handleSubmit(handleFormSubmit)} encType="multipart/form-data">
           <div className="mb-4">
             <label htmlFor="content" className="block mb-3 text-gray-300">
               Content
