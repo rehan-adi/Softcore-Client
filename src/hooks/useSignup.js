@@ -9,7 +9,7 @@ export const useSignup = () => {
     const onSubmit = useCallback(async (data) => {
         setLoading(true);
         try {
-            const response = await axios.post(`${BACKEND_API_URL}/auth/signin`, data);
+            const response = await axios.post(`${BACKEND_API_URL}/auth/signup`, data);
             if (response.data.success) {
                 toast.success("Sign Up successful!");
                 return true;
