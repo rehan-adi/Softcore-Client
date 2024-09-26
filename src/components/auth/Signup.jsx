@@ -1,9 +1,8 @@
-import axios from "axios";
+import { useCallback } from "react";
 import { Loader } from 'lucide-react'
-import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useState, useCallback } from "react";
+import { useSignup } from "../../hooks/useSignup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupValidation } from "../../validations/auth.validation";
 
@@ -11,29 +10,19 @@ function Signup() {
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(SignupValidation),
-    mode: "onChange"
+    mode: "onSubmit"
   });
-  const [loading, setLoading] = useState(false);
-  // const [gitHubloading, setGitHubloading] = useState(false);
 
+  const { onSubmit, loading } = useSignup();
   const navigate = useNavigate();
 
-  const onSubmit = useCallback(async (data) => {
-    setLoading(true);
-    try {
-      const response = await axios.post("http://localhost:3333/api/v1/auth/signup", data);
-      if (response.data.success) {
-        toast.success("Sign Up successful!");
-        navigate("/signin");
-      }
-    } catch (error) {
-      const message = error.response?.data?.message || "Error signing up. Please try again later.";
-      toast.error(message);
-      console.error("Error signing up:", error);
-    } finally {
-      setLoading(false);
+  const handleSignup = async (data) => {
+    const success = await onSubmit(data);
+    if (success) {
+      navigate("/signin");
     }
-  }, [navigate]);
+  };
+
 
   const handleGoogleSignin = useCallback(() => {
     window.location.href = "http://localhost:3333/api/v1/auth/google";
@@ -62,7 +51,7 @@ function Signup() {
       </nav>
       <form
         className="w-full mt-4 max-w-xs"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleSignup)}
         encType="multipart/form-data"
       >
         <div className="mb-4">
@@ -135,13 +124,7 @@ function Signup() {
         onClick={handleGoogleSignin}
         disabled={loading}
       >
-       <img
-              src="/images/google.svg"
-              alt="Google Logo"
-              className="w-6 h-6 mr-5"
-            />
-            Continue with Google 
-        {/* {gitHubloading ?
+        {loading ?
           <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> <img
           src="/images/google.svg"
           alt="Google Logo"
@@ -158,7 +141,7 @@ function Signup() {
             />
             Continue with Google
           </>
-        } */}
+        }
       </button>
       <footer className="absolute bottom-8">
         <div className="text-white text-sm">
