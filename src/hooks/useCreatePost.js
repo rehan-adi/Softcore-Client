@@ -53,7 +53,7 @@ export const useCreatePost = () => {
         } finally {
             setLoading(false);
         }
-    }, [onClose]); 
+    }, []); 
 
     return {
         loading,
