@@ -10,7 +10,7 @@ function Signin() {
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(SigninValidation),
-    mode: "onChange"
+    mode: "onSubmit"
   });
   const [showPassword, setShowPassword] = useState(false);
 
