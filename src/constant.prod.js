@@ -1,0 +1,1 @@
+export const BACKEND_API_URL = 'https://softcore.onrender.com/api/v1';
