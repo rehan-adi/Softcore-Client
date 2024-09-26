@@ -15,8 +15,8 @@ export const createBlogValidation = z.object({
         .string()
         .min(1, { message: 'Category is required' })
         .transform((val) => val.trim()),
-    image: z
-        .instanceof(File)
+        image: z
+        .any()
         .optional()
-        .refine(file => !file || file.size < 5 * 1024 * 1024, { message: "Image size must be less than 5MB." })
+        .refine(file => !file || (file instanceof File && file.size < 5 * 1024 * 1024), { message: "Image size must be less than 5MB." })
 });
