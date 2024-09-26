@@ -1,10 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
 import { Loader } from 'lucide-react'
-import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { setToken } from '../../utils/token'
 import { useNavigate } from "react-router-dom";
+import { useSignin } from '../../hooks/useSignin'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninValidation } from "../../validations/auth.validation";
 
@@ -14,30 +12,16 @@ function Signin() {
     resolver: zodResolver(SigninValidation),
     mode: "onChange"
   });
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const { signin, loading } = useSignin();
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        "http://localhost:3333/api/v1/auth/signin", data,
-        { withCredentials: true }
-      );
-      if (response.data.success) {
-        const { token } = response.data;
-        setToken(token)
-        toast.success("Sign in successfull");
-        navigate("/");
-      }
-    } catch (error) {
-      const message = error.response?.data?.message || "Something went wrong. Please try again.";
-      toast.error(message);
-      console.error("Error signing in:", error);
+    const success = await signin(data);
+    if (success) {
+      navigate("/");
     }
-    setLoading(false);
   };
 
   const handleTogglePassword = () => {
