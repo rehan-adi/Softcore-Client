@@ -12,16 +12,13 @@ export const useGetPost = () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BACKEND_API_URL}/blogs/allblogs`);
-            const { data } = response.data;
-            if (data && data.blogPost) {
-                setBlogPost(data.blogPost);
+            if(response.status === 200) {
+                setBlogPost(response.data.blogPost);
                 toast.success("Blog posts fetched successfully");
-            } else {
-                throw new Error("No blog posts found in response data");
             }
         } catch (error) {
             console.error("Error fetching blogs:", error);
-            setError("Error fetching data");
+            setError(error.response?.data?.message || "Error fetching data");
             toast.error("Failed to fetch blog posts");
         } finally {
             setLoading(false);
