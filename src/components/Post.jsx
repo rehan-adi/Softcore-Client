@@ -2,18 +2,17 @@ import axios from "axios";
 import { X } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
+import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
 
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { loading, blogPost, error } = useGetPost();
 
   const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
@@ -28,29 +27,6 @@ function Post() {
   const [comments, setComments] = useState([]);
 
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3333/api/v1/blogs/allblogs"
-        );
-        console.log(response);
-        const { data } = response.data;
-        if (data && data.blogPost) {
-          setBlogs(data.blogPost);
-        } else {
-          throw new Error("No blog posts found in response data");
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setError("Error fetching data");
-        setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
 
   const getToken = () => {
     const token = localStorage.getItem("token");
@@ -265,7 +241,7 @@ function Post() {
           <div>Error: {error}</div>
         ) : (
           <div className="space-y-6 pt-20 lg:pb-9 pb-20 px-3 lg:px-12">
-            {blogs.map((blog) => (
+            {blogPost.map((blog) => (
               <div
                 key={blog._id}
                 className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
