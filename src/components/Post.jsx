@@ -14,6 +14,7 @@ function Post() {
 
   const { loading, blogPost, error } = useGetPost();
 
+  const [blogs, setBlogs] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
