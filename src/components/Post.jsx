@@ -1,8 +1,9 @@
 import axios from "axios";
+import { useState } from "react";
 import { X } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
-import { useState } from "react";
+import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { useGetPost } from "../hooks/useGetPost";
@@ -26,13 +27,6 @@ function Post() {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [commentFormData, setCommentFormData] = useState({ content: "" });
   const [comments, setComments] = useState([]);
-
-
-
-  const getToken = () => {
-    const token = localStorage.getItem("token");
-    return token;
-  };
 
 
   const handleLike = async (postId) => {
