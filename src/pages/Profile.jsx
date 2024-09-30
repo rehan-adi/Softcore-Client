@@ -5,11 +5,14 @@ import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
+import { useNavigate } from 'react-router-dom'; 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
+
+  const navigate = useNavigate();
 
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -235,8 +238,8 @@ function Profile() {
     );
   }
 
-  const followersCount = profileData.followers ? profileData.followers.length : 0;
-  const followingCount = profileData.following ? profileData.following.length : 0;
+  const followersCount = profileData?.followers?.length || 0;
+  const followingCount = profileData?.following?.length || 0;
 
   return (
     <div>
@@ -363,7 +366,16 @@ function Profile() {
             </div>
           </div>
         ) : (
-          <p>No profile data available</p>
+          <div className="h-screen w-full flex flex-col justify-center items-center text-center space-y-4">
+            <p className="text-lg font-semibold">You need to sign in to access your profile</p>
+            <button
+              className="px-6 py-2 bg-white font-semibold text-black rounded-lg"
+              onClick={() =>  navigate('/signin')}
+            >
+              Sign In
+            </button>
+          </div>
+
         )}
       </div>
 
