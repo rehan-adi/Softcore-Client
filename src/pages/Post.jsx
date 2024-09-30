@@ -185,7 +185,6 @@ function Post() {
     const token = getToken();
     try {
       const postId = selectedBlog._id;
-      console.log(postId);
       const response = await axios.post(
         `http://localhost:3333/api/v1/comments/post/${postId}/comments`,
         commentFormData,

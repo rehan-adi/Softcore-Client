@@ -61,7 +61,6 @@ function Profile() {
           }
         );
 
-        console.log("Profile data response:", response.data);
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
         toast.success("Profile data fetched successfully!");
