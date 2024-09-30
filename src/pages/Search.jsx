@@ -1,6 +1,7 @@
 import axios from 'axios';
 import debounce from "lodash/debounce";
 import { toast } from "react-hot-toast";
+import { BACKEND_API_URL } from '../constant.prod'
 import { Search as SearchIcon, X } from 'lucide-react';
 import { useCallback, useState, useEffect } from 'react';
 
@@ -12,7 +13,7 @@ function Search() {
   const fetchSearchResults = useCallback(async (username) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3333/api/v1/search/user?query=${username}`);
+      const response = await axios.get(`${BACKEND_API_URL}/search/user?query=${username}`);
 
       if (response.status === 200) {
         const users = response.data.user;
