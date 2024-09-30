@@ -8,6 +8,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from 'react-router-dom'; 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { BACKEND_API_URL } from '../constant.prod'
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
@@ -52,7 +53,7 @@ function Profile() {
         }
 
         const response = await axios.get(
-          `http://localhost:3333/api/v1/profile/${userId}`,
+          `${BACKEND_API_URL}/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -109,7 +110,7 @@ function Profile() {
       formData.append("image", editFormData.profilePicture);
 
       const response = await axios.patch(
-        `http://localhost:3333/api/v1/profile/${id}`,
+        `${BACKEND_API_URL}/profile/${id}`,
         formData,
         {
           headers: {
@@ -172,7 +173,7 @@ function Profile() {
       formData.append("content", editPostFormData.content);
 
       const response = await axios.patch(
-        `http://localhost:3333/api/v1/blogs/update/${selectedPost}`,
+        `${BACKEND_API_URL}/blogs/update/${selectedPost}`,
         formData,
         {
           headers: {
@@ -200,7 +201,7 @@ function Profile() {
   const handleDelete = async (postId) => {
     try {
       const token = getToken();
-      await axios.delete(`http://localhost:3333/api/v1/blogs/delete/${postId}`, {
+      await axios.delete(`${BACKEND_API_URL}/blogs/delete/${postId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
