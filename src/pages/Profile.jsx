@@ -2,11 +2,11 @@ import axios from "axios";
 import { Loader, X } from 'lucide-react'
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { useState, useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { useState, useEffect } from "react";
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
