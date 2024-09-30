@@ -19,10 +19,10 @@ export const useCreatePost = () => {
         const formData = new FormData();
         formData.append("content", data.content);
         formData.append("category", data.category);
-        const tagsArray = data.tags.split(',').map(tag => tag.trim()).filter(tag => tag); // Filter out empty tags
+        const tagsArray = (data.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag); 
         tagsArray.forEach(tag => formData.append("tags[]", tag));
 
-        if (data.image?.[0]) {
+        if (data.image && data.image.length > 0) {
             formData.append("image", data.image[0]);
         }
 
