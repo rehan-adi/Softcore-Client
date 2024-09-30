@@ -367,10 +367,10 @@ function Profile() {
             </div>
           </div>
         ) : (
-          <div className="h-screen w-full flex flex-col justify-center items-center text-center space-y-4">
+          <div className="h-screen w-full flex flex-col px-5 justify-center items-center text-center space-y-5">
             <p className="text-lg font-semibold">You need to sign in to access your profile</p>
             <button
-              className="px-6 py-2 bg-white font-semibold text-black rounded-lg"
+              className="px-5 py-2 bg-white font-semibold text-black rounded-lg"
               onClick={() =>  navigate('/signin')}
             >
               Sign In
