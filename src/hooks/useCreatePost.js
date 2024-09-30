@@ -19,8 +19,12 @@ export const useCreatePost = () => {
         const formData = new FormData();
         formData.append("content", data.content);
         formData.append("category", data.category);
-        const tagsArray = (data.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag); 
+        const tagsArray = Array.isArray(data.tags)
+            ? data.tags
+            : (data.tags || '').split(',').map(tag => tag.trim()).filter(tag => tag);
+
         tagsArray.forEach(tag => formData.append("tags[]", tag));
+
 
         if (data.image && data.image.length > 0) {
             formData.append("image", data.image[0]);
@@ -45,7 +49,7 @@ export const useCreatePost = () => {
                 return;
             }
         } catch (error) {
-            console.error("Error creating post:", error); 
+            console.error("Error creating post:", error);
             toast.error(
                 error.response?.data?.message ||
                 "Error creating post. Please try again."
@@ -53,7 +57,7 @@ export const useCreatePost = () => {
         } finally {
             setLoading(false);
         }
-    }, []); 
+    }, []);
 
     return {
         loading,
