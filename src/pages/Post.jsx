@@ -257,7 +257,6 @@ function Post() {
                         />
                       )}
                       <div>
-                        {console.log(post.author.username)}
                         {post.author && (
                           <p className="font-bold text-white">
                             {post.author.fullname}

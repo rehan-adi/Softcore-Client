@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 
 export const useGetPost = () => {
     const [loading, setLoading] = useState(false);
-    const [blogPost, setBlogPost] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null); 
 
     const fetchBlogs = useCallback(async () => {
@@ -13,7 +13,7 @@ export const useGetPost = () => {
         try {
             const response = await axios.get(`${BACKEND_API_URL}/blogs/allblogs`);
             if(response.status === 200) {
-                setBlogPost(response.data.blogPost);
+                setPosts(response.data.data.blogPost);
                 toast.success("Blog posts fetched successfully");
             }
         } catch (error) {
@@ -31,7 +31,7 @@ export const useGetPost = () => {
 
     return {
         loading,
-        blogPost,
+        posts,
         error
     };
 };
