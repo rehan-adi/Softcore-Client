@@ -1,8 +1,8 @@
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Home from "../src/pages/Home";
+import Post from "../src/pages/Post";
 import Search from "../src/pages/Search";
-import Post from "../src/components/Post";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
