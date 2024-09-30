@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from 'lucide-react'
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
@@ -13,7 +13,7 @@ import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
 
-  const { loading, blogPost, error } = useGetPost();
+  const { loading, posts, error } = useGetPost();
 
   const [blogs, setBlogs] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
@@ -235,48 +235,49 @@ function Post() {
           <div>Error: {error}</div>
         ) : (
           <div className="space-y-6 pt-20 lg:pb-9 pb-20 px-3 lg:px-12">
-            {!loading && blogPost && blogPost.length > 0 ? (
-               blogPost.map((blog) => (
+            {posts && posts.length > 0 ? (
+               posts.map((post) => (
                 <div
-                  key={blog._id}
+                  key={post._id}
                   className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
                 >
                   <div className="flex justify-between items-center mb-8">
                     <div className="flex gap-3 items-center">
-                      {blog.author && blog.author.profilePicture ? (
+                      {post.author && post.author.profilePicture ? (
                         <img
-                          src={blog.author.profilePicture}
-                          alt={blog.author.username}
+                          src={post.author.profilePicture}
+                          alt={post.author.username}
                           className="w-8 h-8 rounded-full mr-1"
                         />
                       ) : (
                         <img
-                          src={`http://localhost:3333/${blog.author.profilePicture}`}
-                          alt={blog.author.username}
+                          src={`http://localhost:3333/${post.author.profilePicture}`}
+                          alt={post.author.username}
                           className="w-8 h-8 rounded-full mr-1"
                         />
                       )}
                       <div>
-                        {blog.author && (
+                        {console.log(post.author.username)}
+                        {post.author && (
                           <p className="font-bold text-white">
-                            {blog.author.fullname}
+                            {post.author.fullname}
                           </p>
                         )}
-                        {blog.author && (
+                        {post.author && (
                           <p className="text-gray-300 text-sm font-semibold">
-                            {blog.author.username}
+                            {post.author.username}
                           </p>
                         )}
                       </div>
                     </div>
                     <div className="relative">
                       <button
-                        onClick={() => setSelectedBlog(blog)}
+                        onClick={() => setSelectedBlog(post)}
                         className="text-white font-semibold cursor-pointer"
                       >
                         <BsThreeDots className="text-2xl" />
                       </button>
-                      {selectedBlog && selectedBlog._id === blog._id && (
+                      {selectedBlog && selectedBlog._id === post._id && (
                         <div className="absolute right-0 top-0">
                           <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
                             <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
@@ -287,14 +288,14 @@ function Post() {
                                 <span className="text-white text-2xl">&times;</span>
                               </button>
                               <button
-                                onClick={() => handleEdit(blog)}
+                                onClick={() => handleEdit(post)}
                                 className="w-[90%] px-4 py-3 mt-5 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                               >
                                 <MdOutlineEdit className="mr-2 text-2xl" />
                                 <span className="text-base font-medium">Edit Post</span>
                               </button>
                               <button
-                                onClick={() => handleDelete(blog._id)}
+                                onClick={() => handleDelete(post._id)}
                                 className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                               >
                                 <RiDeleteBin6Line className="mr-2 text-xl" />
@@ -307,17 +308,17 @@ function Post() {
   
                     </div>
                   </div>
-                  {blog.image && (
+                  {post.image && (
                     <img
                       className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                      src={`http://localhost:3333/${blog.image}`}
-                      alt={blog.title}
+                      src={`http://localhost:3333/${post.image}`}
+                      alt={post.title}
                     />
                   )}
-                  <h2 className="mt-4 text-xl font-semibold">{blog.title}</h2>
-                  <p className="mt-2 text-[#E7E9EA]">{blog.content}</p>
+                  <h2 className="mt-4 text-xl font-semibold">{post.title}</h2>
+                  <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
                   <div className="mt-7">
-                    {blog.tags.map((tag, index) => (
+                    {post.tags.map((tag, index) => (
                       <span
                         key={index}
                         className="inline-block text-[#1D9BF0] text-base font-bold mr-2 py-0.5 rounded"
@@ -328,14 +329,14 @@ function Post() {
                   </div>
                   <div className="mt-8 flex justify-between items-center">
                     <button
-                      onClick={() => handleLike(blog._id)}
+                      onClick={() => handleLike(post._id)}
                       className="text-gray-700 font-semibold cursor-pointer"
                     >
                       <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                         <span>
                           <MdOutlineThumbUpOffAlt className="inline-block text-2xl" />
                         </span>
-                        <span>{blog.likes.length}</span>
+                        <span>{post.likes.length}</span>
                       </span>
                     </button>
                     <button className="text-gray-700 font-semibold cursor-pointer"
