@@ -1,1 +1,1 @@
-export const BACKEND_API_URL = 'http://localhost:1111/example';
+export const BACKEND_API_URL = import.meta.env.VITE_BACKEND_API_URL;
