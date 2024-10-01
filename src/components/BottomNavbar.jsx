@@ -20,7 +20,7 @@ function BottomNavbar() {
   };
 
   return (
-    <div className="md:hidden fixed bottom-0 w-full z-50 bg-[#0A090F] bg-opacity-90 border-t border-white border-opacity-25 shadow-lg flex justify-around items-center py-3 px-5">
+    <div className="md:hidden fixed bottom-0 w-full z-50 bg-black bg-opacity-90 border-t border-white border-opacity-25 shadow-lg flex justify-around items-center py-3 px-5">
       <nav className="flex justify-between items-center w-full max-w-sm mx-auto">
         {/* Home icon */}
         <Link to="/">
