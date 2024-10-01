@@ -51,7 +51,7 @@ function CreatePostModal({ onClose }) {
             </label>
             <textarea
               id="content"
-              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2 rounded-md mt-1 block w-full placeholder:text-white"
+              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2 rounded-md mt-1 block w-full text-white placeholder:text-white"
               rows="5"
               placeholder="What do you want to talk about ?"
               {...register("content", { required: "Content is required" })}
