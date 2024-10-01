@@ -60,7 +60,8 @@ function Profile() {
             },
           }
         );
-
+        console.log(response.data);
+        
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
         toast.success("Profile data fetched successfully!");
@@ -261,8 +262,7 @@ function Profile() {
             <div className="lg:pt-20 pt-24 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
-                  src={`https://imgs.search.brave.com/n0K4wEQNjdf0w0xC1ACVJZROjRF78VjZD-P8zteUve0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjYv/NDE4LzcxOC9zbWFs/bC9tYW4tcHJvZmls/ZS1hY2NvdW50LXBp/Y3R1cmUtY2hhcmFj/dGVyLWZyZWUtcG5n/LnBuZw`}
-                  // src={`http://localhost:3333/${profileData.profilePicture}`}
+                  src={profileData.profilePicture}
                   alt="Profile"
                   className="w-28 h-28 rounded-full"
                 />
@@ -301,7 +301,7 @@ function Profile() {
                           <div className="flex gap-3 items-center justify-start">
                             {post.author && post.author.profilePicture && (
                               <img
-                                src={`http://localhost:3333/${profileData.profilePicture}`}
+                                src={profileData.profilePicture}
                                 alt={post.author.username}
                                 className="w-8 h-8 rounded-full mr-1"
                               />
