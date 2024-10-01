@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { X } from 'lucide-react'
+import { useState } from "react";
+import { X } from 'lucide-react';
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
 import { getToken } from '../utils/token';
@@ -236,7 +236,7 @@ function Post() {
         ) : (
           <div className="space-y-6 pt-20 lg:pb-9 pb-20 px-3 lg:px-12">
             {posts && posts.length > 0 ? (
-               posts.map((post) => (
+              posts.map((post) => (
                 <div
                   key={post._id}
                   className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
@@ -304,7 +304,7 @@ function Post() {
                           </div>
                         </div>
                       )}
-  
+
                     </div>
                   </div>
                   {post.image && (
