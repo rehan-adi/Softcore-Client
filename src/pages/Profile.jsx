@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import { BACKEND_API_URL } from '../constant';
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from 'react-router-dom'; 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { BACKEND_API_URL } from '../constant.prod'
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
