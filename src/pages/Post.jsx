@@ -234,7 +234,7 @@ function Post() {
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className="space-y-6 pt-20 lg:pb-9 pb-20 px-3 lg:px-12">
+          <div className="space-y-6 pt-8 lg:pb-9 pb-20 px-3 lg:px-12">
             {posts && posts.length > 0 ? (
               posts.map((post) => (
                 <div
@@ -333,9 +333,9 @@ function Post() {
                     >
                       <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                         <span>
-                          <MdOutlineThumbUpOffAlt className="inline-block text-2xl" />
+                          <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
                         </span>
-                        <span>{post.likes.length}</span>
+                        <span className="text-sm md:text-base">{post.likes.length}</span>
                       </span>
                     </button>
                     <button className="text-gray-700 font-semibold cursor-pointer"
@@ -343,17 +343,17 @@ function Post() {
                     >
                       <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                         <span>
-                          <FaRegCommentDots className="inline-block text-2xl" />
+                          <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
                         </span>
-                        <span>Comment</span>
+                        <span className="text-sm md:text-base">Comment</span>
                       </span>
                     </button>
                     <button className="text-gray-700 font-semibold cursor-pointer">
                       <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                         <span>
-                          <LuSend className="inline-block text-2xl" />
+                          <LuSend className="inline-block text-xl md:text-2xl" />
                         </span>
-                        <span>Send</span>
+                        <span className="text-sm md:text-base">Send</span>
                       </span>
                     </button>
                   </div>
