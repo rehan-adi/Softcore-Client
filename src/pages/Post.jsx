@@ -1,19 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
-import { X } from 'lucide-react';
 import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
+import { X, Loader } from 'lucide-react';
 import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegCommentDots } from "react-icons/fa6";
+import { useDeletePost } from "../hooks/usePostDelete";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
-
-  const { loading, posts, error } = useGetPost();
 
   const [blogs, setBlogs] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
@@ -27,6 +26,9 @@ function Post() {
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [commentFormData, setCommentFormData] = useState({ content: "" });
   const [comments, setComments] = useState([]);
+
+  const { loading, posts, error } = useGetPost();
+  const { handleDelete, isDeleting } = useDeletePost(setBlogs, setSelectedBlog);
 
 
   const handleLike = async (postId) => {
@@ -62,34 +64,32 @@ function Post() {
   };
 
 
-  const handleDelete = async (postId) => {
-
-    try {
-      const token = getToken();
-      await axios.delete(`http://localhost:3333/api/v1/blogs/delete/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setBlogs(blogs.filter((blog) => blog._id !== postId));
-      setSelectedBlog(null);
-      toast.success("Post deleted successfully!");
-    } catch (error) {
-      if (error.response) {
-        console.error("Error deleting post:", error.response.data.message);
-        toast.error(error.response.data.message);
-      } else if (error.request) {
-        console.error(
-          "Error deleting post: No response received",
-          error.request
-        );
-        toast.error("Error deleting post. Please try again.");
-      } else {
-        console.error("Error deleting post:", error.message);
-        toast.error("Error deleting post. Please try again.");
-      }
-    }
-  };
+  //   try {
+  //     const token = getToken();
+  //     await axios.delete(`http://localhost:3333/api/v1/blogs/delete/${postId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setBlogs(blogs.filter((blog) => blog._id !== postId));
+  //     setSelectedBlog(null);
+  //     toast.success("Post deleted successfully!");
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error("Error deleting post:", error.response.data.message);
+  //       toast.error(error.response.data.message);
+  //     } else if (error.request) {
+  //       console.error(
+  //         "Error deleting post: No response received",
+  //         error.request
+  //       );
+  //       toast.error("Error deleting post. Please try again.");
+  //     } else {
+  //       console.error("Error deleting post:", error.message);
+  //       toast.error("Error deleting post. Please try again.");
+  //     }
+  //   }
+  // };
 
   const handleEdit = (blog) => {
     setEditFormData({
@@ -295,18 +295,25 @@ function Post() {
                               </button>
                               <button
                                 onClick={() => handleDelete(post._id)}
-                                className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
+                                disabled={isDeleting}
+                                className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                               >
-                                <RiDeleteBin6Line className="mr-2 text-xl" />
-                                <span className="text-base font-medium">Delete Post</span>
+                                {isDeleting ? (
+                                  <Loader className="mr-3 animate-spin w-5 h-5" /> 
+                                ) : (
+                                  <RiDeleteBin6Line className="mr-3 text-xl" />
+                                )}
+                                <span className="text-base font-medium">
+                                  {isDeleting ? "Deleting..." : "Delete Post"}
+                                </span>
                               </button>
                             </div>
                           </div>
                         </div>
                       )}
-
                     </div>
                   </div>
+
                   {post.image && (
                     <img
                       className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
