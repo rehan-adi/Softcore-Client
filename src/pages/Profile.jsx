@@ -60,7 +60,6 @@ function Profile() {
             },
           }
         );
-        console.log(response.data);
         
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
@@ -227,7 +226,6 @@ function Profile() {
   };
 
   const closeModel = () => {
-    // setShowModal(false);
     setSelectedPost(null);
   };
 
