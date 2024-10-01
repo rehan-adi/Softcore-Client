@@ -247,18 +247,18 @@ function Profile() {
         {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
-            <nav className="h-[81px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
+            <nav className="h-[70px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
               <Link to="/">
                 <span>
                   <FaArrowLeftLong className="text-xl inline-block" />
                 </span>
               </Link>
               <div className="">
-                <p className="text-xl font-semibold">{profileData.fullname}</p>
+                <p className="text-lg font-semibold">{profileData.fullname}</p>
                 <p className="text-sm font-normal">{posts.length} posts</p>
               </div>
             </nav>
-            <div className="lg:pt-20 pt-28 lg:px-8 px-5">
+            <div className="lg:pt-20 pt-24 lg:px-8 px-5">
               <div className="flex justify-between items-center">
                 <img
                   src={`https://imgs.search.brave.com/n0K4wEQNjdf0w0xC1ACVJZROjRF78VjZD-P8zteUve0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wMjYv/NDE4LzcxOC9zbWFs/bC9tYW4tcHJvZmls/ZS1hY2NvdW50LXBp/Y3R1cmUtY2hhcmFj/dGVyLWZyZWUtcG5n/LnBuZw`}
