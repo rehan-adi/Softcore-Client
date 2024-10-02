@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from 'zustand';
 import { getToken, removeToken } from "../utils/token";
 
 const useAuthStore = create((set) => ({

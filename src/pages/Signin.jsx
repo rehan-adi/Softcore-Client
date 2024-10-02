@@ -3,7 +3,7 @@ import { Loader } from 'lucide-react'
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSignin } from '../hooks/useSignin';
-import { useAuthStore } from '../store/useAuthStore';
+import useAuthStore  from '../store/useAuthStore';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninValidation } from "../validations/auth.validation";
 

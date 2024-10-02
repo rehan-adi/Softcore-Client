@@ -3,9 +3,9 @@ import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { useCallback, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
+import useAuthStore from "../store/useAuthStore";
 import { MdLogout, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthStore";
 
 function SideNavbar() {
 
