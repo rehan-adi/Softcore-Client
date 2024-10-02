@@ -1,35 +1,29 @@
 import { toast } from "react-hot-toast";
 import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
-import  { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
 import { MdLogout, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
-import { getToken, removeToken } from "../utils/token";
+import { useAuthStore } from "../store/useAuthStore";
 
 function SideNavbar() {
 
   const [showModal, setShowModal] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const { isLoggedIn, logout } = useAuthStore();
 
-  const isActive = (path) => location.pathname === path;
-
-  useEffect(() => {
-    const token = getToken();
-    setIsLoggedIn(!!token);
-  }, []);
+  const isActive = useCallback((path) => location.pathname === path, [location.pathname]);
 
   const handleSubmit = () => {
     closeModal();
   };
 
   const handleLogout = () => {
-    removeToken();
-    setIsLoggedIn(false);
+    logout();
     toast.success("You are logged out now");
   };
-
+  
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
@@ -58,6 +52,7 @@ function SideNavbar() {
       </nav>
       <div className="flex justify-center py-10 items-center text-white">
         <ul className="flex items-start flex-col px-2 gap-3">
+
           {/* Home item */}
           <Link to="/" className={`font-semibold text-base ${isActive("/") ? "bg-[#27272A] pr-20" : ""
             } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
@@ -146,7 +141,6 @@ function SideNavbar() {
               <span className="font-semibold text-base">Message</span>
             </li>
           </Link>
-
 
           <li className="flex gap-3 ml-1 items-center">
             {isLoggedIn ? (

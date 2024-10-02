@@ -3,6 +3,7 @@ import { Loader } from 'lucide-react'
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSignin } from '../hooks/useSignin';
+import { useAuthStore } from '../store/useAuthStore';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninValidation } from "../validations/auth.validation";
 
@@ -16,10 +17,12 @@ function Signin() {
 
   const { signin, loading } = useSignin();
   const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
 
   const onSubmit = async (data) => {
     const success = await signin(data);
     if (success) {
+      login();
       navigate("/");
     }
   };
