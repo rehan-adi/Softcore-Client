@@ -413,8 +413,17 @@ function Post() {
       )}
       {showCommentModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-[#0A090F] border border-opacity-20 lg:w-[35vw] w-[90vw] h-[40vh] lg:h-[50vh] border-white p-6 rounded-lg">
-            <h2 className="text-2xl mb-8 lg:mb-4">Comments</h2>
+          <div className="bg-black border border-opacity-20 lg:w-[35vw] w-[90vw] h-[55vh] border-white p-6 rounded-lg">
+              <div className="flex justify-between mb-5 items-center">
+              <h2 className="text-xl font-semibold">Comments</h2>
+            <button
+                  type="button"
+                  onClick={toggleCommentModal}
+                  className=" text-white py-2 px-4 rounded-full ml-4 focus:outline-none focus:shadow-outline"
+                >
+                  < X />
+                </button>
+              </div>
             <div className="overflow-y-auto max-h-[50vh]">
               {comments.map((comment, index) => (
                 <div key={index} className="mb-4">
@@ -429,22 +438,15 @@ function Post() {
                 name="content"
                 value={commentFormData.content}
                 onChange={handleCommentChange}
-                className="appearance-none border border-white border-opacity-20 rounded bg-[#0A090F] w-full py-3 px-3 text-white leading-tight focus:outline-none h-44 focus:shadow-outline"
+                className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white placeholder:text-white leading-tight focus:outline-none h-44 focus:shadow-outline"
                 placeholder="Write a comment..."
               />
               <div className="flex items-center mt-7 justify-start">
                 <button
                   type="submit"
-                  className="text-white font-bold py-2 px-4 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                  className="text-black bg-white font-bold py-2 px-4 rounded-full"
                 >
                   Comment
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleCommentModal}
-                  className="bg-white text-black font-bold py-2 px-4 rounded-full ml-4 focus:outline-none focus:shadow-outline"
-                >
-                  Close
                 </button>
               </div>
             </form>
