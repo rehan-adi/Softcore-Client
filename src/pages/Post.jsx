@@ -251,7 +251,7 @@ function Post() {
                         />
                       ) : (
                         <img
-                          src={`http://localhost:3333/${post.author.profilePicture}`}
+                        src={post.author.profilePicture}
                           alt={post.author.username}
                           className="w-8 h-8 rounded-full mr-1"
                         />
@@ -317,7 +317,7 @@ function Post() {
                   {post.image && (
                     <img
                       className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                      src={`http://localhost:3333/${post.image}`}
+                      src={post.image}
                       alt={post.title}
                     />
                   )}
