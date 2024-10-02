@@ -13,7 +13,6 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@hookform/resolvers": "^3.9.0",
-    "@mui/material": "^5.15.19",
     "axios": "^1.7.2",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
@@ -25,8 +24,6 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
-    "react-spinners": "^0.13.8",
-    "recoil": "^0.7.7",
     "universal-cookie": "^7.1.4",
     "zod": "^3.23.8"
   },
