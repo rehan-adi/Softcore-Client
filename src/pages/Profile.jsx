@@ -1,24 +1,24 @@
 import axios from "axios";
-import { Loader, X } from 'lucide-react'
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { Loader, X } from 'lucide-react';
 import { useState, useEffect } from "react";
+import {useProfile} from '../hooks/useProfile';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
 import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from 'react-router-dom'; 
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useProfileStore } from "../store/useProfileStore";
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 function Profile() {
 
+  const { profileData, posts, loading } = useProfileStore();
+
   const navigate = useNavigate();
 
-  const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({
@@ -32,49 +32,7 @@ function Profile() {
     content: "",
   });
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      setLoading(true);
-      try {
-        const token = getToken("token");
-        if (!token) {
-          toast.error("Token not available. Please log in again.");
-          setLoading(false);
-          return;
-        }
-
-        // Decode the token to get user ID
-        const userId = getUserIdFromToken(token);
-
-        if (!userId) {
-          toast.error("User ID not found in token. Please log in again.");
-          setLoading(false);
-          return;
-        }
-
-        const response = await axios.get(
-          `${BACKEND_API_URL}/profile/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        
-        setProfileData(response.data.profile);
-        setPosts(response.data.posts);
-        toast.success("Profile data fetched successfully!");
-      } catch (error) {
-        console.error("Error fetching profile data:", error);
-        toast.error("Error fetching profile data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
-
+  useProfile();
 
   const handleEditProfile = () => {
     setEditFormData({
@@ -98,7 +56,7 @@ function Profile() {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    // setLoading(true)
     try {
       const token = getToken("token");
       const id = getUserIdFromToken(token);
@@ -128,9 +86,10 @@ function Profile() {
         error.response?.data?.message ||
         "Error updating profile. Please try again later."
       );
-    } finally {
-      setLoading(false);
-    }
+    } 
+    // finally {
+    //   setLoading(false);
+    // }
   }
 
   const handleFileChange = async (e) => {
