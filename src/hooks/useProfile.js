@@ -1,53 +1,51 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { toast } from 'react-hot-toast';
 import { BACKEND_API_URL } from '../constant';
+import { useEffect, useCallback } from "react";
 import { useProfileStore } from "../store/useProfileStore";
 import { getToken, getUserIdFromToken } from '../utils/token';
 
 export const useProfile = () => {
-
     const { setProfileData, setPosts, setLoading } = useProfileStore();
 
-    useEffect(() => {
-        const fetchProfileData = async () => {
-          setLoading(true);
-          try {
+    const fetchProfileData = useCallback(async () => {
+        setLoading(true);
+        try {
             const token = getToken("token");
             if (!token) {
-              toast.error("Token not available. Please log in again.");
-              setLoading(false);
-              return;
+                toast.error("Token not available. Please log in again.");
+                return;
             }
-    
+
             const userId = getUserIdFromToken(token);
-    
             if (!userId) {
-              toast.error("User ID not found in token. Please log in again.");
-              setLoading(false);
-              return;
+                toast.error("User ID not found in token. Please log in again.");
+                return;
             }
-    
+
             const response = await axios.get(
-              `${BACKEND_API_URL}/profile/${userId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
+                `${BACKEND_API_URL}/profile/${userId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
             );
-            
+
+            // Store profile data and posts
             setProfileData(response.data.profile);
             setPosts(response.data.posts);
-            toast.success("Profile data fetched successfully!");
-          } catch (error) {
+
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Error fetching profile data. Please try again later.";
+            toast.error(errorMessage);
             console.error("Error fetching profile data:", error);
-            toast.error("Error fetching profile data. Please try again later.");
-          } finally {
+        } finally {
             setLoading(false);
-          }
-        };
-    
+        }
+    }, [setProfileData, setPosts, setLoading]);
+
+    useEffect(() => {
         fetchProfileData();
-      }, []);
-}
+    }, [fetchProfileData]);
+};
