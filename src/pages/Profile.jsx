@@ -2,6 +2,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Loader, X } from 'lucide-react';
+import { getToken } from '../utils/token';
 import { useState, useEffect } from "react";
 import {useProfile} from '../hooks/useProfile';
 import { BsThreeDots } from "react-icons/bs";
@@ -11,11 +12,12 @@ import { useNavigate } from 'react-router-dom';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useProfileStore } from "../store/useProfileStore";
-import { getToken, getUserIdFromToken } from '../utils/token';
+import { useUpdateProfile } from "../hooks/useUpdateProfile";
 
 function Profile() {
 
   const { profileData, posts, loading } = useProfileStore();
+  const { updateProfile } = useUpdateProfile();
 
   const navigate = useNavigate();
 
@@ -43,6 +45,20 @@ function Profile() {
     setIsEditModalOpen(true);
   };
 
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        setEditFormData((prevData) => ({
+          ...prevData,
+          profilePicture: file,
+        }));
+      } catch (error) {
+        console.error("Error handling file:", error);
+      }
+    }
+  };
+
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
   };
@@ -56,54 +72,7 @@ function Profile() {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-    // setLoading(true)
-    try {
-      const token = getToken("token");
-      const id = getUserIdFromToken(token);
-
-      const formData = new FormData();
-      formData.append("username", editFormData.username);
-      formData.append("bio", editFormData.bio);
-      formData.append("image", editFormData.profilePicture);
-
-      const response = await axios.patch(
-        `${BACKEND_API_URL}/profile/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setProfileData(response.data.profile);
-      setIsEditModalOpen(false);
-      toast.success("Profile updated successfully!");
-    } catch (error) {
-      setLoading(false);
-      console.error("Error updating profile:", error);
-      toast.error(
-        error.response?.data?.message ||
-        "Error updating profile. Please try again later."
-      );
-    } 
-    // finally {
-    //   setLoading(false);
-    // }
-  }
-
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        setEditFormData((prevData) => ({
-          ...prevData,
-          profilePicture: file,
-        }));
-      } catch (error) {
-        console.error("Error handling file:", error);
-      }
-    }
+    await updateProfile(editFormData);
   };
 
   const handleEditPost = (postId) => {
