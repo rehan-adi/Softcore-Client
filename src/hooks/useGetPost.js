@@ -1,18 +1,20 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { BACKEND_API_URL } from '../constant';
+import { usePostsStore } from "../store/usePostsStore";
 import { useState, useEffect, useCallback } from "react";
 
 export const useGetPost = () => {
-    const [loading, setLoading] = useState(false);
-    const [posts, setPosts] = useState([]);
-    const [error, setError] = useState(null); 
+
+    const { loading, setLoading, posts, setPosts } = usePostsStore();
+    const [error, setError] = useState(null);
 
     const fetchBlogs = useCallback(async () => {
         setLoading(true);
+        
         try {
             const response = await axios.get(`${BACKEND_API_URL}/blogs/allblogs`);
-            if(response.status === 200) {
+            if (response.status === 200) {
                 setPosts(response.data.data.blogPost);
                 toast.success("Blog posts fetched successfully");
             }
@@ -23,7 +25,7 @@ export const useGetPost = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [setPosts]);
 
     useEffect(() => {
         fetchBlogs();
