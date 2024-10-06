@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegCommentDots } from "react-icons/fa6";
 import CommentModal from "../components/CommentModal";
 import { useDeletePost } from "../hooks/usePostDelete";
+import { useUpdatePost } from '../hooks/useUpdatePost';
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
@@ -30,8 +31,17 @@ function Post() {
 
 
   const { loading, posts, error } = useGetPost();
+  const { handleUpdatePost, loading: isUpdatingPost } = useUpdatePost();
   const { handleDelete, isDeleting } = useDeletePost(setBlogs, setSelectedBlog);
 
+
+  const handleEditFormSubmit = async (e) => {
+    e.preventDefault();
+    const postId = selectedBlog._id;
+    await handleUpdatePost(postId, editFormData);
+
+    closeModel();
+  };
 
   const handleLike = async (postId) => {
     try {
@@ -85,45 +95,9 @@ function Post() {
     });
   };
 
-  const handleEditFormSubmit = async (e) => {
-    e.preventDefault();
-    const token = getToken();
-    try {
-      const postId = selectedBlog._id;
-      const response = await axios.patch(
-        `http://localhost:3333/api/v1/blogs/update/${postId}`,
-        editFormData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const updatedBlog = response.data.updatedBlog;
-      setBlogs((prevBlogs) =>
-        prevBlogs.map((blog) =>
-          blog._id === postId ? { ...blog, ...updatedBlog } : blog
-        )
-      );
-      setShowModal(false);
-      toast.success("Post updated successfully!");
-    } catch (error) {
-      if (error.response) {
-        console.error("Server Error:", error.response.data);
-        toast.error("An error occurred. Please try again later.");
-      } else if (error.request) {
-        console.error("No response from server:", error.request);
-        toast.error("No response from server. Please try again later.");
-      } else {
-        console.error("Error:", error.message);
-        toast.error("An error occurred. Please try again later.");
-      }
-    }
-  };
-
   const toggleCommentModal = () => {
     setShowCommentModal(prev => !prev);
-};
+  };
 
   return (
     <div className="flex relative z-10">
@@ -172,7 +146,7 @@ function Post() {
                         />
                       ) : (
                         <img
-                        src={post.author.profilePicture}
+                          src={post.author.profilePicture}
                           alt={post.author.username}
                           className="w-8 h-8 rounded-full mr-1"
                         />
@@ -220,7 +194,7 @@ function Post() {
                                 className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                               >
                                 {isDeleting ? (
-                                  <Loader className="mr-3 animate-spin w-5 h-5" /> 
+                                  <Loader className="mr-3 animate-spin w-5 h-5" />
                                 ) : (
                                   <RiDeleteBin6Line className="mr-3 text-xl" />
                                 )}
@@ -325,22 +299,28 @@ function Post() {
                   type="submit"
                   className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
-                  Save Changes
+                  {isUpdatingPost ? (
+                    <>
+                      <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Updating...
+                    </>
+                  ) : (
+                    "Update Post"
+                  )}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
-      <CommentModal 
-      showCommentModal={showCommentModal}
-      toggleCommentModal={toggleCommentModal}
-      selectedBlog={selectedBlog}
-      comments={comments}
-      setComments={setComments}
-      commentFormData={commentFormData}
-      setCommentFormData={setCommentFormData}
-       />
+      <CommentModal
+        showCommentModal={showCommentModal}
+        toggleCommentModal={toggleCommentModal}
+        selectedBlog={selectedBlog}
+        comments={comments}
+        setComments={setComments}
+        commentFormData={commentFormData}
+        setCommentFormData={setCommentFormData}
+      />
     </div>
   );
 }
