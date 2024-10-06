@@ -12,11 +12,11 @@ import { FaRegCommentDots } from "react-icons/fa6";
 import CommentModal from "../components/CommentModal";
 import { useDeletePost } from "../hooks/usePostDelete";
 import { useUpdatePost } from '../hooks/useUpdatePost';
+import { usePostsStore } from "../store/usePostsStore";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
 
-  const [blogs, setBlogs] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -25,20 +25,30 @@ function Post() {
     content: "",
     tags: [],
   });
+  const [comments, setComments] = useState([]);
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [commentFormData, setCommentFormData] = useState({ content: "" });
-  const [comments, setComments] = useState([]);
 
 
+  const { setPosts } = usePostsStore();
   const { loading, posts, error } = useGetPost();
   const { handleUpdatePost, loading: isUpdatingPost } = useUpdatePost();
-  const { handleDelete, isDeleting } = useDeletePost(setBlogs, setSelectedBlog);
+  const { handleDelete, isDeleting } = useDeletePost(setPosts, setSelectedBlog);
 
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     const postId = selectedBlog._id;
-    await handleUpdatePost(postId, editFormData);
+    
+    const updatedPost = await handleUpdatePost(postId, editFormData);
+
+    if (updatedPost) {
+      setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+              post._id === postId ? { ...post, ...updatedPost } : post
+          )
+      );
+  }
 
     closeModel();
   };
@@ -61,11 +71,11 @@ function Post() {
       );
       const updatedBlog = response.data.post;
       // Update blogs with new like count
-      setBlogs((prevBlogs) =>
-        prevBlogs.map((blog) =>
-          blog._id === postId ? { ...blog, likes: updatedBlog.likes } : blog
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId ? { ...post, likes: updatedBlog.likes } : post
         )
-      );
+      );      
       // Update likedPosts state
       setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
       toast.success("Post liked successfully!");

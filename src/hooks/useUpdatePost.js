@@ -10,8 +10,11 @@ export const useUpdatePost = () => {
     const { updatePost, loading, setLoading } = usePostsStore();
 
     const handleUpdatePost = useCallback(async (postId, updatedData) => {
+
         setLoading(true);
         const token = getToken();
+
+        let updatedBlog = null;
 
         try {
             const response = await axios.patch(
@@ -25,7 +28,8 @@ export const useUpdatePost = () => {
             );
 
             if (response.status === 200) {
-                updatePost(postId, data.updatedBlog);
+                updatedBlog = response.data.updatedBlog;
+                updatePost(postId, response.data.updatedBlog);
                 toast.success("Post updated successfully!");
             }
 
@@ -35,6 +39,7 @@ export const useUpdatePost = () => {
         } finally {
             setLoading(false);
         }
+        return updatedBlog; 
     }, [updatePost, setLoading]);
 
     return { handleUpdatePost, loading };
