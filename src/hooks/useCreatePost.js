@@ -14,7 +14,7 @@ export const useCreatePost = () => {
 
         if (!token) {
             toast.error("Please login to create a post");
-            onClose();
+            if (onClose) onClose(); 
             return;
         }
 
@@ -60,7 +60,7 @@ export const useCreatePost = () => {
         } finally {
             setLoading(false);
         }
-    }, [addPost, onClose]);
+    }, [addPost]);
 
     return {
         loading,
