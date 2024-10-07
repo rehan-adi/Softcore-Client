@@ -3,9 +3,12 @@ import { toast } from "react-hot-toast";
 import { getToken } from '../utils/token';
 import { BACKEND_API_URL } from "../constant";
 import { useCallback, useState } from "react";
+import { usePostsStore } from "../store/usePostsStore"; 
 
-export const useDeletePost = (setBlogs, setSelectedBlog) => {
+export const useDeletePost = (setSelectedBlog) => {
+
   const [isDeleting, setIsDeleting] = useState(false);
+  const { deletePost } = usePostsStore();
 
   const handleDelete = useCallback(async (postId) => {
     setIsDeleting(true);
@@ -16,7 +19,7 @@ export const useDeletePost = (setBlogs, setSelectedBlog) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== postId));
+      deletePost(postId); 
       setSelectedBlog(null);
       toast.success("Post deleted successfully!");
     } catch (error) {
@@ -30,7 +33,7 @@ export const useDeletePost = (setBlogs, setSelectedBlog) => {
     } finally {
       setIsDeleting(false);
     }
-  }, [setBlogs, setSelectedBlog]);
+  }, [deletePost, setSelectedBlog]);
 
   return { handleDelete, isDeleting };
 };
