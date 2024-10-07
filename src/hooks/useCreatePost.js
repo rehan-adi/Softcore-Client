@@ -2,19 +2,20 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
 import { useState, useCallback } from "react";
+import { useGetPost } from "./useGetPost";
 import { BACKEND_API_URL } from '../constant';
 import { usePostsStore } from "../store/usePostsStore";
 
 export const useCreatePost = () => {
     const [loading, setLoading] = useState(false);
-    const addPost = usePostsStore((state) => state.addPost);
+    const { fetchBlogs } = useGetPost();
 
     const onSubmitForm = useCallback(async (data, onClose) => {
         const token = getToken('token');
 
         if (!token) {
             toast.error("Please login to create a post");
-            if (onClose) onClose(); 
+            if (onClose) onClose();
             return;
         }
 
@@ -46,7 +47,7 @@ export const useCreatePost = () => {
                 }
             );
             if (response.status === 201) {
-                addPost(response.data);
+                await fetchBlogs();
                 toast.success("Post created successfully!");
                 onClose();
                 return;
@@ -60,7 +61,7 @@ export const useCreatePost = () => {
         } finally {
             setLoading(false);
         }
-    }, [addPost]);
+    }, [fetchBlogs]);
 
     return {
         loading,
