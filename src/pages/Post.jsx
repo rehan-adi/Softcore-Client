@@ -30,10 +30,10 @@ function Post() {
   const [commentFormData, setCommentFormData] = useState({ content: "" });
 
 
-  const { setPosts } = usePostsStore();
-  const { loading, posts, error } = useGetPost();
+  const { loading, error } = useGetPost();
+  const { setPosts, posts } = usePostsStore();
   const { handleUpdatePost, loading: isUpdatingPost } = useUpdatePost();
-  const { handleDelete, isDeleting } = useDeletePost(setPosts, setSelectedBlog);
+  const { handleDelete, isDeleting } = useDeletePost(setSelectedBlog);
 
 
   const handleEditFormSubmit = async (e) => {
