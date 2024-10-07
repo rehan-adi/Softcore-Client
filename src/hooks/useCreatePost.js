@@ -3,9 +3,11 @@ import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
 import { useState, useCallback } from "react";
 import { BACKEND_API_URL } from '../constant';
+import { usePostsStore } from "../store/usePostsStore";
 
 export const useCreatePost = () => {
     const [loading, setLoading] = useState(false);
+    const addPost = usePostsStore((state) => state.addPost);
 
     const onSubmitForm = useCallback(async (data, onClose) => {
         const token = getToken('token');
@@ -44,6 +46,7 @@ export const useCreatePost = () => {
                 }
             );
             if (response.status === 201) {
+                addPost(response.data);
                 toast.success("Post created successfully!");
                 onClose();
                 return;
@@ -57,7 +60,7 @@ export const useCreatePost = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [addPost, onClose]);
 
     return {
         loading,
