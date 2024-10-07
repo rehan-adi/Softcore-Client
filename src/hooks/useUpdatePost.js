@@ -29,7 +29,7 @@ export const useUpdatePost = () => {
 
             if (response.status === 200) {
                 updatedBlog = response.data.updatedBlog;
-                updatePost(postId, response.data.updatedBlog);
+                updatePost(postId, updatedBlog);
                 toast.success("Post updated successfully!");
             }
 

@@ -40,17 +40,19 @@ function Post() {
     e.preventDefault();
     const postId = selectedBlog._id;
     
-    const updatedPost = await handleUpdatePost(postId, editFormData);
+    const updatedPost = await handleUpdatePost(postId, {
+      content: editFormData.content,
+  });
 
-    if (updatedPost) {
+  if (updatedPost) {
       setPosts((prevPosts) =>
           prevPosts.map((post) =>
-              post._id === postId ? { ...post, ...updatedPost } : post
+              post._id === postId ? { ...post, content: updatedPost.content } : post
           )
       );
   }
 
-    closeModel();
+  closeModel();
   };
 
   const handleLike = async (postId) => {

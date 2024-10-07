@@ -14,16 +14,14 @@ function CreatePostModal({ onClose }) {
       category: '',
       tags: '',
       image: null,
-  }
+    }
   });
-  const { loading, onSubmitForm } = useCreatePost(); 
+  
+  const { loading, onSubmitForm } = useCreatePost();
 
   const handleFormSubmit = (data) => {
-    onSubmitForm(data, () => {
-      reset(); 
-      onClose(); 
-    });
-};
+    onSubmitForm(data, onClose);
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
