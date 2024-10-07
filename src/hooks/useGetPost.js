@@ -15,7 +15,7 @@ export const useGetPost = () => {
         try {
             const response = await axios.get(`${BACKEND_API_URL}/blogs/allblogs`);
             if (response.status === 200) {
-                setPosts(response.data.data.blogPost);
+                setPosts(Array.isArray(response.data.data.blogPost) ? response.data.data.blogPost : []);
                 toast.success("Blog posts fetched successfully");
             }
         } catch (error) {
