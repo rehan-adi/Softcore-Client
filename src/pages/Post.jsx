@@ -1,13 +1,11 @@
-import axios from "axios";
 import { useState } from "react";
 import { LuSend } from "react-icons/lu";
-import { toast } from "react-hot-toast";
 import { X, Loader } from 'lucide-react';
-import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useLikePost } from "../hooks/useLikePost";
 import { FaRegCommentDots } from "react-icons/fa6";
 import CommentModal from "../components/CommentModal";
 import { useDeletePost } from "../hooks/usePostDelete";
@@ -17,25 +15,23 @@ import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
 
-  const [likedPosts, setLikedPosts] = useState([]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [editFormData, setEditFormData] = useState({
-    title: "",
-    content: "",
-    tags: [],
-  });
+  const [editFormData, setEditFormData] = useState({ content: "" });
   const [comments, setComments] = useState([]);
   const [showCommentModal, setShowCommentModal] = useState(false);
   const [commentFormData, setCommentFormData] = useState({ content: "" });
+  const [likedPosts, setLikedPosts] = useState([]);
 
-
+  // Hooks for fetching posts and managing likes, updates, and deletions
   const { loading, error } = useGetPost();
   const { setPosts, posts } = usePostsStore();
   const { handleUpdatePost, loading: isUpdatingPost } = useUpdatePost();
   const { handleDelete, isDeleting } = useDeletePost(setSelectedBlog);
+  const { handleLikePost, loading: isLikingPost } = useLikePost();
 
 
+  // Handling post edit form submission
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     const postId = selectedBlog._id;
@@ -57,36 +53,14 @@ function Post() {
 
   const handleLike = async (postId) => {
     try {
-      const token = getToken();
-      if (likedPosts.includes(postId)) {
-        toast.error("You have already liked this post.");
-        return;
-      }
-      const response = await axios.post(
-        `http://localhost:3333/api/v1/likes/${postId}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const updatedBlog = response.data.post;
-      // Update blogs with new like count
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === postId ? { ...post, likes: updatedBlog.likes } : post
-        )
-      );
-      // Update likedPosts state
+      await handleLikePost(postId);
       setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
-      toast.success("Post liked successfully!");
     } catch (error) {
-      console.error("Error liking post:", error);
-      toast.error("Error liking post. Please try again.");
+      toast.error("Error liking the post");
     }
   };
 
+  // Handle editing, opening the edit modal
   const handleEdit = (blog) => {
     setEditFormData({
       content: blog.content,
@@ -95,11 +69,13 @@ function Post() {
     setShowModal(true);
   };
 
+  // Closing the modal 
   const closeModel = () => {
     setShowModal(false);
     setSelectedBlog(null);
   };
 
+  // Handle changes in the edit form
   const handleEditFormChange = (e) => {
     setEditFormData({
       ...editFormData,
@@ -107,6 +83,7 @@ function Post() {
     });
   };
 
+  // Toggle comment modal visibility
   const toggleCommentModal = () => {
     setShowCommentModal(prev => !prev);
   };
