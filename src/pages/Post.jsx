@@ -47,7 +47,7 @@ function Post() {
           )
         );
       }
-      closeModel();
+      handleCloseModal();
     } catch (error) {
       toast.error("Error updating the post");
     }
@@ -73,7 +73,7 @@ function Post() {
   };
 
   // Closing the modal 
-  const closeModel = () => {
+  const handleCloseModal = () => {
     setShowModal(false);
     setSelectedBlog(null);
   };
@@ -156,7 +156,7 @@ function Post() {
                           <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
                             <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
                               <button
-                                onClick={closeModel}
+                                onClick={handleCloseModal}
                                 className="absolute top-0 right-3 transition-colors"
                               >
                                 <span className="text-white text-2xl">&times;</span>
@@ -255,7 +255,7 @@ function Post() {
               <h2 className="text-2xl font-semibold mb-8 lg:mb-4">Edit Post</h2>
               <button
                 type="button"
-                onClick={closeModel}
+                onClick={handleCloseModal}
               >
                 < X />
               </button>
@@ -277,6 +277,7 @@ function Post() {
               <div className="flex lg:mt-10 mt-8 items-center justify-between">
                 <button
                   type="submit"
+                  disabled={isUpdatingPost}
                   className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   {isUpdatingPost ? (
