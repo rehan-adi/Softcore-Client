@@ -17,4 +17,12 @@ export const usePostsStore = create((set) => ({
       posts: state.posts.filter((post) => post._id !== postId),
     })),
   setLoading: (loading) => set(() => ({ loading })),
+  likePost: (postId) =>
+    set((state) => ({
+      posts: state.posts.map((post) =>
+        post._id === postId
+          ? { ...post, likes: post.likes + 1, likedByUser: true }
+          : post
+      ),
+    })),
 }));
