@@ -34,22 +34,25 @@ function Post() {
   // Handling post edit form submission
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-    const postId = selectedBlog._id;
-
-    const updatedPost = await handleUpdatePost(postId, {
-      content: editFormData.content,
-    });
-
-    if (updatedPost) {
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === postId ? { ...post, content: updatedPost.content } : post
-        )
-      );
+    try {
+      const postId = selectedBlog._id;
+      const updatedPost = await handleUpdatePost(postId, {
+        content: editFormData.content,
+      });
+  
+      if (updatedPost) {
+        setPosts((prevPosts) =>
+          prevPosts.map((post) =>
+            post._id === postId ? { ...post, content: updatedPost.content } : post
+          )
+        );
+      }
+      closeModel();
+    } catch (error) {
+      toast.error("Error updating the post");
     }
-
-    closeModel();
   };
+  
 
   const handleLike = async (postId) => {
     try {
