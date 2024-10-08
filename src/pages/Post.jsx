@@ -39,20 +39,20 @@ function Post() {
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     const postId = selectedBlog._id;
-    
+
     const updatedPost = await handleUpdatePost(postId, {
       content: editFormData.content,
-  });
+    });
 
-  if (updatedPost) {
+    if (updatedPost) {
       setPosts((prevPosts) =>
-          prevPosts.map((post) =>
-              post._id === postId ? { ...post, content: updatedPost.content } : post
-          )
+        prevPosts.map((post) =>
+          post._id === postId ? { ...post, content: updatedPost.content } : post
+        )
       );
-  }
+    }
 
-  closeModel();
+    closeModel();
   };
 
   const handleLike = async (postId) => {
@@ -77,7 +77,7 @@ function Post() {
         prevPosts.map((post) =>
           post._id === postId ? { ...post, likes: updatedBlog.likes } : post
         )
-      );      
+      );
       // Update likedPosts state
       setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
       toast.success("Post liked successfully!");
