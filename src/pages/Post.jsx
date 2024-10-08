@@ -127,30 +127,18 @@ function Post() {
                 >
                   <div className="flex justify-between items-center mb-8">
                     <div className="flex gap-3 items-center">
-                      {post.author && post.author.profilePicture ? (
+                      {post.author?.profilePicture ? (
                         <img
                           src={post.author.profilePicture}
                           alt={post.author.username}
                           className="w-8 h-8 rounded-full mr-1"
                         />
                       ) : (
-                        <img
-                          src={post.author.profilePicture}
-                          alt={post.author.username}
-                          className="w-8 h-8 rounded-full mr-1"
-                        />
+                        <div className="w-8 h-8 rounded-full bg-gray-300"></div>
                       )}
                       <div>
-                        {post.author && (
-                          <p className="font-bold text-white">
-                            {post.author.fullname}
-                          </p>
-                        )}
-                        {post.author && (
-                          <p className="text-gray-300 text-sm font-semibold">
-                            {post.author.username}
-                          </p>
-                        )}
+                        <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
+                        <p className="text-gray-300 text-sm font-semibold">{post.author?.username ?? "anonymous"}</p>
                       </div>
                     </div>
                     <div className="relative">
