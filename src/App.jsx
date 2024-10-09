@@ -1,7 +1,7 @@
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import Home from "../src/pages/Home";
 import Post from "../src/pages/Post";
+import Layout from "./layout/layout";
 import Search from "../src/pages/Search";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-        <Route path="/" element={<Home />}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Post />} />
           <Route path="profile" element={<Profile />} />
           <Route path="search" element={<Search />} />

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import SideNavbar from "../components/SideNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 
-function Home() {
+function Layout() {
   return (
     <div className="relative">
       <SideNavbar />
@@ -14,4 +14,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Layout;
