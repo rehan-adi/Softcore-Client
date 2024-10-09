@@ -1,10 +1,9 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { getToken } from "../utils/token";
-import { useState, useCallback } from "react";
 import { useGetPost } from "./useGetPost";
+import { useState, useCallback } from "react";
 import { BACKEND_API_URL } from '../constant';
-import { usePostsStore } from "../store/usePostsStore";
 
 export const useCreatePost = () => {
     const [loading, setLoading] = useState(false);

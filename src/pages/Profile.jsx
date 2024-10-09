@@ -1,9 +1,9 @@
 import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Loader, X } from 'lucide-react';
 import { getToken } from '../utils/token';
-import { useState, useEffect } from "react";
 import {useProfile} from '../hooks/useProfile';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
