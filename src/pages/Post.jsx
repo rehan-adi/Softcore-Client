@@ -30,7 +30,7 @@ function Post() {
   const { setPosts, posts } = usePostsStore();
   const { handleUpdatePost, loading: isUpdatingPost } = useUpdatePost();
   const { handleDelete, isDeleting } = useDeletePost(setSelectedBlog);
-  const { handleLikePost, loading: isLikingPost } = useLikePost();
+  const { handleLikePost } = useLikePost();
 
 
   // Handling post edit form submission
