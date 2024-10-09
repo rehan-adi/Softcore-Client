@@ -23,7 +23,7 @@ export const useGetPost = () => {
         } finally {
             setLoading(false);
         }
-    }, [setPosts]);
+    }, [setPosts, setLoading]);
 
     useEffect(() => {
         fetchBlogs();
