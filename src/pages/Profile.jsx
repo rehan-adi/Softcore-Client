@@ -1,16 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { Loader, X } from 'lucide-react';
 import { getToken } from '../utils/token';
-import {useProfile} from '../hooks/useProfile';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
 import { MdOutlineEdit } from "react-icons/md";
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../hooks/useProfile';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useCallback, useEffect, useState } from "react";
 import { useProfileStore } from "../store/useProfileStore";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
 
@@ -21,6 +21,8 @@ function Profile() {
 
   const navigate = useNavigate();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({
@@ -33,6 +35,22 @@ function Profile() {
     title: "",
     content: "",
   });
+
+  const controlNavbar = useCallback(() => {
+    if (window.scrollY > lastScrollY) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+    setLastScrollY(window.scrollY);
+  }, [lastScrollY])
+
+  useEffect(() => {
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY, controlNavbar]);
 
   useProfile();
 
@@ -174,7 +192,16 @@ function Profile() {
         {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
-            <nav className="h-[70px] py-4 lg:px-10 px-3 items-center bg-black z-40 fixed top-0 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20">
+            <nav
+              className={`h-[70px] py-4 lg:px-10 px-3 items-center fixed top-0 z-40 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20 transition-transform duration-300 ${isScrolled ? '-translate-y-full' : 'translate-y-0'
+                }`}
+              style={{
+                backdropFilter: 'blur(10px)',
+                background: 'rgba(0, 0, 0, 0.5)', // Adjust transparency as needed
+                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+              }}
+            >
               <Link to="/">
                 <span>
                   <FaArrowLeftLong className="text-xl inline-block" />
@@ -296,7 +323,7 @@ function Profile() {
             <p className="text-lg font-semibold">You need to sign in to access your profile</p>
             <button
               className="px-5 py-2 bg-white font-semibold text-black rounded-lg"
-              onClick={() =>  navigate('/signin')}
+              onClick={() => navigate('/signin')}
             >
               Sign In
             </button>
