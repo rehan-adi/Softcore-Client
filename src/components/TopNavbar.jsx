@@ -1,21 +1,19 @@
+import { Link } from 'react-router-dom';
+import { toast } from "react-hot-toast";
+import useAuthStore from '../store/useAuthStore';
+import { MdLogout, MdLogin } from "react-icons/md";
 import React, { useEffect, useState } from 'react';
 
+function TopNavbar() {
 
-const TopNavbar = () => {
+  const { isLoggedIn, logout } = useAuthStore();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const isLoggedIn = false;
-
-  const handleLoginLogout = () => {
-    if (isLoggedIn) {
-      console.log('User logged out');
-      // Implement logout functionality here
-    } else {
-      console.log('Redirect to login page');
-      // Implement login redirect functionality here
-    }
+  const handleLogout = () => {
+    logout();
+    toast.success("You are logged out now");
   };
 
   const controlNavbar = () => {
@@ -44,19 +42,27 @@ const TopNavbar = () => {
         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
       }}
     >
-      {/* Logo */}
       <div className="text-white text-lg font-bold">
-        <img src="/logo.svg" alt="Logo" className="h-8 w-auto" />
+        <img src="/logo.svg" alt="Logo" className="h-10 w-auto" />
       </div>
 
-      {/* Login/Logout Button */}
       <div>
-        <button
-          onClick={handleLoginLogout}
-          className="bg-white hover:bg-gray-300 text-black font-bold py-2 px-4 rounded"
-        >
-          {isLoggedIn ? 'Logout' : 'Login'}
-        </button>
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="flex items-center text-base bg-white rounded-full py-2 px-3 shadow-lg text-black gap-1"
+          >
+            <MdLogout className="text-xl mr-1" />
+            <span className="font-semibold text-base">Logout</span>
+          </button>
+        ) : (
+          <Link to="/signin">
+            <button className="flex items-center text-base bg-white rounded-full py-2 px-3 shadow-lg text-black gap-1">
+              <MdLogin className="text-2xl mr-1" />
+              <span className="font-semibold text-base">Login</span>
+            </button>
+          </Link>
+        )}
       </div>
     </nav>
   );
