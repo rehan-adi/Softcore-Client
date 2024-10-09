@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { toast } from "react-hot-toast";
 import useAuthStore from '../store/useAuthStore';
 import { MdLogout, MdLogin } from "react-icons/md";
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function TopNavbar() {
 
@@ -16,21 +16,21 @@ function TopNavbar() {
     toast.success("You are logged out now");
   };
 
-  const controlNavbar = () => {
+  const controlNavbar = useCallback(() => {
     if (window.scrollY > lastScrollY) {
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
     }
     setLastScrollY(window.scrollY);
-  };
+  }, [lastScrollY]);
 
   useEffect(() => {
     window.addEventListener('scroll', controlNavbar);
     return () => {
       window.removeEventListener('scroll', controlNavbar);
-    };
-  }, [lastScrollY]);
+    }
+  }, [lastScrollY, controlNavbar]);
 
   return (
     <nav
@@ -66,6 +66,6 @@ function TopNavbar() {
       </div>
     </nav>
   );
-};
+}
 
 export default TopNavbar;
