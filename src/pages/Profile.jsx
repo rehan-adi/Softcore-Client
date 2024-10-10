@@ -235,10 +235,10 @@ function Profile() {
               </div>
               <div className="mt-5 flex gap-7">
                 <p className="text-base font-normal">
-                  {followingCount} <span className="opacity-40">Following</span>
+                  {followingCount} <span className="opacity-50">Following</span>
                 </p>
                 <p className="text-base font-normal">
-                  {followersCount} <span className="opacity-40">Followers</span>
+                  {followersCount} <span className="opacity-50">Followers</span>
                 </p>
               </div>
               <div className="mt-10">
