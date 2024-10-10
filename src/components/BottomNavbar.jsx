@@ -73,7 +73,7 @@ function BottomNavbar() {
               <img
                 src={profileData.profilePicture}
                 alt="Profile"
-                className="w-7 h-7 bg-red-600 rounded-full border-2 border-white"
+                className="w-7 h-7 rounded-full border-2 border-white"
               />
             ) : (
               <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full"></div>
