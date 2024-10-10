@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
 import { useProfile } from "./hooks/useProfile";
+import UsersProfile from "./components/UsersProfile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route index element={<Post />} />
           <Route path="profile" element={<Profile />} />
           <Route path="search" element={<Search />} />
+          <Route path="profile/:id" element={<UsersProfile />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
