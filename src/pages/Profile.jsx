@@ -234,11 +234,11 @@ function Profile() {
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
               <div className="mt-5 flex gap-7">
-                <p className="text-base font-normal">
-                  {followingCount} <span className="opacity-50">Following</span>
+                <p className="text-base font-bold">
+                  {followingCount} <span className="opacity-60 font-normal">Following</span>
                 </p>
-                <p className="text-base font-normal">
-                  {followersCount} <span className="opacity-50">Followers</span>
+                <p className="text-base font-bold">
+                  {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
               </div>
               <div className="mt-10">
