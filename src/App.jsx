@@ -6,9 +6,13 @@ import Search from "../src/pages/Search";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
+import { useProfile } from "./hooks/useProfile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
+
+  useProfile();
+
   return (
     <Router>
       <Toaster position="top-right" reverseOrder={false} />
