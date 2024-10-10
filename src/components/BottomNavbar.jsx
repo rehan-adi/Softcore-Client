@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { LuUser2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 import { IoSearch } from "react-icons/io5";
 import CreatePostModal from "./CreatePostModels";
 import { Link, useLocation } from "react-router-dom";
+import { useProfileStore } from '../store/useProfileStore';
 
 function BottomNavbar() {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
+  const { profileData, loading } = useProfileStore();
 
   const handleSubmit = () => {
     closeModal();
@@ -22,6 +24,7 @@ function BottomNavbar() {
   return (
     <div className="md:hidden fixed bottom-0 w-full z-50 bg-black bg-opacity-90 border-t border-white border-opacity-25 shadow-lg flex justify-around items-center py-3 px-5">
       <nav className="flex justify-between items-center w-full max-w-sm mx-auto">
+
         {/* Home icon */}
         <Link to="/">
           <button className={getActiveClass("/")}>
@@ -62,11 +65,22 @@ function BottomNavbar() {
         )}
 
         {/* Profile icon */}
-        <Link to="/profile">
-          <button className={getActiveClass("/profile")}>
-            <LuUser2 className="text-2xl" />
-          </button>
+        <Link to="/profile" className={getActiveClass("/profile")}>
+          {loading ? (
+            <Loader2 className="w-6 h-7 animate-spin" />
+          ) : (
+            profileData?.profilePicture ? (
+              <img
+                src={profileData.profilePicture}
+                alt="Profile"
+                className="w-7 h-7 bg-red-600 rounded-full border-2 border-white"
+              />
+            ) : (
+              <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full"></div>
+            )
+          )}
         </Link>
+
 
         {/* Message icon */}
         <Link to="/messages">
