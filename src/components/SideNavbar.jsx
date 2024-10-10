@@ -1,17 +1,19 @@
+import { Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
-import { LuUser2 } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { useCallback, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
 import useAuthStore from "../store/useAuthStore";
 import { MdLogout, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
+import { useProfileStore } from "../store/useProfileStore";
 
 function SideNavbar() {
 
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const { isLoggedIn, logout } = useAuthStore();
+  const { profileData, loading } = useProfileStore();
 
   const isActive = useCallback((path) => location.pathname === path, [location.pathname]);
 
@@ -23,7 +25,7 @@ function SideNavbar() {
     logout();
     toast.success("You are logged out now");
   };
-  
+
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
@@ -85,16 +87,25 @@ function SideNavbar() {
             </li>
           </Link>
 
+
           {/* Profile item */}
-          <Link to="profile" className={`font-semibold text-sm ${isActive("/profile") ? "bg-[#27272A]" : ""
-            } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
-            <li className="flex gap-1 items-center">
-              <span className="mr-1.5">
-                <LuUser2 className="text-2xl" />
-              </span>
+          <Link to="/profile" className={`font-semibold text-sm ${isActive("/profile") ? "bg-[#27272A]" : ""} hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
+            <div className="flex justify-start gap-3 items-center">
+              {loading ? (
+                <Loader2 className="w-6 h-7 animate-spin" />
+              ) : profileData?.profilePicture ? (
+                <img
+                  src={profileData.profilePicture}
+                  alt="Profile"
+                  className="w-7 h-7 rounded-full border-2 border-white"
+                />
+              ) : (
+                <div className="w-8 h-8 bg-gray-600 animate-pulse rounded-full"></div>
+              )}
               <span className="font-semibold text-base">Profile</span>
-            </li>
+            </div>
           </Link>
+
 
           <Link to="/premium" className={`font-semibold text-sm ${isActive("/premium") ? "bg-[#27272A]" : ""
             } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
@@ -122,6 +133,7 @@ function SideNavbar() {
               <span className="font-semibold text-base">Premium</span>
             </li>
           </Link>
+
 
           <Link to="/message" className={`font-semibold text-sm ${isActive("/message") ? "bg-[#27272A]" : ""
             } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
