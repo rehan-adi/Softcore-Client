@@ -2,10 +2,14 @@ import axios from 'axios';
 import debounce from "lodash/debounce";
 import { toast } from "react-hot-toast";
 import { BACKEND_API_URL } from '../constant';
+import { useNavigate } from 'react-router-dom';
 import { Search as SearchIcon, X } from 'lucide-react';
 import { useCallback, useState, useEffect } from 'react';
 
 function Search() {
+
+  const navigate = useNavigate();
+
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,6 +62,10 @@ function Search() {
   const clearSearch = () => {
     setQuery('');
     setSearchResults([]);
+  };
+
+  const goToUserProfile = (id) => {
+    navigate(`/profile/${id}`);
   };
 
   return (
@@ -116,7 +124,7 @@ function Search() {
           <div
             key={user.id}
             className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] rounded-lg cursor-pointer"
-            // bg-gray-900 change color for 
+            onClick={() => goToUserProfile(user._id)}
           >
             {/* Profile Picture */}
             <div className="flex items-center">
