@@ -1,13 +1,13 @@
-import React from 'react';
 import axios from 'axios';
 import { Loader } from 'lucide-react';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { BACKEND_API_URL } from '../constant';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
 const UsersProfile = () => {
     const { userProfileData, loading } = useGetUsersProfile();
-    const [isFollowing, setIsFollowing] = React.useState(false);
+    const [isFollowing, setIsFollowing] = useState(false);
 
     const handleFollow = async () => {
         try {
