@@ -13,16 +13,19 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { useCallback, useEffect, useState } from "react";
 import { useProfileStore } from "../store/useProfileStore";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
+import { useProfilePostDelete } from "../hooks/useProfilePostDelete";
 
 function Profile() {
 
-  const { profileData, posts, loading } = useProfileStore();
+  const { profileData, posts, setPosts, loading } = useProfileStore();
   const { updateProfile } = useUpdateProfile();
+  const { handleDelete, loading: isDeletingPost } = useProfilePostDelete();
 
   const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({
@@ -32,7 +35,6 @@ function Profile() {
   });
   const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false);
   const [editPostFormData, setEditPostFormData] = useState({
-    title: "",
     content: "",
   });
 
@@ -142,32 +144,15 @@ function Profile() {
     }
   };
 
-
-  const handleDelete = async (postId) => {
+  const handlePostDelete = async (postId) => {
     try {
-      const token = getToken();
-      await axios.delete(`${BACKEND_API_URL}/blogs/delete/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setPosts(posts.filter((post) => post._id !== postId));
+      await handleDelete(postId);
+      setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId)); 
       setSelectedPost(null);
       toast.success("Post deleted successfully!");
     } catch (error) {
-      if (error.response) {
-        console.error("Error deleting post:", error.response.data.message);
-        toast.error(error.response.data.message);
-      } else if (error.request) {
-        console.error(
-          "Error deleting post: No response received",
-          error.request
-        );
-        toast.error("Error deleting post. Please try again.");
-      } else {
-        console.error("Error deleting post:", error.message);
-        toast.error("Error deleting post. Please try again.");
-      }
+      console.error("Error deleting post:", error);
+      toast.error("Failed to delete post");
     }
   };
 
@@ -244,7 +229,7 @@ function Profile() {
               <div className="mt-10">
                 <h1 className="text-xl font-semibold mb-5">Posts</h1>
                 <div>
-                  {posts.length > 0 ? (
+                  {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post) => (
                       <div
                         key={post._id}
@@ -289,7 +274,8 @@ function Profile() {
                                       <span className="text-base font-medium">Edit Post</span>
                                     </button>
                                     <button
-                                      onClick={() => handleDelete(post._id)}
+                                      onClick={() => handlePostDelete(post._id)}
+                                      disabled={isDeletingPost} 
                                       className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
                                     >
                                       <RiDeleteBin6Line className="mr-2 text-xl" />

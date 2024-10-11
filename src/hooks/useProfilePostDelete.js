@@ -23,7 +23,7 @@ export const useProfilePostDelete = () => {
             toast.success("Post deleted successfully!");
             return true;
         } catch (error) {
-            console.error("Error deleting post");
+            console.error("Error deleting post:", error.message);
             const message = error.response?.data?.message || "Something went wrong. Please try again.";
             toast.error(message);
             return false;
