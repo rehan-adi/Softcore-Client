@@ -41,7 +41,7 @@ function Post() {
       const updatedPost = await handleUpdatePost(postId, {
         content: editFormData.content,
       });
-  
+
       if (updatedPost) {
         setPosts((prevPosts) =>
           prevPosts.map((post) =>
@@ -54,7 +54,7 @@ function Post() {
       toast.error("Error updating the post");
     }
   };
-  
+
 
   const handleLike = async (postId) => {
     try {
@@ -113,11 +113,11 @@ function Post() {
                 </div>
                 <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
                 <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
-                <div className="mt-4 space-x-2">
+                <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
+                <div className="mt-4 flex justify-between items-center">
                   <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
                   <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
                 </div>
-                <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24"></div>
               </div>
             ))}
           </div>
@@ -131,7 +131,7 @@ function Post() {
                   key={post._id}
                   className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
                 >
-                  <div className="flex justify-between items-center mb-8">
+                  <div className="flex justify-between items-center mb-4">
                     <div className="flex gap-3 items-center">
                       {post.author?.profilePicture ? (
                         <img
@@ -142,9 +142,14 @@ function Post() {
                       ) : (
                         <div className="w-8 h-8 rounded-full bg-gray-300"></div>
                       )}
-                      <div>
-                        <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
-                        <p className="text-gray-300 text-sm font-semibold">{post.author?.username ?? "anonymous"}</p>
+                      <div className="flex items-start gap-5">
+                        <div>
+                          <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
+                          <p className="text-gray-300 text-xs font-semibold">{post.author?.username ?? "anonymous"}</p>
+                        </div>
+                        <p className="text-gray-400 mt-1.5 text-xs">
+                          Posted on {new Date(post.createdAt).toLocaleDateString()}
+                        </p>
                       </div>
                     </div>
                     <div className="relative">
@@ -191,7 +196,6 @@ function Post() {
                       )}
                     </div>
                   </div>
-
                   {post.image && (
                     <img
                       className="w-full h-48 border border-white border-opacity-20 object-cover rounded-lg mb-4"
@@ -231,14 +235,6 @@ function Post() {
                           <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
                         </span>
                         <span className="text-sm md:text-base">Comment</span>
-                      </span>
-                    </button>
-                    <button className="text-gray-700 font-semibold cursor-pointer">
-                      <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
-                        <span>
-                          <LuSend className="inline-block text-xl md:text-2xl" />
-                        </span>
-                        <span className="text-sm md:text-base">Send</span>
                       </span>
                     </button>
                   </div>
