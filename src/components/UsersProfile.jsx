@@ -1,26 +1,14 @@
-import axios from 'axios';
+import React from 'react';
 import { Loader } from 'lucide-react';
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { BACKEND_API_URL } from '../constant';
+import useFollowUser from '../hooks/useFollowUser';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
 const UsersProfile = () => {
-    const { userProfileData, loading } = useGetUsersProfile();
-    const [isFollowing, setIsFollowing] = useState(false);
 
-    const handleFollow = async () => {
-        try {
-            const response = await axios.post(`${BACKEND_API_URL}/follow/${userProfileData.id}`);
-            if (response.status === 200) {
-                setIsFollowing(true);
-                toast.success('You are now following this user!');
-            }
-        } catch (error) {
-            console.error('Error following user:', error);
-            toast.error('Could not follow user. Please try again.');
-        }
-    };
+    const { userProfileData, loading } = useGetUsersProfile();
+
+    const userId = userProfileData?._id;
+    const { isFollowing, followUser, loading: followLoading } = useFollowUser(userId);
 
     if (loading) {
         return (
@@ -66,13 +54,26 @@ const UsersProfile = () => {
                         </p>
                     </div>
                     <div className="mt-8">
-                        <button
-                            onClick={handleFollow}
-                            className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            disabled={isFollowing}
-                        >
-                            {isFollowing ? 'Following' : 'Follow'}
-                        </button>
+                        <div className="mt-8">
+                            <button
+                                onClick={followUser}
+                                className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''} ${followLoading ? 'bg-gray-300' : ''}`}
+                                disabled={isFollowing || followLoading}
+                                aria-pressed={isFollowing}
+                                aria-busy={followLoading}
+                            >
+                                {followLoading ? (
+                                    <>
+                                        <Loader className="h-4 w-4 animate-spin inline-block" />
+                                        <span className="ml-2">Processing...</span>
+                                    </>
+                                ) : isFollowing ? (
+                                    'Following'
+                                ) : (
+                                    'Follow'
+                                )}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
