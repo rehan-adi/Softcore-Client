@@ -2,6 +2,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Post from "../src/pages/Post";
 import Layout from "./layout/layout";
+import Settings from "./pages/Settings";
 import Search from "../src/pages/Search";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
@@ -22,6 +23,7 @@ function App() {
           <Route index element={<Post />} />
           <Route path="profile" element={<Profile />} />
           <Route path="search" element={<Search />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
