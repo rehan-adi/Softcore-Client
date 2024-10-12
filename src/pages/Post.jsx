@@ -161,8 +161,8 @@ function Post() {
                       </button>
                       {selectedBlog && selectedBlog._id === post._id && (
                         <div className="absolute right-0 top-0">
-                          <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
-                            <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
+                          <div className="w-48 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
+                            <div className="py-4 px-1 flex flex-col justify-center items-center gap-2 relative">
                               <button
                                 onClick={handleCloseModal}
                                 className="absolute top-0 right-3 transition-colors"
@@ -171,15 +171,15 @@ function Post() {
                               </button>
                               <button
                                 onClick={() => handleEdit(post)}
-                                className="w-[90%] px-4 py-3 mt-5 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
+                                className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150"
                               >
-                                <MdOutlineEdit className="mr-2 text-2xl" />
+                                <MdOutlineEdit className="mr-3 text-2xl" />
                                 <span className="text-base font-medium">Edit Post</span>
                               </button>
                               <button
                                 onClick={() => handleDelete(post._id)}
                                 disabled={isDeleting}
-                                className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                               >
                                 {isDeleting ? (
                                   <Loader className="mr-3 animate-spin w-5 h-5" />
@@ -187,7 +187,7 @@ function Post() {
                                   <RiDeleteBin6Line className="mr-3 text-xl" />
                                 )}
                                 <span className="text-base font-medium">
-                                  {isDeleting ? "Deleting..." : "Delete Post"}
+                                  {isDeleting ? "" : "Delete Post"}
                                 </span>
                               </button>
                             </div>
