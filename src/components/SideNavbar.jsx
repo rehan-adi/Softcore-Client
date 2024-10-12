@@ -1,8 +1,8 @@
-import { Loader2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { IoSearch } from "react-icons/io5";
 import { useCallback, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
+import { Loader2, Settings } from "lucide-react";
 import useAuthStore from "../store/useAuthStore";
 import { MdLogout, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
@@ -135,22 +135,13 @@ function SideNavbar() {
           </Link>
 
 
-          <Link to="/message" className={`font-semibold text-sm ${isActive("/message") ? "bg-[#27272A]" : ""
+          <Link to="/settings" className={`font-semibold text-sm ${isActive("/message") ? "bg-[#27272A]" : ""
             } hover:bg-[#27272A] py-2 w-40 rounded-lg p-2`}>
             <li className="flex gap-1 items-center">
               <span className="mr-2.5">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  fill="white"
-                  className="w-5 h-5"
-                >
-                  <g>
-                    <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
-                  </g>
-                </svg>
+                <Settings />
               </span>
-              <span className="font-semibold text-base">Message</span>
+              <span className="font-semibold text-base">Settings</span>
             </li>
           </Link>
 
