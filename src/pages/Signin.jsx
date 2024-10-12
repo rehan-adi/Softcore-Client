@@ -117,7 +117,7 @@ function Signin() {
             type='submit'
             disabled={loading}
           >
-            {loading ? <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> : "Sign In"}
+            {loading ? <Loader className="w-6 h-6 animate-spin mr-3 inline-block" /> : "Sign In"}
           </button>
         </div>
       </form>
@@ -137,7 +137,7 @@ function Signin() {
         onClick={handleGoogleSignin}
         disabled={loading}
       >
-        {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" />  <img
+        {loading ? <><Loader className="w-6 h-6 animate-spin mr-3 inline-block" />  <img
           src="/images/google.svg"
           alt="Google Logo"
           className="w-6 h-6 mr-4"
