@@ -276,11 +276,11 @@ function Post() {
                 <button
                   type="submit"
                   disabled={isUpdatingPost}
-                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                  className="bg-white text-black font-bold py-2 px-5 w-36 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   {isUpdatingPost ? (
                     <>
-                      <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Updating...
+                      <Loader className="w-5 h-5 animate-spin mr-3 inline-block" />
                     </>
                   ) : (
                     "Update Post"
