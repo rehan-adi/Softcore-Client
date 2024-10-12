@@ -145,16 +145,16 @@ function Profile() {
   };
 
   const handlePostDelete = async (postId) => {
-    try {
-      await handleDelete(postId);
-      setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId)); 
+    const success = await handleDelete(postId);
+    if (success) {
+      setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
       setSelectedPost(null);
       toast.success("Post deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting post:", error);
+    } else {
       toast.error("Failed to delete post");
     }
   };
+
 
   const closeModel = () => {
     setSelectedPost(null);
@@ -258,28 +258,36 @@ function Profile() {
                             </button>
                             {selectedPost === post._id && (
                               <div className="absolute right-0 top-0">
-                                <div className="w-56 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
-                                  <div className="py-3 flex flex-col justify-center items-center gap-2 relative">
+                                <div className="w-48 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
+                                  <div className="py-4 flex flex-col px-1 justify-center items-center gap-2 relative">
                                     <button
                                       onClick={closeModel}
-                                      className="absolute top-0 right-3 transition-colors"
+                                      className="absolute top-1 right-3 transition-colors"
                                     >
                                       <span className="text-white text-2xl">&times;</span>
                                     </button>
                                     <button
                                       onClick={() => handleEditPost(post._id)}
-                                      className="w-[90%] px-4 py-3 mt-5 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
+                                      className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg justify-center text-left flex items-center transition-colors duration-150"
                                     >
-                                      <MdOutlineEdit className="mr-2 text-2xl" />
+                                      <MdOutlineEdit className="mr-3 text-2xl" />
                                       <span className="text-base font-medium">Edit Post</span>
                                     </button>
                                     <button
                                       onClick={() => handlePostDelete(post._id)}
-                                      disabled={isDeletingPost} 
-                                      className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center transition-colors duration-150"
+                                      disabled={isDeletingPost}
+                                      className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex justify-center items-center transition-colors duration-150"
                                     >
-                                      <RiDeleteBin6Line className="mr-2 text-xl" />
-                                      <span className="text-base font-medium">Delete Post</span>
+                                      {isDeletingPost && selectedPost === post._id ? (
+                                        <>
+                                          <Loader className="text-xl animate-spin" />
+                                        </>
+                                      ) : (
+                                        <>
+                                          <RiDeleteBin6Line className="mr-2 text-xl" />
+                                          <span className="text-base font-medium">Delete Post</span>
+                                        </>
+                                      )}
                                     </button>
                                   </div>
                                 </div>
