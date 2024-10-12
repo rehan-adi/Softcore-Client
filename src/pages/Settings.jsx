@@ -5,15 +5,15 @@ const Settings = () => {
 
   return (
     <div className="min-h-screen flex justify-start pt-5 md:px-40 items-center flex-col w-full bg-black text-white">
-      <div className="border-b py-7 px-10 border-white border-opacity-15">
+      <div className="border-b py-7 md:px-10 border-white border-opacity-15">
         <ul className="flex gap-8 items-center">
           <li>
             <span
               className={`w-full p-2 cursor-pointer transition 
                 ${
                   activeSetting === "changePassword"
-                    ? "border-b-4 border-white"
-                    : "hover:border-b-4 hover:border-white"
+                    ? "md:border-b-4 border-b-2 border-white"
+                    : "md:hover:border-b-4 hover:border-b-2 hover:border-white"
                 }
             `}
               onClick={() => setActiveSetting("changePassword")}
@@ -26,8 +26,8 @@ const Settings = () => {
               className={`w-full p-2 cursor-pointer transition 
             ${
               activeSetting === "deleteAccount"
-                ? "border-b-4 border-white"
-                : "hover:border-b-4 hover:border-white"
+                ? "md:border-b-4 border-b-2 border-white"
+                : "md:hover:border-b-4 hover:border-b-2  hover:border-white"
             }
              `}
               onClick={() => setActiveSetting("deleteAccount")}
