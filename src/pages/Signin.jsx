@@ -117,7 +117,7 @@ function Signin() {
             type='submit'
             disabled={loading}
           >
-            {loading ? <><Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> Signing In... </> : "Sign In"}
+            {loading ? <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> : "Sign In"}
           </button>
         </div>
       </form>
@@ -142,7 +142,7 @@ function Signin() {
           alt="Google Logo"
           className="w-6 h-6 mr-4"
         />
-          Continue with Google...
+          Continue with Google
         </>
           : <>
             <img
