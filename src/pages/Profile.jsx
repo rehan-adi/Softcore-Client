@@ -226,7 +226,7 @@ function Profile() {
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
               </div>
-              <div className="mt-10">
+              <div className="mt-6 py-8">
                 <h1 className="text-xl font-semibold mb-5">Posts</h1>
                 <div>
                   {Array.isArray(posts) && posts.length > 0 ? (
