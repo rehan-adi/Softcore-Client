@@ -25,3 +25,11 @@ export const SigninValidation = z.object({
     .min(6, 'Password must be at least 6 characters')
     .max(15, 'Password must be at most 15 characters'),
 });
+
+
+export const changePasswordValidation = z.object({
+  password: z
+    .string()
+    .min(6, 'Password must be at least 6 characters')
+    .max(15, 'Password must be at most 15 characters')
+})
