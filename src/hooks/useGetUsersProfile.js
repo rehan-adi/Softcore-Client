@@ -7,8 +7,9 @@ import { BACKEND_API_URL } from "../constant";
 export const useGetUsersProfile = () => {
 
     const { id } = useParams();
-    const [userProfileData, setUserProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [userProfileData, setUserProfileData] = useState(null);
+    const [userProfilePost, setUserProfilePost] = useState(null);
 
     useEffect(() => {
         const fetchUsersProfile = async () => {
@@ -16,8 +17,11 @@ export const useGetUsersProfile = () => {
             try {
                 const response = await axios.get(`${BACKEND_API_URL}/profile/users/${id}`);
 
+                console.log(response.data);
+
                 if (response.status === 200) {
                     setUserProfileData(response.data.profile);
+                    setUserProfilePost(response.data.posts);
                 }
             } catch (error) {
                 console.error("Error fetching user's profile:", error);
@@ -33,5 +37,5 @@ export const useGetUsersProfile = () => {
         }
     }, [id]);
 
-    return { userProfileData, loading };
+    return { userProfileData, userProfilePost, loading };
 };
