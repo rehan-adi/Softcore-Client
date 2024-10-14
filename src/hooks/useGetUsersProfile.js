@@ -16,9 +16,6 @@ export const useGetUsersProfile = () => {
             setLoading(true);
             try {
                 const response = await axios.get(`${BACKEND_API_URL}/profile/users/${id}`);
-
-                console.log(response.data);
-
                 if (response.status === 200) {
                     setUserProfileData(response.data.profile);
                     setUserProfilePost(response.data.posts);
