@@ -1,11 +1,12 @@
 import React from 'react';
 import { Loader } from 'lucide-react';
 import useFollowUser from '../hooks/useFollowUser';
+import { MdOutlineThumbUpOffAlt } from 'react-icons/md';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
 const UsersProfile = () => {
 
-    const { userProfileData, loading } = useGetUsersProfile();
+    const { userProfileData, userProfilePost, loading } = useGetUsersProfile();
 
     const userId = userProfileData?._id;
     const { isFollowing, followUser, loading: followLoading } = useFollowUser(userId);
@@ -53,8 +54,8 @@ const UsersProfile = () => {
                             {followersCount} <span className="opacity-60 font-normal">Followers</span>
                         </p>
                     </div>
-                    <div className="mt-8">
-                        <div className="mt-8">
+                    <div className="mt-5">
+                        <div className="mt-3">
                             <button
                                 onClick={followUser}
                                 className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''} ${followLoading ? 'bg-gray-300' : ''}`}
@@ -73,6 +74,60 @@ const UsersProfile = () => {
                                     'Follow'
                                 )}
                             </button>
+                        </div>
+                    </div>
+                    <div className="w-full pb-10 mt-5 text-white">
+                        <h1 className="font-semibold text-lg mb-5">Posts</h1>
+                        {console.log(userProfilePost)
+                        }
+                        <div>
+                            {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
+                                userProfilePost.map((post) => (
+                                    <div
+                                        key={post._id}
+                                        className="bg-black border border-white border-opacity-25 p-4 rounded-lg mb-4"
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex gap-3 items-center justify-start">
+                                                {post.author && post.author.profilePicture && (
+                                                    <img
+                                                        src={post.author.profilePicture}
+                                                        alt={post.author.username || 'Author'}
+                                                        className="w-8 h-8 rounded-full mr-1"
+                                                    />
+                                                )}
+                                                <div>
+                                                    <p className="font-bold">{post.author ? post.author.fullname : 'Unknown Author'}</p>
+                                                    <p className="text-gray-300 text-sm">{post.author ? post.author.username : 'Unknown'}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-gray-400 text-xs">
+                                                {new Date(post.createdAt).toLocaleDateString()}
+                                            </div>
+                                        </div>
+                                        <h2 className="text-lg mt-4 font-semibold">{post.title}</h2>
+                                        <p className="text-base mt-5">{post.content}</p>
+                                        {post.image && (
+                                            <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
+                                        )}
+                                        <p className="text-base text text-[#1D9BF0] mt-6">
+                                            {post.tags.join(' ')}
+                                        </p>
+                                        <button
+                                            className="text-gray-700 mt-4 font-semibold cursor-pointer"
+                                        >
+                                            <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                                                <span>
+                                                    <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                                                </span>
+                                                <span className="text-sm md:text-base">{post.likes.length}</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No posts available</p>
+                            )}
                         </div>
                     </div>
                 </div>
