@@ -244,9 +244,14 @@ function Profile() {
                                 className="w-8 h-8 rounded-full mr-1"
                               />
                             )}
-                            <div>
-                              <p className="font-bold">{post.author.fullname}</p>
-                              <p className="text-gray-300 text-sm">{post.author.username}</p>
+                            <div className="flex items-start gap-4">
+                              <div>
+                                <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
+                                <p className="text-gray-300 text-xs font-semibold">{post.author?.username ?? "anonymous"}</p>
+                              </div>
+                              <p className="text-gray-400 mt-1.5 text-xs">
+                                Posted {new Date(post.createdAt).toLocaleDateString()}
+                              </p>
                             </div>
                           </div>
                           <div className="relative">
