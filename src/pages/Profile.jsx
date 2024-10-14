@@ -5,27 +5,30 @@ import { Loader, X } from 'lucide-react';
 import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
-import { MdOutlineEdit } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../hooks/useProfile';
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { useLikePost } from "../hooks/useLikePost";
 import { useCallback, useEffect, useState } from "react";
 import { useProfileStore } from "../store/useProfileStore";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
 import { useProfilePostDelete } from "../hooks/useProfilePostDelete";
+import { MdOutlineEdit, MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Profile() {
 
   const { profileData, posts, setPosts, loading } = useProfileStore();
   const { updateProfile } = useUpdateProfile();
   const { handleDelete, loading: isDeletingPost } = useProfilePostDelete();
+  const { handleLikePost } = useLikePost();
 
   const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  const [likedPosts, setLikedPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({
@@ -160,6 +163,16 @@ function Profile() {
     setSelectedPost(null);
   };
 
+
+  const handleLike = async (postId) => {
+    try {
+      await handleLikePost(postId);
+      setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
+    } catch (error) {
+      toast.error("Error liking the post");
+    }
+  };
+
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center bg-black items-center">
@@ -173,7 +186,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="w-full md:px-60 z-10 lg:pb-3 pb-28 items-center bg-black text-white min-h-screen">
+      <div className="w-full md:px-60 z-10 lg:pb-3 pb-16 items-center bg-black text-white min-h-screen">
         {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
@@ -305,9 +318,27 @@ function Profile() {
                         {post.image && (
                           <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
                         )}
-                        <p className="text-base text text-[#1D9BF0] mt-6">
-                          {post.tags.join(' ')}
-                        </p>
+                        <div className="mt-7">
+                          {post.tags.map((tag, index) => (
+                            <span
+                              key={index}
+                              className="inline-block text-[#1D9BF0] text-base font-bold mr-2 py-0.5 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => handleLike(post._id)}
+                          className="text-gray-700 mt-4 font-semibold cursor-pointer"
+                        >
+                          <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                            <span>
+                              <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                            </span>
+                            <span className="text-sm md:text-base">{post.likes.length}</span>
+                          </span>
+                        </button>
                       </div>
                     ))
                   ) : (
