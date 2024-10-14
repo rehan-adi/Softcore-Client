@@ -110,9 +110,16 @@ const UsersProfile = () => {
                                         {post.image && (
                                             <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
                                         )}
-                                        <p className="text-base text text-[#1D9BF0] mt-6">
-                                            {post.tags.join(' ')}
-                                        </p>
+                                        <div className="mt-7">
+                                            {post.tags.map((tag, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="inline-block text-[#1D9BF0] text-base font-bold mr-2 py-0.5 rounded"
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
                                         <button
                                             className="text-gray-700 mt-4 font-semibold cursor-pointer"
                                         >
