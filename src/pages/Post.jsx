@@ -3,25 +3,23 @@ import { toast } from "react-hot-toast";
 import { X, Loader } from 'lucide-react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import TopNavbar from "../components/TopNavbar";
 import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useLikePost } from "../hooks/useLikePost";
 import { FaRegCommentDots } from "react-icons/fa6";
-import CommentModal from "../components/CommentModal";
 import { useDeletePost } from "../hooks/usePostDelete";
 import { useUpdatePost } from '../hooks/useUpdatePost';
 import { usePostsStore } from "../store/usePostsStore";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Post() {
+  const navigate = useNavigate();
 
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [editFormData, setEditFormData] = useState({ content: "" });
-  const [comments, setComments] = useState([]);
-  const [showCommentModal, setShowCommentModal] = useState(false);
-  const [commentFormData, setCommentFormData] = useState({ content: "" });
   const [likedPosts, setLikedPosts] = useState([]);
 
   // Hooks for fetching posts and managing likes, updates, and deletions
@@ -50,10 +48,10 @@ function Post() {
       }
       handleCloseModal();
     } catch (error) {
+      console.error("Error:", error);
       toast.error("Error updating the post");
     }
   };
-
 
   const handleLike = async (postId) => {
     try {
@@ -87,10 +85,6 @@ function Post() {
     });
   };
 
-  // Toggle comment modal visibility
-  const toggleCommentModal = () => {
-    setShowCommentModal(prev => !prev);
-  };
 
   return (
     <div className="flex relative z-10">
@@ -227,7 +221,7 @@ function Post() {
                       </span>
                     </button>
                     <button className="text-gray-700 font-semibold cursor-pointer"
-                      onClick={toggleCommentModal}
+                      onClick={() => navigate(`/comments/${post._id}`)}
                     >
                       <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
                         <span>
@@ -290,15 +284,6 @@ function Post() {
           </div>
         </div>
       )}
-      <CommentModal
-        showCommentModal={showCommentModal}
-        toggleCommentModal={toggleCommentModal}
-        selectedBlog={selectedBlog}
-        comments={comments}
-        setComments={setComments}
-        commentFormData={commentFormData}
-        setCommentFormData={setCommentFormData}
-      />
     </div>
   );
 }
