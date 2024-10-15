@@ -1,4 +1,3 @@
-import React from 'react';
 import { Loader } from 'lucide-react';
 import useFollowUser from '../hooks/useFollowUser';
 import { MdOutlineThumbUpOffAlt } from 'react-icons/md';

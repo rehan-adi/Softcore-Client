@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { Loader } from 'lucide-react';
-import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
