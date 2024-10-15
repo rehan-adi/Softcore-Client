@@ -3,6 +3,7 @@ import Signin from "./pages/Signin";
 import Post from "../src/pages/Post";
 import Layout from "./layout/layout";
 import Settings from "./pages/Settings";
+import Comments from "./pages/Comments";
 import Search from "../src/pages/Search";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
@@ -25,6 +26,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
+          <Route path="comments/:id" element={<Comments />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
