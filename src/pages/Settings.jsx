@@ -64,7 +64,7 @@ const Settings = () => {
           </li>
         </ul>
       </div>
-      <main className="flex flex-col items-center w-full md:w-[400px] mt-10 justify-center">
+      <main className="flex flex-col px-5 md:px-0 items-center w-full md:w-[400px] mt-10 justify-center">
         {activeSetting === "changePassword" && (
           <div className="py-5 px-2 rounded-lg shadow-md w-full max-w-lg">
             <h1 className="text-xl font-semibold mb-5">Change Password</h1>
