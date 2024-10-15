@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
 import { IoSearch } from "react-icons/io5";
+import { Loader2, Settings } from "lucide-react";
 import CreatePostModal from "./CreatePostModels";
 import { Link, useLocation } from "react-router-dom";
 import { useProfileStore } from '../store/useProfileStore';
@@ -81,20 +81,10 @@ function BottomNavbar() {
           )}
         </Link>
 
-
-        {/* Message icon */}
-        <Link to="/messages">
-          <button className={getActiveClass("/messages")}>
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              fill="white"
-              className="lg:w-7 lg:h-7 w-6 h-6"
-            >
-              <g>
-                <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
-              </g>
-            </svg>
+        {/* Settings icon */}
+        <Link to="/settings">
+          <button className={getActiveClass("/search")}>
+            <Settings className="lg:text-3xl text-2xl" />
           </button>
         </Link>
 
