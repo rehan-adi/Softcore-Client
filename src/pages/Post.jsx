@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { LuSend } from "react-icons/lu";
 import { toast } from "react-hot-toast";
 import { X, Loader } from 'lucide-react';
 import { BsThreeDots } from "react-icons/bs";
