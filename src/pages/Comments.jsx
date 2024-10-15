@@ -5,6 +5,7 @@ import { SendHorizonal, ArrowLeft } from 'lucide-react';
 const Comments = () => {
 
   const navigate = useNavigate();
+  
   const dummyComments = [
     {
       _id: '1',
