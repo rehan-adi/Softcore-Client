@@ -26,7 +26,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
-          <Route path="comments/:id" element={<Comments />} />
+          <Route path="comments/:postId" element={<Comments />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
