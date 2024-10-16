@@ -75,7 +75,7 @@ function Search() {
         <input
           type="text"
           placeholder="Search users"
-          className="py-3 pl-14 pr-20 w-full placeholder:text-white bg-black border border-white rounded-full focus:outline-none transition"
+          className="py-3 pl-14 pr-20 w-full placeholder:text-white bg-neutral-800 focus:ring-2 focus:ring-neutral-600 rounded-full focus:outline-none transition"
           value={query}
           onChange={handleSearchChange}
           onKeyDown={handleKeyDown}
