@@ -1,18 +1,36 @@
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useComment } from '../hooks/useComment';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate, useParams } from 'react-router-dom';
 import { SendHorizonal, ArrowLeft, Loader2 } from 'lucide-react';
+import { commentValidation } from '../validations/comment.validation';
 
 const Comments = () => {
 
   const { postId } = useParams();
   const navigate = useNavigate();
 
-  const { getComment, loading, comments } = useComment(postId);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+    resolver: zodResolver(commentValidation),
+    mode: "onSubmit"
+  });
+
+  const { getComment, loading, comments, postComment, submitLoading } = useComment(postId);
+
 
   useEffect(() => {
     getComment();
   }, [postId, getComment]);
+
+  const onSubmit = async (data) => {
+    try {
+      await postComment(data.content);
+      reset();
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
+  };
 
 
   return (
@@ -36,10 +54,10 @@ const Comments = () => {
           <ul className="space-y-3">
             {comments.map((comment) => (
               <li key={comment._id} className="flex items-start bg-black border border-white border-opacity-15 p-4 rounded-lg shadow-md">
-                {comment.user.profilePicture ? (
+                {comment.author.profilePicture ? (
                   <img
-                    src={comment.user.profilePicture}
-                    alt={comment.user.fullname}
+                    src={comment.author.profilePicture}
+                    alt={comment.author.fullname}
                     className="w-8 h-8 rounded-full mr-3"
                   />
                 ) : (
@@ -47,7 +65,7 @@ const Comments = () => {
                 )}
                 <div className="flex flex-col">
                   <div className="flex items-center">
-                    <span className="font-semibold text-base">{comment.user.fullname}</span>
+                    <span className="font-semibold text-base">{comment.author.fullname}</span>
                     <span className="text-gray-400 text-xs ml-3">
                       {new Date(comment.createdAt).toLocaleDateString()}
                     </span>
@@ -60,17 +78,20 @@ const Comments = () => {
         )}
 
       </div>
-      <form className="w-full max-w-2xl px-3 bg-black flex justify-center fixed bottom-16 md:bottom-0 items-center md:py-7 py-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl px-3 bg-black flex justify-center fixed bottom-16 md:bottom-0 items-center md:py-7 py-5">
         <input
           type="text"
           placeholder="Add a comment..."
           maxLength="500"
           className="flex-1 bg-neutral-800 text-white rounded-full px-6 py-3 focus:outline-none placeholder:text-white focus:ring-2 focus:ring-neutral-600"
           name="content"
+          {...register('content')}
+          disabled={submitLoading}
         />
-        <button type="submit" className="ml-2 p-2 bg-white text-black rounded-lg flex items-center">
-          <SendHorizonal />
+        <button type="submit" disabled={submitLoading} className="ml-2 p-2 bg-white text-black rounded-lg flex items-center">
+          {submitLoading ? <Loader2 className='animate-spin w-6 h-6' /> : <SendHorizonal className="text-black" />}
         </button>
+        {errors.content && <p className="text-red-500 text-xs">{errors.content.message}</p>}
       </form>
     </div>
   );
