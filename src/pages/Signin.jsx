@@ -59,7 +59,7 @@ function Signin() {
       <form className="w-full mt-4 max-w-xs" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4 relative">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded w-full py-3 px-3 bg-transparent text-white leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 bg-transparent text-white leading-tight bg-[#1E1E1E] focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             type="email"
             placeholder="Email*"
             {...register('email')}
@@ -70,7 +70,7 @@ function Signin() {
         </div>
         <div className="relative">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded w-full py-3 px-3 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 bg-[#1E1E1E] border-white bg-transparent rounded-full w-full py-4 px-5 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             type={showPassword ? "text" : "password"}
             placeholder="Password*"
             {...register('password')}
