@@ -36,7 +36,7 @@ const Comments = () => {
   return (
     <div className="flex flex-col items-center bg-black text-white min-h-screen px-3 py-4 md:py-6">
       <nav className="flex items-center w-full max-w-2xl mb-5">
-        <button onClick={() => navigate(-1)} className="mr-4 p-2 bg-neutral-800 rounded-full hover:bg-neutral-700">
+        <button onClick={() => navigate(-1)} className="mr-4 p-1 bg-neutral-800 rounded-full hover:bg-neutral-700">
           <ArrowLeft className="text-white" />
         </button>
         <h2 className="text-xl font-semibold">Comments</h2>
