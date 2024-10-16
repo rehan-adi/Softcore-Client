@@ -74,7 +74,7 @@ const Settings = () => {
                 placeholder="Enter New Password"
                 {...register("password")}
                 disabled={loading}
-                className="shadow appearance-none border rounded-full border-opacity-30 border-white bg-transparent w-full py-3 px-5 text-white leading-tight mb-3 focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+                className="rounded-full bg-neutral-800 focus:ring-2 focus:ring-neutral-600 w-full py-3 px-5 text-white leading-tight mb-3 focus:outline-none placeholder:text-white"
               />
               {errors.password && (
                 <span className="text-red-500 inline-block">{errors.password.message}</span>
