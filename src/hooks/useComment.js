@@ -8,13 +8,14 @@ export const useComment = (postId) => {
 
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     const getComment = useCallback(async () => {
         setLoading(true);
         try {
             const response = await axios.get(`${BACKEND_API_URL}/comments/${postId}`);
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 setComments(response.data.comments);
             }
 
@@ -27,12 +28,37 @@ export const useComment = (postId) => {
         }
     }, [postId]);
 
+    const postComment = useCallback(async (content) => {
+        setSubmitLoading(true);
+        try {
+            const token = getToken("token");
+            const response = await axios.post(`${BACKEND_API_URL}/comments/post/${postId}`, { content }, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 201) {
+                toast.success('Comment submitted successfully');
+                getComment();
+            }
+
+        } catch (error) {
+            console.error("Error while Submiting comments:", error);
+            const message = error.response?.data?.message || 'Error while Submiting comments';
+            toast.error(message);
+        } finally {
+            setSubmitLoading(false);
+        }
+
+    }, [postId, getComment]);
+
     useEffect(() => {
         if (postId) {
             getComment();
         }
     }, [postId, getComment])
 
-    return { getComment, loading, comments };
+    return { getComment, loading, comments, postComment, submitLoading };
 
 }
