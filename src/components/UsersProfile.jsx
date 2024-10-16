@@ -1,5 +1,6 @@
 import { Loader } from 'lucide-react';
 import useFollowUser from '../hooks/useFollowUser';
+import { FaRegCommentDots } from 'react-icons/fa6';
 import { MdOutlineThumbUpOffAlt } from 'react-icons/md';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
@@ -84,7 +85,7 @@ const UsersProfile = () => {
                                 userProfilePost.map((post) => (
                                     <div
                                         key={post._id}
-                                        className="bg-black border border-white border-opacity-25 p-4 rounded-lg mb-4"
+                                        className="bg-black border border-white border-opacity-25 lg:p-6 p-5 rounded-lg mb-4"
                                     >
                                         <div className="flex justify-between items-center">
                                             <div className="flex gap-3 items-center justify-start">
@@ -119,16 +120,28 @@ const UsersProfile = () => {
                                                 </span>
                                             ))}
                                         </div>
-                                        <button
-                                            className="text-gray-700 mt-4 font-semibold cursor-pointer"
-                                        >
-                                            <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
-                                                <span>
-                                                    <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                                        <div className="mt-8 flex justify-between items-center">
+                                            <button
+                                                className="text-gray-700 font-semibold cursor-pointer"
+                                            >
+                                                <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                                                    <span>
+                                                        <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                                                    </span>
+                                                    <span className="text-sm md:text-base">{post.likes.length}</span>
                                                 </span>
-                                                <span className="text-sm md:text-base">{post.likes.length}</span>
-                                            </span>
-                                        </button>
+                                            </button>
+                                            <button className="text-gray-700 font-semibold cursor-pointer"
+                                                onClick={() => navigate(`/comments/${post._id}`)}
+                                            >
+                                                <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                                                    <span>
+                                                        <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
+                                                    </span>
+                                                    <span className="text-sm md:text-base">Comment</span>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
                                 ))
                             ) : (
