@@ -8,11 +8,11 @@ import { BACKEND_API_URL } from '../constant';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../hooks/useProfile';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import { useLikePost } from "../hooks/useLikePost";
 import { useCallback, useEffect, useState } from "react";
 import { useProfileStore } from "../store/useProfileStore";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
+import { FaArrowLeftLong, FaRegCommentDots } from "react-icons/fa6";
 import { useProfilePostDelete } from "../hooks/useProfilePostDelete";
 import { MdOutlineEdit, MdOutlineThumbUpOffAlt } from "react-icons/md";
 
@@ -246,7 +246,7 @@ function Profile() {
                     posts.map((post) => (
                       <div
                         key={post._id}
-                        className="bg-black border border-white border-opacity-25 p-4 rounded-lg mb-4"
+                        className="bg-black border border-white border-opacity-25 md:p-6 p-5 rounded-lg mb-4"
                       >
                         <div className="flex justify-between items-center">
                           <div className="flex gap-3 items-center justify-start">
@@ -328,17 +328,29 @@ function Profile() {
                             </span>
                           ))}
                         </div>
-                        <button
-                          onClick={() => handleLike(post._id)}
-                          className="text-gray-700 mt-4 font-semibold cursor-pointer"
-                        >
-                          <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
-                            <span>
-                              <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                        <div className="flex justify-between mt-8 items-center">
+                          <button
+                            onClick={() => handleLike(post._id)}
+                            className="text-gray-700 font-semibold cursor-pointer"
+                          >
+                            <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                              <span>
+                                <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                              </span>
+                              <span className="text-sm md:text-base">{post.likes.length}</span>
                             </span>
-                            <span className="text-sm md:text-base">{post.likes.length}</span>
-                          </span>
-                        </button>
+                          </button>
+                          <button className="text-gray-700 font-semibold cursor-pointer"
+                            onClick={() => navigate(`/comments/${post._id}`)}
+                          >
+                            <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                              <span>
+                                <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
+                              </span>
+                              <span className="text-sm md:text-base">Comment</span>
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     ))
                   ) : (
