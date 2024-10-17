@@ -1,10 +1,12 @@
 import { Loader } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import useFollowUser from '../hooks/useFollowUser';
 import { FaRegCommentDots } from 'react-icons/fa6';
 import { MdOutlineThumbUpOffAlt } from 'react-icons/md';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
 const UsersProfile = () => {
+    const navigate = useNavigate();
 
     const { userProfileData, userProfilePost, loading } = useGetUsersProfile();
 
