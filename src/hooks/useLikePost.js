@@ -11,25 +11,26 @@ export const useLikePost = () => {
     const [loading, setLoading] = useState(false);
 
     const handleLikePost = useCallback(async (postId) => {
-
         const post = posts.find((post) => post._id === postId);
-        if (post.likedByUser) {
-            toast.error("You have already liked this post.");
-            return;
-        }
+        const hasLiked = post.likedByUser;
 
         setPosts(
             posts.map((post) =>
-                post._id === postId ? { ...post, likes: post.likes + 1, likedByUser: true } : post
+                post._id === postId
+                    ? {
+                        ...post,
+                        likes: hasLiked ? post.likes - 1 : post.likes + 1,
+                        likedByUser: !hasLiked,
+                    }
+                    : post
             )
         );
 
         try {
             setLoading(true);
             const token = getToken();
-
-            const response = await axios.post(
-                `${BACKEND_API_URL}/likes/${postId}`,
+            await axios.post(
+                `${BACKEND_API_URL}/likes/${postId}/toggle-like`,
                 {},
                 {
                     headers: {
@@ -38,22 +39,19 @@ export const useLikePost = () => {
                 }
             );
 
-            const updatedPost = response.data.post;
-
-            setPosts(
-                posts.map((post) =>
-                    post._id === postId ? { ...post, likes: updatedPost.likes, likedByUser: true } : post
-                )
-            );
-
-            toast.success("Post liked successfully!");
         } catch (error) {
-            console.error("Error liking post:", error);
-            toast.error("Error liking post. Please try again.");
+            console.error("Error liking/unliking post:", error);
+            toast.error("Error updating like. Please try again.");
 
             setPosts(
                 posts.map((post) =>
-                    post._id === postId ? { ...post, likes: post.likes - 1, likedByUser: false } : post
+                    post._id === postId
+                        ? {
+                            ...post,
+                            likes: hasLiked ? post.likes + 1 : post.likes - 1,
+                            likedByUser: hasLiked,
+                        }
+                        : post
                 )
             );
         } finally {

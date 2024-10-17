@@ -20,7 +20,6 @@ function Post() {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [editFormData, setEditFormData] = useState({ content: "" });
-  const [likedPosts, setLikedPosts] = useState([]);
 
   // Hooks for fetching posts and managing likes, updates, and deletions
   const { loading, error } = useGetPost();
@@ -53,14 +52,13 @@ function Post() {
     }
   };
 
-  const handleLike = async (postId) => {
-    try {
-      await handleLikePost(postId);
-      setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
-    } catch (error) {
-      toast.error("Error liking the post");
-    }
-  };
+const handleLike = async (postId) => {
+  try {
+    await handleLikePost(postId);
+  } catch (error) {
+    toast.error("Error liking the post");
+  }
+};
 
   // Handle editing, opening the edit modal
   const handleEdit = (blog) => {
@@ -209,14 +207,13 @@ function Post() {
                     ))}
                   </div>
                   <div className="mt-8 flex justify-between items-center">
+                    {console.log(post)}
                     <button
                       onClick={() => handleLike(post._id)}
-                      className="text-gray-700 font-semibold cursor-pointer"
+                      className={`font-semibold cursor-pointer flex items-center gap-2 ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-700'}`}
                     >
-                      <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
-                        <span>
-                          <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
-                        </span>
+                      <span className={`flex py-2 px-1 gap-2 items-center justify-center ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-500'}`}>
+                        <MdOutlineThumbUpOffAlt className={`inline-block text-xl md:text-2xl ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-500'}`} />
                         <span className="text-sm md:text-base">{post.likes.length}</span>
                       </span>
                     </button>
