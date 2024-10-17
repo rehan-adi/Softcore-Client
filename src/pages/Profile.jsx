@@ -28,7 +28,6 @@ function Profile() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const [likedPosts, setLikedPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editFormData, setEditFormData] = useState({
@@ -174,7 +173,6 @@ function Profile() {
   const handleLike = async (postId) => {
     try {
       await handleLikePost(postId);
-      setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
     } catch (error) {
       toast.error("Error liking the post");
     }
