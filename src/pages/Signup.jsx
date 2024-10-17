@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { Loader } from 'lucide-react'
 import { useForm } from "react-hook-form";
-import { useSignup } from "../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
+import { useSignup } from "../hooks/auth/useSignup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupValidation } from "../validations/auth.validation";
 

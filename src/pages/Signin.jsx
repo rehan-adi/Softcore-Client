@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useSignin } from '../hooks/useSignin';
+import { useSignin } from '../hooks/auth/useSignin';
 import useAuthStore  from '../store/useAuthStore';
 import { Loader, Eye, EyeOff } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod";

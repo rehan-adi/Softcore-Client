@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useCallback, useState } from "react";
-import { BACKEND_API_URL } from '../constant';
+import { BACKEND_API_URL } from '../../constant';
 
 export const useSignup = () => {
     const [loading, setLoading] = useState(false);

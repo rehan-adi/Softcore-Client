@@ -3,8 +3,8 @@ import { Loader } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDeleteAccount } from '../hooks/useDeleteAccount';
-import { useChangePassword } from '../hooks/useChangePassword';
+import { useDeleteAccount } from '../hooks/auth/useDeleteAccount';
+import { useChangePassword } from '../hooks/auth/useChangePassword';
 import { changePasswordValidation } from "../validations/auth.validation";
 
 const Settings = () => {
