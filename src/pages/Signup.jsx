@@ -56,7 +56,7 @@ function Signup() {
       >
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 bg-transparent text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="username"
             type="text"
             placeholder="Username"
@@ -68,7 +68,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 bg-transparent text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="fullname"
             type="text"
             placeholder="FullName"
@@ -80,7 +80,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 bg-transparent text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 text-white bg-[#1E1E1E] leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="email"
             type="email"
             placeholder="Email"
@@ -92,7 +92,7 @@ function Signup() {
         </div>
         <div className="mb-4">
           <input
-            className="shadow appearance-none border border-opacity-30 border-white bg-transparent rounded-full w-full py-4 px-5 text-white bg-[#1E1E1E] mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
+            className="shadow appearance-none border border-opacity-30 border-white rounded-full w-full py-4 px-5 text-white bg-[#1E1E1E] mb-3 leading-tight focus:border-opacity-55 focus:outline-none focus:shadow-outline placeholder:text-white"
             id="password"
             type="password"
             placeholder="Password"
