@@ -95,7 +95,14 @@ function Profile() {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-    await updateProfile(editFormData);
+    try {
+      await updateProfile(editFormData); 
+      setIsEditModalOpen(false);         
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
+    }
   };
 
   const handleEditPost = (postId) => {
