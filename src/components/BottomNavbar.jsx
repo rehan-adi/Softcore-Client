@@ -83,7 +83,7 @@ function BottomNavbar() {
 
         {/* Settings icon */}
         <Link to="/settings">
-          <button className={getActiveClass("/search")}>
+          <button className={getActiveClass("/settings")}>
             <Settings className="lg:text-3xl text-2xl" />
           </button>
         </Link>
