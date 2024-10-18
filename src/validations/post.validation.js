@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createBlogValidation = z.object({
+export const createPostValidation = z.object({
     content: z
         .string()
         .min(1, { message: 'Content should have at least 1 character' })
@@ -15,8 +15,7 @@ export const createBlogValidation = z.object({
         .string()
         .min(1, { message: 'Category is required' })
         .transform((val) => val.trim()),
-        image: z
-        .any()
-        .optional()
-        .refine(file => !file || (file instanceof File && file.size < 5 * 1024 * 1024), { message: "Image size must be less than 5MB." })
+    image: z
+        .instanceof(File)
+        .refine((file) => file !== null, { message: 'Image is required' }),
 });
