@@ -3,12 +3,12 @@ import { Loader } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useCreatePost } from "../hooks/useCreatePost"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createBlogValidation } from '../validations/blog.validation';
+import { createPostValidation } from '../validations/post.validation';
 
 function CreatePostModal({ onClose }) {
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: zodResolver(createBlogValidation),
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm({
+    resolver: zodResolver(createPostValidation),
     defaultValues: {
       content: '',
       category: '',
@@ -21,6 +21,13 @@ function CreatePostModal({ onClose }) {
 
   const handleFormSubmit = (data) => {
     onSubmitForm(data, onClose);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setValue("image", file);
+    }
   };
 
   return (
@@ -101,8 +108,9 @@ function CreatePostModal({ onClose }) {
                 <input
                   type="file"
                   accept="image/*"
-                  className="hidden"
+                  className="hidden text-white"
                   {...register("image")}
+                  onChange={handleImageChange}
                 />
                 <div className="flex flex-col items-center justify-center">
                   <svg
@@ -122,6 +130,7 @@ function CreatePostModal({ onClose }) {
                   <p className="text-gray-400">Click to browse files</p>
                 </div>
               </label>
+              {errors.image && <span className="text-red-500">{errors.image.message}</span>}
             </div>
           </div>
           <div className="flex justify-start mt-10">

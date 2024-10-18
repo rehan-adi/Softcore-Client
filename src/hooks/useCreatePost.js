@@ -28,8 +28,10 @@ export const useCreatePost = () => {
         tagsArray.forEach(tag => formData.append("tags[]", tag));
 
 
-        if (data.image && data.image.length > 0) {
-            formData.append("image", data.image[0]);
+        if (data.image) {
+            formData.append("image", data.image);
+        } else {
+            console.log("Image is null");
         }
 
         setLoading(true);
