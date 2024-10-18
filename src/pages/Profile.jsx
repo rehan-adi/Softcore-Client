@@ -95,8 +95,8 @@ function Profile() {
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateProfile(editFormData); 
-      setIsEditModalOpen(false);         
+      await updateProfile(editFormData);
+      setIsEditModalOpen(false);
       toast.success("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -253,7 +253,7 @@ function Profile() {
                         key={post._id}
                         className="bg-black border border-white border-opacity-25 md:p-6 p-5 rounded-lg mb-4"
                       >
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between mb-4 items-center">
                           <div className="flex gap-3 items-center justify-start">
                             {post.author && post.author.profilePicture && (
                               <img
@@ -318,11 +318,14 @@ function Profile() {
                             )}
                           </div>
                         </div>
-                        <h2 className="text-lg mt-4 font-semibold">{post.title}</h2>
-                        <p className="text-base mt-5">{post.content}</p>
                         {post.image && (
-                          <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
+                          <img
+                            className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                            src={post.image}
+                            alt={post.title}
+                          />
                         )}
+                        <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
                         <div className="mt-7">
                           {post.tags.map((tag, index) => (
                             <span
