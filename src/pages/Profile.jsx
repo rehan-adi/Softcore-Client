@@ -318,13 +318,15 @@ function Profile() {
                             )}
                           </div>
                         </div>
-                        {post.image && (
-                          <img
-                            className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                            src={post.image}
-                            alt={post.title}
-                          />
-                        )}
+                        <Link to={`/post/image/${post.id}`}>
+                          {post.image && (
+                            <img
+                              className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                              src={post.image}
+                              alt={post.title}
+                            />
+                          )}
+                        </Link>
                         <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
                         <div className="mt-7">
                           {post.tags.map((tag, index) => (

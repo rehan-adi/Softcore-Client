@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { X, Loader } from 'lucide-react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TopNavbar from "../components/TopNavbar";
 import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -52,13 +52,13 @@ function Post() {
     }
   };
 
-const handleLike = async (postId) => {
-  try {
-    await handleLikePost(postId);
-  } catch (error) {
-    toast.error("Error liking the post");
-  }
-};
+  const handleLike = async (postId) => {
+    try {
+      await handleLikePost(postId);
+    } catch (error) {
+      toast.error("Error liking the post");
+    }
+  };
 
   // Handle editing, opening the edit modal
   const handleEdit = (blog) => {
@@ -187,13 +187,15 @@ const handleLike = async (postId) => {
                       )}
                     </div>
                   </div>
-                  {post.image && (
-                    <img
-                      className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
-                      src={post.image}
-                      alt={post.title}
-                    />
-                  )}
+                  <Link to={`/post/image/${post.id}`}>
+                    {post.image && (
+                      <img
+                        className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                        src={post.image}
+                        alt={post.title}
+                      />
+                    )}
+                  </Link>
                   <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
                   <div className="mt-7">
                     {post.tags.map((tag, index) => (
