@@ -10,6 +10,7 @@ import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
 import { useProfile } from "./hooks/useProfile";
 import UsersProfile from "./components/UsersProfile";
+import ImagePreview from "./components/ImagePreview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
           <Route path="comments/:postId" element={<Comments />} />
+          <Route path="post/image/:postId" element={<ImagePreview />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
