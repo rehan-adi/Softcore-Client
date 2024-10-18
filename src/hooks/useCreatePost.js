@@ -37,7 +37,7 @@ export const useCreatePost = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                `${BACKEND_API_URL}/blogs/create`,
+                `${BACKEND_API_URL}/posts/create`,
                 formData,
                 {
                     headers: {
