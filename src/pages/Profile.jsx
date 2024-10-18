@@ -318,7 +318,7 @@ function Profile() {
                             )}
                           </div>
                         </div>
-                        <Link to={`/post/image/${post.id}`}>
+                        <Link to={`/post/image/${post._id}`}>
                           {post.image && (
                             <img
                               className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
