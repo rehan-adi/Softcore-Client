@@ -207,7 +207,6 @@ const handleLike = async (postId) => {
                     ))}
                   </div>
                   <div className="mt-8 flex justify-between items-center">
-                    {console.log(post)}
                     <button
                       onClick={() => handleLike(post._id)}
                       className={`font-semibold cursor-pointer flex items-center gap-2 ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-700'}`}
