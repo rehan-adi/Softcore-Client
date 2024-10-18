@@ -53,13 +53,13 @@ function TopNavbar() {
             className="flex items-center text-base bg-white rounded-full py-2 px-3 shadow-lg text-black gap-1"
           >
             <MdLogout className="text-xl mr-1" />
-            <span className="font-semibold text-base">Logout</span>
+            <span className="font-semibold text-sm">Logout</span>
           </button>
         ) : (
           <Link to="/signin">
             <button className="flex items-center text-base bg-white rounded-full py-2 px-3 shadow-lg text-black gap-1">
               <MdLogin className="text-2xl mr-1" />
-              <span className="font-semibold text-base">Login</span>
+              <span className="font-semibold text-sm">Login</span>
             </button>
           </Link>
         )}
