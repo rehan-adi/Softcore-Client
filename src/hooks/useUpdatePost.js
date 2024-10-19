@@ -18,7 +18,7 @@ export const useUpdatePost = () => {
 
         try {
             const response = await axios.patch(
-                `${BACKEND_API_URL}/blogs/update/${postId}`,
+                `${BACKEND_API_URL}/posts/update/${postId}`,
                 updatedData,
                 {
                     headers: {

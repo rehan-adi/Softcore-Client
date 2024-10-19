@@ -129,7 +129,7 @@ function Profile() {
       formData.append("content", editPostFormData.content);
 
       const response = await axios.patch(
-        `${BACKEND_API_URL}/blogs/update/${selectedPost}`,
+        `${BACKEND_API_URL}/posts/update/${selectedPost}`,
         formData,
         {
           headers: {
