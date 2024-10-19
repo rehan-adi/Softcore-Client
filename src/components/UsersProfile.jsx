@@ -1,7 +1,7 @@
 import { Loader } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import useFollowUser from '../hooks/useFollowUser';
 import { FaRegCommentDots } from 'react-icons/fa6';
+import useFollowUser from '../hooks/useFollowUser';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdOutlineThumbUpOffAlt } from 'react-icons/md';
 import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
 
@@ -80,8 +80,6 @@ const UsersProfile = () => {
                     </div>
                     <div className="w-full pb-10 mt-5 text-white">
                         <h1 className="font-semibold text-lg mb-5">Posts</h1>
-                        {console.log(userProfilePost)
-                        }
                         <div>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
                                 userProfilePost.map((post) => (
@@ -89,7 +87,7 @@ const UsersProfile = () => {
                                         key={post._id}
                                         className="bg-black border border-white border-opacity-25 lg:p-6 p-5 rounded-lg mb-4"
                                     >
-                                        <div className="flex justify-between items-center">
+                                        <div className="flex justify-between items-center mb-4">
                                             <div className="flex gap-3 items-center justify-start">
                                                 {post.author && post.author.profilePicture && (
                                                     <img
@@ -107,11 +105,16 @@ const UsersProfile = () => {
                                                 {new Date(post.createdAt).toLocaleDateString()}
                                             </div>
                                         </div>
-                                        <h2 className="text-lg mt-4 font-semibold">{post.title}</h2>
-                                        <p className="text-base mt-5">{post.content}</p>
-                                        {post.image && (
-                                            <img src={post.image} alt={post.title} className="mt-2 p-5 rounded" />
-                                        )}
+                                        <Link to={`/post/image/${post._id}`}>
+                                            {post.image && (
+                                                <img
+                                                    className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                                                    src={post.image}
+                                                    alt={post.title}
+                                                />
+                                            )}
+                                        </Link>
+                                        <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
                                         <div className="mt-7">
                                             {post.tags.map((tag, index) => (
                                                 <span
