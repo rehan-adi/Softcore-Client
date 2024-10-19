@@ -1,9 +1,9 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { getToken } from "../utils/token";
+import { getToken } from "../../utils/token";
 import { useCallback, useState } from "react";
-import { BACKEND_API_URL } from '../constant';
-import { usePostsStore } from "../store/usePostsStore";
+import { BACKEND_API_URL } from '../../constant';
+import { usePostsStore } from "../../store/usePostsStore";
 
 export const useLikePost = () => {
 

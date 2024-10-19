@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { BACKEND_API_URL } from '../constant';
-import { usePostsStore } from "../store/usePostsStore";
+import { BACKEND_API_URL } from '../../constant';
 import { useState, useEffect, useCallback } from "react";
+import { usePostsStore } from "../../store/usePostsStore";
 
 export const useGetPost = () => {
 

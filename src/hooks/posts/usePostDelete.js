@@ -1,9 +1,9 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { getToken } from '../utils/token';
-import { BACKEND_API_URL } from "../constant";
+import { getToken } from '../../utils/token';
+import { BACKEND_API_URL } from "../../constant";
 import { useCallback, useState } from "react";
-import { usePostsStore } from "../store/usePostsStore"; 
+import { usePostsStore } from "../../store/usePostsStore";
 
 export const useDeletePost = (setSelectedBlog) => {
 
@@ -14,12 +14,12 @@ export const useDeletePost = (setSelectedBlog) => {
     setIsDeleting(true);
     try {
       const token = getToken();
-      await axios.delete(`${BACKEND_API_URL}/blogs/delete/${postId}`, {
+      await axios.delete(`${BACKEND_API_URL}/posts/delete/${postId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      deletePost(postId); 
+      deletePost(postId);
       setSelectedBlog(null);
       toast.success("Post deleted successfully!");
     } catch (error) {

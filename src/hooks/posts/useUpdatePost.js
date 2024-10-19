@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-hot-toast';
-import { getToken } from '../utils/token';
-import { BACKEND_API_URL } from '../constant';
-import { usePostsStore } from '../store/usePostsStore';
+import { getToken } from '../../utils/token';
+import { BACKEND_API_URL } from '../../constant';
+import { usePostsStore } from '../../store/usePostsStore';
 
 export const useUpdatePost = () => {
 
@@ -39,7 +39,7 @@ export const useUpdatePost = () => {
         } finally {
             setLoading(false);
         }
-        return updatedBlog; 
+        return updatedBlog;
     }, [updatePost, setLoading]);
 
     return { handleUpdatePost, loading };
