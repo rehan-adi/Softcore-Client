@@ -124,7 +124,7 @@ function Signup() {
         <hr className="border-t border-opacity-15 border-white w-[137px]  flex-grow" />
       </div>
       <button
-        className="bg-white w-full max-w-xs text-black font-semibold text-base py-3 px-3 rounded focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-center"
+        className="bg-white w-full max-w-xs text-black font-semibold text-base py-3 px-3 rounded-full focus:outline-none focus:shadow-outline hover:opacity-80 mt-2 flex items-center justify-center"
         onClick={handleGoogleSignin}
         disabled={loading}
       >
