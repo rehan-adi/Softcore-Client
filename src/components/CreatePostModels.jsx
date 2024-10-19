@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
 import { useForm } from "react-hook-form";
-import { useCreatePost } from "../hooks/useCreatePost"
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCreatePost } from "../hooks/posts/useCreatePost";
 import { createPostValidation } from '../validations/post.validation';
 
 function CreatePostModal({ onClose }) {

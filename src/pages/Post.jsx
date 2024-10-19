@@ -3,16 +3,16 @@ import { toast } from "react-hot-toast";
 import { X, Loader } from 'lucide-react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
 import TopNavbar from "../components/TopNavbar";
-import { useGetPost } from "../hooks/useGetPost";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useLikePost } from "../hooks/useLikePost";
 import { FaRegCommentDots } from "react-icons/fa6";
-import { useDeletePost } from "../hooks/usePostDelete";
-import { useUpdatePost } from '../hooks/useUpdatePost';
+import { Link, useNavigate } from "react-router-dom";
+import { useGetPost } from "../hooks/posts/useGetPost";
 import { usePostsStore } from "../store/usePostsStore";
 import { MdOutlineThumbUpOffAlt } from "react-icons/md";
+import { useLikePost } from "../hooks/posts/useLikePost";
+import { useDeletePost } from "../hooks/posts/usePostDelete";
+import { useUpdatePost } from '../hooks/posts/useUpdatePost';
 
 function Post() {
   const navigate = useNavigate();
