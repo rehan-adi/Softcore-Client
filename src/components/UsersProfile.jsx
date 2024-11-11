@@ -33,7 +33,7 @@ const UsersProfile = () => {
     return (
         <div className="w-full md:px-60 z-10 flex justify-center items-start bg-black text-white min-h-screen">
             <div className="flex justify-center items-center">
-                <div className="lg:px-8 py-10 flex justify-center items-center flex-col px-5">
+                <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
                     <div className="flex justify-between items-center">
                         <img
                             src={userProfileData.profilePicture}
@@ -43,9 +43,9 @@ const UsersProfile = () => {
                     </div>
                     <div className="mt-6 text-center">
                         <p className="text-2xl font-semibold">{userProfileData.fullname}</p>
-                        <p className="text-sm text-gray-400 mt-1 font-normal">{userProfileData.username}</p>
+                        <p className="text-base text-gray-400 mt-1 font-normal">{userProfileData.username}</p>
                     </div>
-                    <div className="mt-7">
+                    <div className="mt-5">
                         <p className="text-base lg:w-[31vw] w-[90vw] text-center font-normal">{userProfileData.bio}</p>
                     </div>
                     <div className="mt-5 flex gap-7">
@@ -78,14 +78,14 @@ const UsersProfile = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full pb-10 mt-5 text-white">
-                        <h1 className="font-semibold text-lg mb-5">Posts</h1>
+                    <div className="w-full mt-12 md:border pb-20 md:pb-0 md:border-white md:border-opacity-20 md:rounded-3xl  text-white">
+                        <h1 className="font-semibold px-5 pt-4 text-lg mb-5">Posts</h1>
                         <div>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
                                 userProfilePost.map((post) => (
                                     <div
                                         key={post._id}
-                                        className="bg-black border border-white border-opacity-25 lg:p-6 p-5 rounded-lg mb-4"
+                                        className="border-b border-white border-opacity-20 md:w-[45vw] px-5 py-4"
                                     >
                                         <div className="flex justify-between items-center mb-4">
                                             <div className="flex gap-3 items-center justify-start">
@@ -101,14 +101,14 @@ const UsersProfile = () => {
                                                     <p className="text-gray-300 text-sm">{post.author ? post.author.username : 'Unknown'}</p>
                                                 </div>
                                             </div>
-                                            <div className="text-gray-400 text-xs">
+                                            <div className="text-white text-xs">
                                                 {new Date(post.createdAt).toLocaleDateString()}
                                             </div>
                                         </div>
                                         <Link to={`/post/image/${post._id}`}>
                                             {post.image && (
                                                 <img
-                                                    className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                                                    className="w-full h-60 border border-white border-opacity-15 object-cover rounded-xl mb-4"
                                                     src={post.image}
                                                     alt={post.title}
                                                 />
