@@ -89,9 +89,9 @@ function Post() {
       <TopNavbar />
       <div className="w-full flex justify-center bg-black items-center min-h-screen">
         {loading ? (
-          <div className="min-h-screen flex w-full flex-col lg:mt-8 mt-24 space-y-6 justify-center items-center">
+          <div className="min-h-screen flex w-full md:w-[45vw] border border-white border-opacity-20 md:rounded-3xl rounded-none flex-col lg:mt-10 mt-[70px] space-y-6 justify-center items-center">
             {[1, 2].map((_, i) => (
-              <div key={i} className="p-6 border border-white border-opacity-25 md:w-[45vw] w-[90%] rounded-lg space-y-6 animate-pulse">
+              <div key={i} className="p-6 border-b border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
                 <div className="flex justify-between items-center mb-8">
                   <div className="flex gap-3 items-center">
                     <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
