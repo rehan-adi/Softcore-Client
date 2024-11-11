@@ -87,7 +87,7 @@ function Post() {
   return (
     <div className="flex relative z-10">
       <TopNavbar />
-      <div className="w-full flex justify-center items-center min-h-screen">
+      <div className="w-full flex justify-center bg-black items-center min-h-screen">
         {loading ? (
           <div className="min-h-screen flex w-full flex-col lg:mt-8 mt-24 space-y-6 justify-center items-center">
             {[1, 2].map((_, i) => (
@@ -115,12 +115,12 @@ function Post() {
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className="space-y-6 pt-24 lg:pt-8 lg:pb-9 pb-20 px-3 lg:px-12">
+          <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white border-opacity-20 rounded-3xl lg:pb-0 pb-20">
             {posts && posts.length > 0 ? (
               posts.map((post) => (
                 <div
                   key={post._id}
-                  className="bg-black border-white border border-opacity-25 rounded-lg md:w-[45vw] lg:p-6 p-5 relative"
+                  className="bg-black border-white border-b border-opacity-20 w-full px-5 py-4 relative"
                 >
                   <div className="flex justify-between items-center mb-4">
                     <div className="flex gap-3 items-center">
@@ -190,13 +190,13 @@ function Post() {
                   <Link to={`/post/image/${post._id}`}>
                     {post.image && (
                       <img
-                        className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                        className="w-full h-60 border border-white border-opacity-15 object-cover rounded-xl mb-4"
                         src={post.image}
                         alt={post.title}
                       />
                     )}
                   </Link>
-                  <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
+                  <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>
                   <div className="mt-7">
                     {post.tags.map((tag, index) => (
                       <span
