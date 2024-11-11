@@ -31,7 +31,7 @@ const UsersProfile = () => {
     const followingCount = userProfileData?.following?.length || 0;
 
     return (
-        <div className="w-full md:px-60 z-10 flex justify-center items-start bg-black text-white min-h-screen">
+        <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
             <div className="flex justify-center items-center">
                 <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
                     <div className="flex justify-between items-center">
