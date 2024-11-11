@@ -327,7 +327,7 @@ function Profile() {
                             />
                           )}
                         </Link>
-                        <p className="mt-2 text-[#E7E9EA]">{post.content}</p>
+                        <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>
                         <div className="mt-7">
                           {post.tags.map((tag, index) => (
                             <span
