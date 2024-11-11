@@ -244,14 +244,14 @@ function Profile() {
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
               </div>
-              <div className="mt-2 pb-20 md:pb-0 w-full md:border md:border-white md:border-opacity-20 md:rounded-3xl text-white">
+              <div className="mt-2 pb-20 md:pb-0 w-full text-white">
                 <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>
-                <div>
+                <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
                   {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post) => (
                       <div
                         key={post._id}
-                        className="border-b border-white border-opacity-20 px-4 py-5"
+                        className="border-b border-white border-opacity-20 px-5 py-4"
                       >
                         <div className="flex justify-between mb-4 items-center">
                           <div className="flex gap-3 items-center justify-start">
