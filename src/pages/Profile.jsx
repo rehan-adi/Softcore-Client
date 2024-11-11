@@ -191,7 +191,7 @@ function Profile() {
 
   return (
     <div>
-      <div className="w-full md:px-60 z-10 lg:pb-3 pb-16 items-center bg-black text-white min-h-screen">
+      <div className="w-full md:px-80 z-10 items-center bg-black text-white min-h-screen">
         {/*  Profile and Profile Posts */}
         {profileData ? (
           <div className="text-white">
@@ -215,8 +215,8 @@ function Profile() {
                 <p className="text-sm font-normal">{posts.length} posts</p>
               </div>
             </nav>
-            <div className="lg:pt-20 pt-24 lg:px-8 px-5">
-              <div className="flex justify-between items-center">
+            <div className="lg:pt-20 pt-24">
+              <div className="flex justify-between px-5 items-center">
                 <img
                   src={profileData.profilePicture}
                   alt="Profile"
@@ -229,14 +229,14 @@ function Profile() {
                   Edit Profile
                 </button>
               </div>
-              <div className="mt-6">
+              <div className="mt-6 px-5">
                 <p className="text-xl font-semibold">{profileData.fullname}</p>
                 <p className="text-sm text-gray-400 font-normal">{profileData.username}</p>
               </div>
-              <div className="mt-5">
+              <div className="mt-5 px-5">
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
-              <div className="mt-5 flex gap-7">
+              <div className="mt-5 flex gap-7 mb-10 px-5">
                 <p className="text-base font-bold">
                   {followingCount} <span className="opacity-60 font-normal">Following</span>
                 </p>
@@ -244,14 +244,14 @@ function Profile() {
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
               </div>
-              <div className="mt-6 py-8">
-                <h1 className="text-xl font-semibold mb-5">Posts</h1>
+              <div className="mt-2 pb-20 md:pb-0 w-full md:border md:border-white md:border-opacity-20 md:rounded-3xl text-white">
+                <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>
                 <div>
                   {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post) => (
                       <div
                         key={post._id}
-                        className="bg-black border border-white border-opacity-25 md:p-6 p-5 rounded-lg mb-4"
+                        className="border-b border-white border-opacity-20 px-4 py-5"
                       >
                         <div className="flex justify-between mb-4 items-center">
                           <div className="flex gap-3 items-center justify-start">
@@ -321,7 +321,7 @@ function Profile() {
                         <Link to={`/post/image/${post._id}`}>
                           {post.image && (
                             <img
-                              className="w-full h-60 border border-white border-opacity-20 object-cover rounded-lg mb-4"
+                              className="w-full h-60 border border-white border-opacity-15 object-cover rounded-xl mb-4"
                               src={post.image}
                               alt={post.title}
                             />
