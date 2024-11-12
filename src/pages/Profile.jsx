@@ -253,7 +253,7 @@ function Profile() {
                         key={post._id}
                         className="border-b border-white border-opacity-20 px-5 py-4"
                       >
-                        <div className="flex justify-between mb-4 items-center">
+                        <div className="flex justify-between mb-4 items-start">
                           <div className="flex gap-3 items-center justify-start">
                             {post.author && post.author.profilePicture && (
                               <img
@@ -264,10 +264,10 @@ function Profile() {
                             )}
                             <div className="flex items-start gap-4">
                               <div>
-                                <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
-                                <p className="text-gray-300 text-xs font-semibold">{post.author?.username ?? "anonymous"}</p>
+                                <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
+                                <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
                               </div>
-                              <p className="text-gray-400 mt-1.5 text-xs">
+                              <p className="text-gray-400 mt-1 text-xs">
                                 Posted {new Date(post.createdAt).toLocaleDateString()}
                               </p>
                             </div>
@@ -321,7 +321,7 @@ function Profile() {
                         <Link to={`/post/image/${post._id}`}>
                           {post.image && (
                             <img
-                               className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
+                              className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
                               src={post.image}
                               alt={post.title}
                             />
