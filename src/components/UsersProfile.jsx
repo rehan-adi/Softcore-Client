@@ -87,7 +87,7 @@ const UsersProfile = () => {
                                         key={post._id}
                                         className="border-b border-white border-opacity-20 md:w-[45vw] px-5 py-4"
                                     >
-                                        <div className="flex justify-between items-center mb-4">
+                                        <div className="flex justify-between items-start mb-4">
                                             <div className="flex gap-3 items-center justify-start">
                                                 {post.author && post.author.profilePicture && (
                                                     <img
@@ -97,8 +97,8 @@ const UsersProfile = () => {
                                                     />
                                                 )}
                                                 <div>
-                                                    <p className="font-bold">{post.author ? post.author.fullname : 'Unknown Author'}</p>
-                                                    <p className="text-gray-300 text-sm">{post.author ? post.author.username : 'Unknown'}</p>
+                                                    <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
+                                                    <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
                                                 </div>
                                             </div>
                                             <div className="text-white text-xs">
