@@ -2,10 +2,10 @@ import { toast } from "react-hot-toast";
 import { IoSearch } from "react-icons/io5";
 import { useCallback, useState } from "react";
 import CreatePostModal from "./CreatePostModels";
-import { Loader2, Settings } from "lucide-react";
 import useAuthStore from "../store/useAuthStore";
 import { MdLogout, MdLogin } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
+import { Loader2, Settings, User2 } from "lucide-react";
 import { useProfileStore } from "../store/useProfileStore";
 
 function SideNavbar() {
@@ -100,7 +100,7 @@ function SideNavbar() {
                   className="w-7 h-7 rounded-full border-2 border-white"
                 />
               ) : (
-                <div className="w-8 h-8 bg-gray-600 animate-pulse rounded-full"></div>
+                <User2 />
               )}
               <span className="font-semibold text-base">Profile</span>
             </div>

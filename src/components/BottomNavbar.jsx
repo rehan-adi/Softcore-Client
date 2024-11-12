@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { Loader2, Settings } from "lucide-react";
 import CreatePostModal from "./CreatePostModels";
 import { Link, useLocation } from "react-router-dom";
+import { Loader2, Settings, User2 } from "lucide-react";
 import { useProfileStore } from '../store/useProfileStore';
 
 function BottomNavbar() {
@@ -76,7 +76,7 @@ function BottomNavbar() {
                 className="w-7 h-7 rounded-full border-2 border-white"
               />
             ) : (
-              <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full"></div>
+              <User2 />
             )
           )}
         </Link>
