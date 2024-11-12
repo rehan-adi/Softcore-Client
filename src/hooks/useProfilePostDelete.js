@@ -14,7 +14,7 @@ export const useProfilePostDelete = () => {
         setLoading(true);
         try {
             const token = getToken();
-            await axios.delete(`${BACKEND_API_URL}/blogs/delete/${postId}`, {
+            await axios.delete(`${BACKEND_API_URL}/posts/delete/${postId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
