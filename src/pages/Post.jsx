@@ -122,7 +122,7 @@ function Post() {
                   key={post._id}
                   className="bg-black border-white border-b border-opacity-20 w-full px-5 py-4 relative"
                 >
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex justify-between items-start mb-4">
                     <div className="flex gap-3 items-center">
                       {post.author?.profilePicture ? (
                         <img
@@ -133,12 +133,12 @@ function Post() {
                       ) : (
                         <div className="w-8 h-8 rounded-full bg-gray-300"></div>
                       )}
-                      <div className="flex items-start gap-5">
+                      <div className="flex items-start gap-4">
                         <div>
-                          <p className="font-bold text-white">{post.author?.fullname ?? "Unknown Author"}</p>
-                          <p className="text-gray-300 text-xs font-semibold">{post.author?.username ?? "anonymous"}</p>
+                          <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
+                          <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
                         </div>
-                        <p className="text-gray-400 mt-1.5 text-xs">
+                        <p className="text-gray-400 mt-1 text-xs">
                           Posted on {new Date(post.createdAt).toLocaleDateString()}
                         </p>
                       </div>
