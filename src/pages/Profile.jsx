@@ -364,7 +364,7 @@ function Profile() {
                       </div>
                     ))
                   ) : (
-                    <p>No posts available</p>
+                    <p className="px-5 pt-5 pb-32">No posts available</p>
                   )}
                 </div>
               </div>
