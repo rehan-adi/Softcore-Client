@@ -1,12 +1,14 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { getToken } from "../../utils/token";
 import { useState, useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 import { BACKEND_API_URL } from '../../constant';
+import { getToken, removeToken } from "../../utils/token";
 
 export const useChangePassword = () => {
 
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChangePassword = useCallback(async (password) => {
         setLoading(true);
@@ -19,7 +21,9 @@ export const useChangePassword = () => {
             });
 
             if (response.status === 200) {
-                toast.success("Password changed successfully!");
+                toast("Password updated successfully. Please log in again to continue.", { icon: "🔐" });
+                removeToken();
+                navigate("/signin");
             }
 
         } catch (error) {
