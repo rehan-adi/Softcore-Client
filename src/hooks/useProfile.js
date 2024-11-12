@@ -13,7 +13,6 @@ export const useProfile = () => {
         try {
             const token = getToken("token");
             if (!token) {
-                toast.error("Token not available. Please log in again.");
                 return;
             }
 
