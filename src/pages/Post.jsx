@@ -115,7 +115,7 @@ function Post() {
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white border-opacity-20 rounded-3xl lg:pb-0 pb-20">
+          <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white border-opacity-20 rounded-3xl lg:pb-0 pb-[67px]">
             {posts && posts.length > 0 ? (
               posts.map((post) => (
                 <div
@@ -190,10 +190,10 @@ function Post() {
                   <Link to={`/post/image/${post._id}`}>
                     {post.image && (
                       <img
-                        className="w-full h-60 border border-white border-opacity-15 object-cover rounded-xl mb-4"
-                        src={post.image}
-                        alt={post.title}
-                      />
+                      className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
+                      src={post.image}
+                      alt={post.title}
+                    />
                     )}
                   </Link>
                   <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>

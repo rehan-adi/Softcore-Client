@@ -78,7 +78,7 @@ const UsersProfile = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full mt-12 pb-20 md:pb-0  text-white">
+                    <div className="w-full mt-12 pb-[67px] md:pb-0 text-white">
                         <h1 className="font-semibold px-5 pt-4 text-lg mb-5">Posts</h1>
                         <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
@@ -108,7 +108,7 @@ const UsersProfile = () => {
                                         <Link to={`/post/image/${post._id}`}>
                                             {post.image && (
                                                 <img
-                                                    className="w-full h-60 border border-white border-opacity-15 object-cover rounded-xl mb-4"
+                                                    className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
                                                     src={post.image}
                                                     alt={post.title}
                                                 />
