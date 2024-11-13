@@ -125,18 +125,24 @@ function Post() {
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex gap-3 items-center">
                       {post.author?.profilePicture ? (
-                        <img
-                          src={post.author.profilePicture}
-                          alt={post.author.username}
-                          className="w-8 h-8 rounded-full mr-1"
-                        />
+                        <Link to={`/profile/${post.author._id}`}>
+                          <img
+                            src={post.author.profilePicture}
+                            alt={post.author.username}
+                            className="w-8 h-8 rounded-full mr-1"
+                          />
+                        </Link>
                       ) : (
                         <div className="w-8 h-8 rounded-full bg-gray-300"></div>
                       )}
                       <div className="flex items-start gap-4">
                         <div>
-                          <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
-                          <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
+                          <Link to={`/profile/${post.author._id}`}>
+                            <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
+                          </Link>
+                          <Link to={`/profile/${post.author._id}`}>
+                            <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
+                          </Link>
                         </div>
                         <p className="text-gray-400 mt-1 text-xs">
                           Posted on {new Date(post.createdAt).toLocaleDateString()}
@@ -190,10 +196,10 @@ function Post() {
                   <Link to={`/post/image/${post._id}`}>
                     {post.image && (
                       <img
-                      className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
-                      src={post.image}
-                      alt={post.title}
-                    />
+                        className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
+                        src={post.image}
+                        alt={post.title}
+                      />
                     )}
                   </Link>
                   <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>
