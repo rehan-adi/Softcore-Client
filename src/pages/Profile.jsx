@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { Loader, X } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
@@ -181,7 +181,7 @@ function Profile() {
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center bg-black items-center">
-        <Loader className="h-6 w-6 animate-spin" />
+        <Loader2 className="h-6 w-6 animate-spin" />
       </div>
     );
   }
@@ -303,7 +303,7 @@ function Profile() {
                                     >
                                       {isDeletingPost && selectedPost === post._id ? (
                                         <>
-                                          <Loader className="text-xl animate-spin" />
+                                          <Loader2 className="text-xl animate-spin" />
                                         </>
                                       ) : (
                                         <>
@@ -457,7 +457,7 @@ function Profile() {
                   className="text-white font-semibold text-sm py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
                 >
                   {loading ? <>
-                    <Loader className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
+                    <Loader2 className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
                   </> : "Save Changes"}
                 </button>
               </div>

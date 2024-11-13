@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Loader } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreatePost } from "../hooks/posts/useCreatePost";
@@ -139,7 +139,7 @@ function CreatePostModal({ onClose }) {
               disabled={loading}
             >
               {loading ? (
-                <Loader className="w-5 h-5 animate-spin inline-block" />
+                <Loader2 className="w-5 h-5 animate-spin inline-block" />
               ) : (
                 "Submit Post"
               )}

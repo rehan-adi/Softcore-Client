@@ -1,4 +1,4 @@
-import { Loader } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { FaRegCommentDots } from 'react-icons/fa6';
 import useFollowUser from '../hooks/useFollowUser';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,7 +16,7 @@ const UsersProfile = () => {
     if (loading) {
         return (
             <div className="w-full h-screen flex justify-center bg-black items-center">
-                <Loader className="h-6 w-6 animate-spin" />
+                <Loader2 className="h-6 w-6 animate-spin" />
             </div>
         );
     }
@@ -67,7 +67,7 @@ const UsersProfile = () => {
                             >
                                 {followLoading ? (
                                     <>
-                                        <Loader className="h-4 w-4 animate-spin inline-block" />
+                                        <Loader2 className="h-4 w-4 animate-spin inline-block" />
                                         <span className="ml-2">Processing...</span>
                                     </>
                                 ) : isFollowing ? (

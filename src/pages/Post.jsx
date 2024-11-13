@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { X, Loader } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import { BsThreeDots } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import TopNavbar from "../components/TopNavbar";
@@ -173,7 +173,7 @@ function Post() {
                                 className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                               >
                                 {isDeleting ? (
-                                  <Loader className="mr-3 animate-spin w-5 h-5" />
+                                  <Loader2 className="mr-3 animate-spin w-5 h-5" />
                                 ) : (
                                   <RiDeleteBin6Line className="mr-3 text-xl" />
                                 )}
@@ -270,7 +270,7 @@ function Post() {
                 >
                   {isUpdatingPost ? (
                     <>
-                      <Loader className="w-5 h-5 animate-spin mr-3 inline-block" />
+                      <Loader2 className="w-5 h-5 animate-spin mr-3 inline-block" />
                     </>
                   ) : (
                     "Update Post"

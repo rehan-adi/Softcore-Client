@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Loader } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -84,7 +84,7 @@ const Settings = () => {
                 disabled={loading}
                 className="bg-white mt-5 w-44 font-semibold text-black px-4 py-2 rounded-full transition"
               >
-                {loading ? <Loader className="w-6 h-6 animate-spin mr-3 inline-block" /> : "Update Password"}
+                {loading ? <Loader2 className="w-6 h-6 animate-spin mr-3 inline-block" /> : "Update Password"}
               </button>
             </form>
           </div>
@@ -116,7 +116,7 @@ const Settings = () => {
                       disabled={deleteLoading}
                       className="bg-white w-24 font-semibold text-black px-3 py-2 rounded-full transition"
                     >
-                      {deleteLoading ? <Loader className="w-5 h-5 animate-spin inline-block" /> : "Confirm"}
+                      {deleteLoading ? <Loader2 className="w-5 h-5 animate-spin inline-block" /> : "Confirm"}
                     </button>
                   </div>
                 </div>
