@@ -78,7 +78,7 @@ const UsersProfile = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="w-full mt-12 pb-[67px] md:pb-0 text-white">
+                    <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
                         <h1 className="font-semibold px-5 pt-4 text-lg mb-5">Posts</h1>
                         <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (

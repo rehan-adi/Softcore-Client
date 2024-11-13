@@ -244,7 +244,7 @@ function Profile() {
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
               </div>
-              <div className="mt-2 pb-[67px] md:pb-0 w-full text-white">
+              <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
                 <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>
                 <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
                   {Array.isArray(posts) && posts.length > 0 ? (
