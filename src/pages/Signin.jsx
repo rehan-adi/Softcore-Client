@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignin } from '../hooks/auth/useSignin';
 import useAuthStore  from '../store/useAuthStore';
@@ -32,10 +32,10 @@ function Signin() {
     setShowPassword(!showPassword);
   };
 
-  const handleGoogleSignin = () => {
+  const handleGoogleSignin = useCallback(() => {
     setGoogleLoading(true);
     window.location.href = "http://localhost:3333/api/v1/auth/google";
-  };
+  }, []);
 
   return (
     <div className="bg-black w-full h-screen flex flex-col items-center">
