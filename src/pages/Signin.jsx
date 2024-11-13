@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSignin } from '../hooks/auth/useSignin';
 import useAuthStore  from '../store/useAuthStore';
-import { Loader, Eye, EyeOff } from 'lucide-react'
+import { Loader2, Eye, EyeOff } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SigninValidation } from "../validations/auth.validation";
 
@@ -14,6 +14,7 @@ function Signin() {
     mode: "onSubmit"
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
 
   const { signin, loading } = useSignin();
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function Signin() {
   };
 
   const handleGoogleSignin = () => {
+    setGoogleLoading(true);
     window.location.href = "http://localhost:3333/api/v1/auth/google";
   };
 
@@ -96,7 +98,7 @@ function Signin() {
             type='submit'
             disabled={loading}
           >
-            {loading ? <Loader className="w-6 h-6 animate-spin mr-3 inline-block" /> : "Sign In"}
+            {loading ? <Loader2 className="w-6 h-6 animate-spin mr-3 inline-block" /> : "Sign In"}
           </button>
         </div>
       </form>
@@ -114,14 +116,11 @@ function Signin() {
       <button
         className="bg-white w-full max-w-xs text-black hover:opacity-80 font-semibold text-base py-3 px-3 rounded-full focus:outline-none focus:shadow-outline mt-2 flex items-center justify-center"
         onClick={handleGoogleSignin}
-        disabled={loading}
+        disabled={googleLoading}
       >
-        {loading ? <><Loader className="w-6 h-6 animate-spin mr-3 inline-block" />  <img
-          src="/images/google.svg"
-          alt="Google Logo"
-          className="w-6 h-6 mr-4"
-        />
-          Continue with Google
+        {googleLoading ? 
+        <>
+        <Loader2 className="w-6 h-6 animate-spin mr-3 inline-block" />
         </>
           : <>
             <img
