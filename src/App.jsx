@@ -9,6 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
 import { useProfile } from "./hooks/useProfile";
+import GoogleCallback from "./utils/googleCallback";
 import UsersProfile from "./components/UsersProfile";
 import ImagePreview from "./components/ImagePreview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -31,6 +32,7 @@ function App() {
           <Route path="post/image/:postId" element={<ImagePreview />} />
         </Route>
         <Route path="/signin" element={<Signin />} />
+        <Route path="/google/callback" element={<GoogleCallback />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/premium" element={<Premium />} />
       </Routes>
