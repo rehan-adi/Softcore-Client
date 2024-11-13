@@ -180,9 +180,48 @@ function Profile() {
 
   if (loading) {
     return (
-      <div className="w-full h-screen flex justify-center bg-black items-center">
-        <Loader2 className="h-6 w-6 animate-spin" />
+      <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col lg:mt-12 mt-[70px] space-y-6 justify-center items-center">
+      {/* Skeleton structure for the user profile */}
+      <div className="p-6 md:w-[45vw] w-full animate-pulse">
+        <div className="flex justify-between px-5 items-center mb-8">
+          <div className="w-28 h-28 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+          <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
+        </div>
+        <div className="mt-6 px-5">
+          <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
+          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
+        </div>
+        <div className="mt-5 px-5">
+          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
+        </div>
+        <div className="mt-5 flex gap-7 mb-10 px-5">
+          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+        </div>
       </div>
+      {/* Skeleton structure for posts */}
+      {[1, 2, 3].map((_, i) => (
+        <div key={i} className="p-6 border-b mt-20 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
+          <div className="flex justify-between items-center mb-8">
+            <div className="flex gap-3 items-center">
+              <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+              <div>
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+              </div>
+            </div>
+            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+          </div>
+          <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
+          <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
+          <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
+          <div className="mt-4 flex justify-between items-center">
+            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+          </div>
+        </div>
+      ))}
+    </div>
     );
   }
 
