@@ -216,17 +216,17 @@ function Post() {
                   <div className="mt-8 flex justify-between items-center">
                     <button
                       onClick={() => handleLike(post._id)}
-                      className={`font-semibold cursor-pointer flex items-center gap-2 ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-700'}`}
+                      className="font-semibold cursor-pointer flex items-center gap-2"
                     >
-                      <span className={`flex py-2 px-1 gap-2 items-center justify-center ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-500'}`}>
-                        <MdOutlineThumbUpOffAlt className={`inline-block text-xl md:text-2xl ${post.likedByUser ? 'text-[#1D9BF0]' : 'text-gray-500'}`} />
+                      <span className="flex py-2 px-1 gap-2 items-center justify-center text-white">
+                        <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl text-white" />
                         <span className="text-sm md:text-base">{post.likes.length}</span>
                       </span>
                     </button>
-                    <button className="text-gray-700 font-semibold cursor-pointer"
+                    <button className="font-semibold cursor-pointer"
                       onClick={() => navigate(`/comments/${post._id}`)}
                     >
-                      <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                      <span className="text-white flex py-2 px-1 gap-2 items-center justify-center">
                         <span>
                           <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
                         </span>
