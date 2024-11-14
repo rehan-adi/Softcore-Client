@@ -182,7 +182,7 @@ function Profile() {
     return (
       <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col lg:mt-12 mt-[70px] space-y-6 justify-center items-center">
       {/* Skeleton structure for the user profile */}
-      <div className="p-6 md:w-[45vw] w-full animate-pulse">
+      <div className="py-6 md:w-[45vw] w-full animate-pulse">
         <div className="flex justify-between px-5 items-center mb-8">
           <div className="w-28 h-28 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
           <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
@@ -201,7 +201,7 @@ function Profile() {
       </div>
       {/* Skeleton structure for posts */}
       {[1, 2, 3].map((_, i) => (
-        <div key={i} className="p-6 border-b mt-20 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
+        <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
           <div className="flex justify-between items-center mb-8">
             <div className="flex gap-3 items-center">
               <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
