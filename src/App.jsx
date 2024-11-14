@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
 import { useProfile } from "./hooks/useProfile";
-import GoogleCallback from "./utils/googleCallback";
+import GoogleCallback from "./utils/GoogleCallback";
 import UsersProfile from "./components/UsersProfile";
 import ImagePreview from "./components/ImagePreview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
