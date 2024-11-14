@@ -107,7 +107,6 @@ function Profile() {
   const handleEditPost = (postId) => {
     const post = posts.find((post) => post._id === postId);
     setEditPostFormData({
-      title: post.title,
       content: post.content,
     });
     setSelectedPost(postId);
@@ -125,16 +124,16 @@ function Profile() {
     e.preventDefault();
     const token = getToken();
     try {
-      const formData = new FormData();
-      formData.append("content", editPostFormData.content);
+      
+      const data = { content: editPostFormData.content };
 
       const response = await axios.patch(
         `${BACKEND_API_URL}/posts/update/${selectedPost}`,
-        formData,
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         }
       );
