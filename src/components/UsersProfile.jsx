@@ -197,7 +197,7 @@ const UsersProfile = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No posts available</p>
+                                <p className='pb-10 px-5 pt-4'>No posts available</p>
                             )}
                         </div>
                     </div>
