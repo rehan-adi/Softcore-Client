@@ -124,9 +124,8 @@ function Profile() {
     e.preventDefault();
     const token = getToken();
     try {
-      
       const data = { content: editPostFormData.content };
-
+  
       const response = await axios.patch(
         `${BACKEND_API_URL}/posts/update/${selectedPost}`,
         data,
@@ -137,21 +136,31 @@ function Profile() {
           },
         }
       );
-
-      // Update the post data after editing
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === selectedPost ? { ...post, ...response.data.updatedPost } : post
-        )
-      );
-
+  
+      console.log("Response Data:", response.data);
+  
+      setPosts((prevPosts) => {
+        console.log("Previous posts:", prevPosts);
+  
+        const updatedPosts = prevPosts.map((post) =>
+          post._id === selectedPost
+            ? { ...post, content: response.data.data.post.content }
+            : post
+        );
+  
+        console.log("Updated posts:", updatedPosts);
+  
+        return updatedPosts;
+      });
+  
       setIsEditPostModalOpen(false);
       toast.success("Post updated successfully!");
     } catch (error) {
-      console.error("Error updating post:", error);
+      toast.error("Failed to update post.");
     }
   };
-
+  
+  
   const handlePostDelete = async (postId) => {
     const success = await handleDelete(postId);
     if (success) {
