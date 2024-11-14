@@ -15,7 +15,9 @@ export const createPostValidation = z.object({
         .string()
         .min(1, { message: 'Category is required' })
         .transform((val) => val.trim()),
-    image: z
+        image: z
         .instanceof(File)
-        .refine((file) => file !== null, { message: 'Image is required' }),
+        .optional()
+        .nullable()
+        .refine((file) => file === null || file instanceof File, { message: 'Invalid file type' })
 });
