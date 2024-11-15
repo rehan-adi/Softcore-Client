@@ -115,7 +115,7 @@ function Post() {
         ) : error ? (
           <div>Error: {error}</div>
         ) : (
-          <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white border-opacity-20 rounded-3xl lg:pb-0 pb-[58px]">
+          <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white md:border-opacity-20 border-opacity-0 rounded-3xl lg:pb-0 pb-[58px]">
             {posts && posts.length > 0 ? (
               posts.map((post) => (
                 <div
