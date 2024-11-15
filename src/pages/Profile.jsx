@@ -243,7 +243,7 @@ function Profile() {
         {profileData ? (
           <div className="text-white">
             <nav
-              className={`h-[70px] py-4 lg:px-10 px-3 items-center fixed top-0 z-40 border-b border-r border-white w-full md:hidden flex gap-10 border-opacity-20 transition-transform duration-300 ${isScrolled ? '-translate-y-full' : 'translate-y-0'
+              className={`h-[70px] py-4 lg:px-10 px-3 items-center fixed top-0 z-40 border-b border-white w-full md:hidden flex gap-10 border-opacity-20 transition-transform duration-300 ${isScrolled ? '-translate-y-full' : 'translate-y-0'
                 }`}
               style={{
                 backdropFilter: 'blur(10px)',
@@ -293,7 +293,7 @@ function Profile() {
               </div>
               <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
                 <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>
-                <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
+                <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
                   {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post) => (
                       <div
