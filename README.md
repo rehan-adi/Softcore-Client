@@ -1,6 +1,6 @@
 # 📱 [Softcore]
 
-Welcome to Softcore – a modern, responsive, and engaging social media platform designed to bring people closer together. Whether you're sharing moments, discovering content, or connecting with like-minded individuals, our app has you covered.
+Welcome to Softcore – a chill, fun, and totally awesome social media app where you can vibe with your friends, share cool moments, and discover epic content. Whether you're here to hang out, post memes, or just keep up with the squad, Softcore’s got your back. Let's make some memories, bro! 😎🎉
 
 ## 📚 Table of Contents
 
@@ -11,46 +11,10 @@ Welcome to Softcore – a modern, responsive, and engaging social media platform
 
 ## 🚀 Technologies Used
 
-- **Frontend**: [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/)
-- **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/)
-- **Database**: [MongoDB](https://www.mongodb.com/)
-- **Authentication**: Custom authentication using [JWT](https://jwt.io/)
-
-## 🎨 Screenshots
-
-### Login Page
-
-![Login Page](public/images/login.png)
-
-### Home Page
-
-![Home Page](public/images/homepage.png)
-
-### Profile Page
-
-![Profile Page](public/images/profile.png)
-
-## 🌐 Live Demo
-
-Check out the live version of the app [here](https://softcoreapp.vercel.app/).
-
-# 📱 [Softcore]
-
-Welcome to Softcore – a modern, responsive, and engaging social media platform designed to bring people closer together. Whether you're sharing moments, discovering content, or connecting with like-minded individuals, our app has you covered.
-
-## 📚 Table of Contents
-
-- [Technologies Used](#-technologies-used)
-- [Screenshots](#-screenshots)
-- [Contact](#-contact)
-- [License](#-license)
-
-## 🚀 Technologies Used
-
-- **Frontend**: [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/)
-- **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/)
-- **Database**: [MongoDB](https://www.mongodb.com/)
-- **Authentication**: Custom authentication using [JWT](https://jwt.io/)
+- 🖥️ **Frontend**: [React](https://reactjs.org/) + [Tailwind CSS](https://tailwindcss.com/)
+- 🛠️ **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/)
+- 🗄️ **Database**: [MongoDB](https://www.mongodb.com/)
+- 🔐 **Authentication**: Custom authentication using [JWT](https://jwt.io/)
 
 ## 🎨 Screenshots
 
@@ -76,7 +40,6 @@ For inquiries or support, reach out at:
 
 - **Email**: rehanalire52@gmail.com
 - **GitHub**: [rehan-adi](https://github.com/rehan-adi)
-
 
 ## 📜 License
 
