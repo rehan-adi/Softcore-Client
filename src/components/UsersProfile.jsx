@@ -16,55 +16,57 @@ const UsersProfile = () => {
     if (loading) {
         return (
             <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
-            <div className="flex justify-center items-center">
-                <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
-                    <div className="flex justify-between items-center">
-                        <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#27272A] animate-pulse" />
-                    </div>
-                    <div className="mt-6 flex justify-center items-center flex-col text-center">
-                        <div className="w-28 h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
-                        <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
-                    </div>
-                    <div className="mt-10">
-                        <div className="lg:w-[31vw] w-[90vw] h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
-                    </div>
-                    <div className="mt-5 flex gap-7">
-                        <div className="text-base font-bold">
-                            <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
+                <div className="flex justify-center items-center">
+                    <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
+                        <div className="flex justify-between items-center">
+                            <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#27272A] animate-pulse" />
                         </div>
-                        <div className="text-base font-bold">
-                            <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
+                        <div className="mt-6 flex justify-center items-center flex-col text-center">
+                            <div className="w-28 h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
+                            <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
                         </div>
-                    </div>
-                    <div className="mt-5">
-                        <div className="w-28 h-9 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full" />
-                    </div>
-                    <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
-                        <h1 className="font-semibold md:px-5 px-0 pt-4 text-lg mb-5">Posts</h1>
-                        <div className='border-b border-white border-opacity-20 md:rounded-3xl rounded-none'>
-                            <div className="border-b border-white border-opacity-20 md:w-[45vw] md:px-5 px-0 py-4 animate-pulse">
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="flex gap-3 items-center justify-start">
-                                        <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full" />
-                                        <div>
-                                            <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-1" />
-                                            <div className="w-16 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
+                        <div className="mt-10">
+                            <div className="lg:w-[31vw] w-[90vw] h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
+                        </div>
+                        <div className="mt-5 flex gap-7">
+                            <div className="text-base font-bold">
+                                <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
+                            </div>
+                            <div className="text-base font-bold">
+                                <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
+                            </div>
+                        </div>
+                        <div className="mt-5">
+                            <div className="w-28 h-9 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full" />
+                        </div>
+                        <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
+                            <h1 className="font-semibold md:px-5 px-0 pt-4 text-lg mb-5">Posts</h1>
+                            {[1, 2, 3].map((_, i) => (
+                                <div className='border-b border-white border-opacity-20 md:rounded-3xl rounded-none'>
+                                    <div className="border-b border-white border-opacity-20 md:w-[45vw] md:px-5 px-0 py-4 animate-pulse">
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="flex gap-3 items-center justify-start">
+                                                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full" />
+                                                <div>
+                                                    <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-1" />
+                                                    <div className="w-16 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
+                                                </div>
+                                            </div>
+                                            <div className="w-12 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
+                                        </div>
+                                        <div className="w-full h-60 md:h-80 bg-gray-200 dark:bg-[#27272A] rounded-xl mb-4" />
+                                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-2 w-[80%]" />
+                                        <div className="mt-8 flex justify-between items-center">
+                                            <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
+                                            <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
                                         </div>
                                     </div>
-                                    <div className="w-12 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
                                 </div>
-                                <div className="w-full h-60 md:h-80 bg-gray-200 dark:bg-[#27272A] rounded-xl mb-4" />
-                                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-2 w-[80%]" />
-                                <div className="mt-8 flex justify-between items-center">
-                                    <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                    <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         );
     }
 
@@ -126,8 +128,8 @@ const UsersProfile = () => {
                         </div>
                     </div>
                     <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
-                        <h1 className="font-semibold px-5 pt-4 text-lg mb-5">Posts</h1>
-                        <div className='border border-white border-opacity-20 md:rounded-3xl rounded-none'>
+                        <h1 className="font-semibold pt-4 px-5 text-lg mb-5">Posts</h1>
+                        <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
                                 userProfilePost.map((post) => (
                                     <div
@@ -174,19 +176,19 @@ const UsersProfile = () => {
                                         </div>
                                         <div className="mt-8 flex justify-between items-center">
                                             <button
-                                                className="text-gray-700 font-semibold cursor-pointer"
+                                                className="font-semibold cursor-pointer"
                                             >
-                                                <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                                                <span className="flex text-white py-2 px-1 gap-2 items-center justify-center">
                                                     <span>
                                                         <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
                                                     </span>
                                                     <span className="text-sm md:text-base">{post.likes.length}</span>
                                                 </span>
                                             </button>
-                                            <button className="text-gray-700 font-semibold cursor-pointer"
+                                            <button className="text-white font-semibold cursor-pointer"
                                                 onClick={() => navigate(`/comments/${post._id}`)}
                                             >
-                                                <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                                                <span className="text-white flex py-2 px-1 gap-2 items-center justify-center">
                                                     <span>
                                                         <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
                                                     </span>

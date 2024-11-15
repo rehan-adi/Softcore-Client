@@ -388,19 +388,19 @@ function Profile() {
                         <div className="flex justify-between mt-8 items-center">
                           <button
                             onClick={() => handleLike(post._id)}
-                            className="text-gray-700 font-semibold cursor-pointer"
+                            className="font-semibold cursor-pointer"
                           >
-                            <span className="flex text-gray-500 hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                            <span className="flex text-white py-2 px-1 gap-2 items-center justify-center">
                               <span>
                                 <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
                               </span>
                               <span className="text-sm md:text-base">{post.likes.length}</span>
                             </span>
                           </button>
-                          <button className="text-gray-700 font-semibold cursor-pointer"
+                          <button className="font-semibold cursor-pointer"
                             onClick={() => navigate(`/comments/${post._id}`)}
                           >
-                            <span className="text-gray-500 flex hover:text-[#1D9BF0] py-2 px-1 gap-2 items-center justify-center">
+                            <span className="text-white flex py-2 px-1 gap-2 items-center justify-center">
                               <span>
                                 <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
                               </span>
