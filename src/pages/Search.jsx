@@ -102,8 +102,8 @@ function Search() {
                 <div className="flex items-center">
                   <div className="h-8 w-8 bg-gray-200 dark:bg-gray-700 rounded-full mr-4"></div>
                   <div className="flex flex-col">
-                    <div className="h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-1"></div>
-                    <div className="h-3 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="h-5 w-32 bg-gray-200 dark:bg-gray-700 rounded mb-1"></div>
+                    <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
                   </div>
                 </div>
                 <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded"></div>
@@ -123,11 +123,11 @@ function Search() {
         {!loading && searchResults.length > 0 && searchResults.map(user => (
           <div
             key={user.id}
-            className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] rounded-lg cursor-pointer"
+            className="flex items-center justify-between px-4 py-3 bg-[#F9FAFB0D] rounded-lg cursor-pointer hover:bg-neutral-900"
             onClick={() => goToUserProfile(user._id)}
           >
             {/* Profile Picture */}
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <img
                 src={user.profilePicture}
                 alt={`${user.username}'s profile picture`}
@@ -136,18 +136,10 @@ function Search() {
 
               {/* User Info: Name, Username */}
               <div className="flex flex-col">
-                <span className="text-sm font-semibold">{user.fullname}</span>
-                <span className="text-xs text-gray-300">@{user.username}</span>
+                <span className="text-base font-semibold">{user.fullname}</span>
+                <span className="text-sm text-gray-300">@{user.username}</span>
               </div>
             </div>
-
-            {/* Follow Button */}
-            <button
-              disabled={loading}
-              className="text-sm text-blue-400 hover:underline"
-            >
-              Follow
-            </button>
           </div>
         ))}
 
