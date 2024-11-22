@@ -96,7 +96,7 @@ function CreatePostModal({ onClose }) {
               <input
                 type="text"
                 id="tags"
-                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md block placeholder:text-white w-full"
+                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md block text-white placeholder:text-white w-full"
                 placeholder="Separate tags with commas ..."
                 {...register("tags")}
               />
