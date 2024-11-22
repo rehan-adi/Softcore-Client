@@ -289,9 +289,11 @@ function Profile() {
                   {followingCount} <span className="opacity-60 font-normal">Following</span>
                 </p>
                 </Link>
+                <Link to={`/profile/followers`}>
                 <p className="text-base font-bold">
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>
+                </Link>
               </div>
               <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
                 <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>

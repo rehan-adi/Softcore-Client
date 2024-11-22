@@ -8,12 +8,13 @@ import Search from "../src/pages/Search";
 import { Toaster } from "react-hot-toast";
 import Premium from "../src/pages/Premium";
 import Profile from "../src/pages/Profile";
+import Following from "./components/Following";
+import Followers from "./components/Followers";
 import { useProfile } from "./hooks/useProfile";
 import GoogleCallback from "./utils/GoogleCallback";
 import UsersProfile from "./components/UsersProfile";
 import ImagePreview from "./components/ImagePreview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Following from "./components/Following";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
           <Route path="profile/following" element={<Following />} />
+          <Route path="profile/followers" element={<Followers/>} />
           <Route path="comments/:postId" element={<Comments />} />
           <Route path="post/image/:postId" element={<ImagePreview />} />
         </Route>
