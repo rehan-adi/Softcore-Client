@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const createPostValidation = z.object({
     content: z
         .string()
-        .min(1, { message: 'Content should have at least 1 character' })
+        .optional()
         .transform((val) => val.trim()),
     tags: z
         .string()
@@ -13,7 +13,7 @@ export const createPostValidation = z.object({
         .refine(tagsArray => tagsArray.every(tag => tag.length > 0), { message: "Tags cannot be empty." }),
     category: z
         .string()
-        .min(1, { message: 'Category is required' })
+        .optional()
         .transform((val) => val.trim()),
         image: z
         .instanceof(File)
