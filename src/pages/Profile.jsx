@@ -283,10 +283,12 @@ function Profile() {
               <div className="mt-5 px-5">
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
-              <div className="mt-5 flex gap-7 mb-10 px-5">
+              <div className="mt-5 flex gap-7  mb-10 px-5">
+              <Link to={`/profile/following`}>
                 <p className="text-base font-bold">
                   {followingCount} <span className="opacity-60 font-normal">Following</span>
                 </p>
+                </Link>
                 <p className="text-base font-bold">
                   {followersCount} <span className="opacity-60 font-normal">Followers</span>
                 </p>

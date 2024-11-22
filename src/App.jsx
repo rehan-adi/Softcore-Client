@@ -13,6 +13,7 @@ import GoogleCallback from "./utils/GoogleCallback";
 import UsersProfile from "./components/UsersProfile";
 import ImagePreview from "./components/ImagePreview";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Following from "./components/Following";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="settings" element={<Settings />} />
           <Route path="profile/:id" element={<UsersProfile />} />
+          <Route path="profile/following" element={<Following />} />
           <Route path="comments/:postId" element={<Comments />} />
           <Route path="post/image/:postId" element={<ImagePreview />} />
         </Route>
