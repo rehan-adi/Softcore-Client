@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getToken } from "../utils/token";
+import { useEffect, useState } from "react";
 import { BACKEND_API_URL } from "../constant";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 
 function Following() {
 

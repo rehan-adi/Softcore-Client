@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getToken } from "../utils/token";
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { BACKEND_API_URL } from "../constant";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 
 function UserFollowing() {
 
