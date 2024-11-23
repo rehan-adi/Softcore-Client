@@ -34,7 +34,7 @@ function UserFollowers() {
             }
         };
         fetchUserFollowers();
-    }, []);
+    }, [id]);
 
     const goToUserProfile = (id) => {
         navigate(`/profile/${id}`);

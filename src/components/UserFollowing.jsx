@@ -34,7 +34,7 @@ function UserFollowing() {
             }
         };
         fetchUserFollowing();
-    }, []);
+    }, [id]);
 
     const goToUserProfile = (id) => {
         navigate(`/profile/${id}`);
