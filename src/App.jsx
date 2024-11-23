@@ -15,6 +15,7 @@ import GoogleCallback from "./utils/GoogleCallback";
 import UsersProfile from "./components/UsersProfile";
 import ImagePreview from "./components/ImagePreview";
 import UserFollowing from "./components/UserFollowing";
+import UserFollowers from "./components/UserFollowers";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="profile/following" element={<Following />} />
           <Route path="profile/followers" element={<Followers/>} />
           <Route path="profile/following/:id" element={<UserFollowing />} />
+          <Route path="profile/followers/:id" element={<UserFollowers />} />
           <Route path="comments/:postId" element={<Comments />} />
           <Route path="post/image/:postId" element={<ImagePreview />} />
         </Route>

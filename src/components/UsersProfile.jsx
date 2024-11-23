@@ -103,9 +103,11 @@ const UsersProfile = () => {
                                 {followingCount} <span className="opacity-60 font-normal">Following</span>
                             </p>
                         </Link>
-                        <p className="text-base font-bold">
-                            {followersCount} <span className="opacity-60 font-normal">Followers</span>
-                        </p>
+                        <Link to={`/profile/followers/${userProfileData._id}`}>
+                            <p className="text-base font-bold">
+                                {followersCount} <span className="opacity-60 font-normal">Followers</span>
+                            </p>
+                        </Link>
                     </div>
                     <div className="mt-5">
                         <div className="mt-3">
