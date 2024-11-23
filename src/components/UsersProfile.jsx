@@ -42,7 +42,7 @@ const UsersProfile = () => {
                         <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
                             <h1 className="font-semibold md:px-5 px-0 pt-4 text-lg mb-5">Posts</h1>
                             {[1, 2, 3].map((_, i) => (
-                                <div className='border-b border-white border-opacity-20 md:rounded-3xl rounded-none'>
+                                <div key={i} className='border-b border-white border-opacity-20 md:rounded-3xl rounded-none'>
                                     <div className="border-b border-white border-opacity-20 md:w-[45vw] md:px-5 px-0 py-4 animate-pulse">
                                         <div className="flex justify-between items-start mb-4">
                                             <div className="flex gap-3 items-center justify-start">
