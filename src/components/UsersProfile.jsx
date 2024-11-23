@@ -22,7 +22,7 @@ const UsersProfile = () => {
                             <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#27272A] animate-pulse" />
                         </div>
                         <div className="mt-6 flex justify-center items-center flex-col text-center">
-                            <div className="w-28 h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
+                            <div className="w-24 h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
                             <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
                         </div>
                         <div className="mt-10">
@@ -91,8 +91,8 @@ const UsersProfile = () => {
                         />
                     </div>
                     <div className="mt-6 text-center">
-                        <p className="text-2xl font-semibold">{userProfileData.fullname}</p>
-                        <p className="text-base text-gray-400 mt-1 font-normal">{userProfileData.username}</p>
+                        <p className="text-lg font-semibold">{userProfileData.fullname}</p>
+                        <p className="text-base text-gray-200 mt-1 font-normal">{userProfileData.username}</p>
                     </div>
                     <div className="mt-5">
                         <p className="text-base lg:w-[31vw] w-[90vw] text-center font-normal">{userProfileData.bio}</p>
