@@ -47,7 +47,7 @@ export const useUpdatePost = () => {
             setLoading(false);
         }
         return updatedBlog;
-    }, [updatePost, setLoading]);
+    }, [updatePost, setLoading, fetchBlogs]);
 
     return { handleUpdatePost, loading };
 };
