@@ -98,9 +98,11 @@ const UsersProfile = () => {
                         <p className="text-base lg:w-[31vw] w-[90vw] text-center font-normal">{userProfileData.bio}</p>
                     </div>
                     <div className="mt-5 flex gap-7">
-                        <p className="text-base font-bold">
-                            {followingCount} <span className="opacity-60 font-normal">Following</span>
-                        </p>
+                        <Link to={`/profile/following/${userProfileData._id}`}>
+                            <p className="text-base font-bold">
+                                {followingCount} <span className="opacity-60 font-normal">Following</span>
+                            </p>
+                        </Link>
                         <p className="text-base font-bold">
                             {followersCount} <span className="opacity-60 font-normal">Followers</span>
                         </p>
