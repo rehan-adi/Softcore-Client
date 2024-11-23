@@ -32,10 +32,13 @@ export const useUpdatePost = () => {
                 updatePost(postId, updatedBlog);
                 toast.success("Post updated successfully!");
             }
-
         } catch (error) {
-            console.error("Error updating post:", error);
-            toast.error("Failed to update post. Please try again.");
+            if (error.response && error.response.status === 403) {
+                const message = error.response.data.message || "You are not authorized to update this post.";
+                toast.error(message);
+            } else {
+                toast.error("Failed to update post. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
