@@ -168,7 +168,7 @@ function Post() {
                               </button>
                               <button
                                 onClick={() => handleEdit(post)}
-                                className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150"
+                                className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150"
                               >
                                 <MdOutlineEdit className="mr-3 text-2xl" />
                                 <span className="text-base font-medium">Edit Post</span>
@@ -176,7 +176,7 @@ function Post() {
                               <button
                                 onClick={() => handleDelete(post._id)}
                                 disabled={isDeleting}
-                                className={`w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                className={`w-[90%] px-4 py-3 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex items-center justify-center transition-colors duration-150 ${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                               >
                                 {isDeleting ? (
                                   <Loader2 className="mr-3 animate-spin w-5 h-5" />

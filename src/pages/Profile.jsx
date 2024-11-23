@@ -342,7 +342,7 @@ function Profile() {
                                     </button>
                                     <button
                                       onClick={() => handleEditPost(post._id)}
-                                      className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg justify-center text-left flex items-center transition-colors duration-150"
+                                      className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg justify-center text-left flex items-center transition-colors duration-150"
                                     >
                                       <MdOutlineEdit className="mr-3 text-2xl" />
                                       <span className="text-base font-medium">Edit Post</span>
@@ -350,7 +350,7 @@ function Profile() {
                                     <button
                                       onClick={() => handlePostDelete(post._id)}
                                       disabled={isDeletingPost}
-                                      className="w-[90%] px-4 py-3 text-white bg-opacity-50 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex justify-center items-center transition-colors duration-150"
+                                      className="w-[90%] px-4 py-3 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex justify-center items-center transition-colors duration-150"
                                     >
                                       {isDeletingPost && selectedPost === post._id ? (
                                         <>

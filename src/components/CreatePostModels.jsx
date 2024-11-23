@@ -31,8 +31,8 @@ function CreatePostModal({ onClose }) {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <div className="md:w-[45vw] w-[90%] bg-black border border-white border-opacity-20 md:shadow-white shadow-md md:p-6 p-4 rounded-lg">
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-70 z-50">
+      <div className="md:w-[45vw] w-[90%] bg-black border border-white border-opacity-20 shadow-md md:p-6 p-4 rounded-lg">
         <div className="flex items-center md:mb-5 mb-4 justify-between">
           <h2 className="text-xl font-semibold text-white">Create a Post</h2>
           <button className=" text-white" onClick={onClose}>
