@@ -70,7 +70,7 @@ function Following() {
             </h1>
 
             {Array.isArray(following) && following.length > 0 ? (
-                <ul className="w-full md:px-[395px]">
+                <ul className="w-full md:px-[395px] space-y-4">
                     {following.map((following) => (
                         <li
                             key={following._id}
