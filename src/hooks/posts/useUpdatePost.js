@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-hot-toast';
+import { useGetPost } from './useGetPost';
 import { getToken } from '../../utils/token';
 import { BACKEND_API_URL } from '../../constant';
 import { usePostsStore } from '../../store/usePostsStore';
@@ -8,6 +9,7 @@ import { usePostsStore } from '../../store/usePostsStore';
 export const useUpdatePost = () => {
 
     const { updatePost, loading, setLoading } = usePostsStore();
+    const { fetchBlogs } = useGetPost();
 
     const handleUpdatePost = useCallback(async (postId, updatedData) => {
 
@@ -31,6 +33,8 @@ export const useUpdatePost = () => {
                 updatedBlog = response.data.updatedBlog;
                 updatePost(postId, updatedBlog);
                 toast.success("Post updated successfully!");
+
+                await fetchBlogs();
             }
         } catch (error) {
             if (error.response && error.response.status === 403) {
