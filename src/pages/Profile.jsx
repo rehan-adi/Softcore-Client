@@ -192,7 +192,7 @@ function Profile() {
       {/* Skeleton structure for the user profile */}
       <div className="py-6 md:w-[45vw] w-full animate-pulse">
         <div className="flex justify-between px-5 items-center mb-8">
-          <div className="w-28 h-28 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+          <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
           <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
         </div>
         <div className="mt-6 px-5">
@@ -267,7 +267,7 @@ function Profile() {
                 <img
                   src={profileData.profilePicture}
                   alt="Profile"
-                  className="w-28 h-28 rounded-full"
+                  className="w-24 h-24 rounded-full"
                 />
                 <button
                   onClick={handleEditProfile}
