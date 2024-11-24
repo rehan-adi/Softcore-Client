@@ -28,6 +28,7 @@ function Profile() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [updatePostLoader, setUpdatePostLoader] = useState(false);
 
   const [selectedPost, setSelectedPost] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -121,7 +122,9 @@ function Profile() {
 
   const handleEditPostFormSubmit = async (e) => {
     e.preventDefault();
+    setUpdatePostLoader(true);
     const token = getToken();
+
     try {
       const data = { content: editPostFormData.content };
 
@@ -139,14 +142,16 @@ function Profile() {
       if (response.status === 200) {
         setIsEditPostModalOpen(false);
         toast.success("Post updated fuck up successfully!");
+        setSelectedPost(null);
         await fetchProfileData();
       }
 
     } catch (error) {
       toast.error("Failed to update post.");
+    } finally {
+      setUpdatePostLoader(false);
     }
   };
-
 
   const handlePostDelete = async (postId) => {
     const success = await handleDelete(postId);
@@ -535,9 +540,11 @@ function Profile() {
                 <button
                   type="button"
                   onClick={handleEditPostFormSubmit}
-                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline w-40"
                 >
-                  Save Changes
+                  {updatePostLoader
+                    ? <> <Loader2 className="w-5 h-5 animate-spin inline-block" /></>
+                    : <>Save Changes</>}
                 </button>
               </div>
             </form>
