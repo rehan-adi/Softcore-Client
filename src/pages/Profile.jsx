@@ -141,7 +141,7 @@ function Profile() {
 
       if (response.status === 200) {
         setIsEditPostModalOpen(false);
-        toast.success("Post updated fuck up successfully!");
+        toast.success("Post updated successfully!");
         setSelectedPost(null);
         await fetchProfileData();
       }
@@ -156,14 +156,12 @@ function Profile() {
   const handlePostDelete = async (postId) => {
     const success = await handleDelete(postId);
     if (success) {
-      setPosts((prevPosts) => prevPosts.filter(post => post._id !== postId));
-      setSelectedPost(null);
+      await fetchProfileData();
       toast.success("Post deleted successfully!");
     } else {
       toast.error("Failed to delete post");
     }
-  };
-
+  };  
 
   const closeModel = () => {
     setSelectedPost(null);
