@@ -47,4 +47,7 @@ export const useProfile = () => {
     useEffect(() => {
         fetchProfileData();
     }, [fetchProfileData]);
+
+    return { fetchProfileData };
+
 };
