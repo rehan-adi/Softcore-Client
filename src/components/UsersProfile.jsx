@@ -15,58 +15,48 @@ const UsersProfile = () => {
 
     if (loading) {
         return (
-            <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
-                <div className="flex justify-center items-center">
-                    <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
-                        <div className="flex justify-between items-center">
-                            <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-[#27272A] animate-pulse" />
-                        </div>
-                        <div className="mt-6 flex justify-center items-center flex-col text-center">
-                            <div className="w-24 h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
-                            <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
-                        </div>
-                        <div className="mt-10">
-                            <div className="lg:w-[31vw] w-[90vw] h-6 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md mb-2" />
-                        </div>
-                        <div className="mt-5 flex gap-7">
-                            <div className="text-base font-bold">
-                                <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
-                            </div>
-                            <div className="text-base font-bold">
-                                <div className="w-20 h-7 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-md" />
-                            </div>
-                        </div>
-                        <div className="mt-5">
-                            <div className="w-28 h-9 bg-gray-200 dark:bg-[#27272A] animate-pulse rounded-full" />
-                        </div>
-                        <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
-                            <h1 className="font-semibold md:px-5 px-0 pt-4 text-lg mb-5">Posts</h1>
-                            {[1, 2, 3].map((_, i) => (
-                                <div key={i} className='border-b border-white border-opacity-20 md:rounded-3xl rounded-none'>
-                                    <div className="border-b border-white border-opacity-20 md:w-[45vw] md:px-5 px-0 py-4 animate-pulse">
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div className="flex gap-3 items-center justify-start">
-                                                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full" />
-                                                <div>
-                                                    <div className="w-20 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-1" />
-                                                    <div className="w-16 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                                </div>
-                                            </div>
-                                            <div className="w-12 h-3 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                        </div>
-                                        <div className="w-full h-60 md:h-80 bg-gray-200 dark:bg-[#27272A] rounded-xl mb-4" />
-                                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded-md mb-2 w-[80%]" />
-                                        <div className="mt-8 flex justify-between items-center">
-                                            <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                            <div className="w-16 h-4 bg-gray-200 dark:bg-[#27272A] rounded-md" />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+            <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col space-y-6 justify-center items-center">
+            {/* Skeleton structure for the user profile */}
+            <div className="py-6 md:w-[45vw] w-full pt-10 animate-pulse">
+              <div className="flex justify-between px-5 items-center mb-8">
+                <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                <div className="rounded-full h-10 w-28 bg-gray-200 dark:bg-[#27272A]"></div>
+              </div>
+              <div className="mt-6 px-5">
+                <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
+              </div>
+              <div className="mt-5 px-5">
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
+              </div>
+              <div className="mt-5 flex gap-7 mb-10 px-5">
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+              </div>
             </div>
+            {/* Skeleton structure for posts */}
+            {[1, 2, 3].map((_, i) => (
+              <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
+                <div className="flex justify-between items-center mb-8">
+                  <div className="flex gap-3 items-center">
+                    <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                    <div>
+                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                    </div>
+                  </div>
+                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                </div>
+                <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
+                <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
+                <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
+                <div className="mt-4 flex justify-between items-center">
+                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                </div>
+              </div>
+            ))}
+          </div>
         );
     }
 
@@ -82,53 +72,53 @@ const UsersProfile = () => {
     return (
         <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
             <div className="flex justify-center items-center">
-                <div className="lg:px-8 pt-10 flex justify-center items-center flex-col">
-                    <div className="flex justify-between items-center">
-                        <img
-                            src={userProfileData.profilePicture}
-                            alt="Profile"
-                            className="w-24 h-24 rounded-full"
-                        />
-                    </div>
-                    <div className="mt-6 text-center">
-                        <p className="text-lg font-semibold">{userProfileData.fullname}</p>
-                        <p className="text-base text-gray-200 mt-1 font-normal">{userProfileData.username}</p>
-                    </div>
-                    <div className="mt-5">
-                        <p className="text-base lg:w-[31vw] w-[90vw] text-center font-normal">{userProfileData.bio}</p>
-                    </div>
-                    <div className="mt-5 flex gap-7">
-                        <Link to={`/profile/following/${userProfileData._id}`}>
-                            <p className="text-base font-bold">
-                                {followingCount} <span className="opacity-60 font-normal">Following</span>
-                            </p>
-                        </Link>
-                        <Link to={`/profile/followers/${userProfileData._id}`}>
-                            <p className="text-base font-bold">
-                                {followersCount} <span className="opacity-60 font-normal">Followers</span>
-                            </p>
-                        </Link>
-                    </div>
-                    <div className="mt-5">
-                        <div className="mt-3">
-                            <button
-                                onClick={followUser}
-                                className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''} ${followLoading ? 'bg-gray-300' : ''}`}
-                                disabled={isFollowing || followLoading}
-                                aria-pressed={isFollowing}
-                                aria-busy={followLoading}
-                            >
-                                {followLoading ? (
-                                    <>
-                                        <Loader2 className="h-4 w-4 animate-spin inline-block" />
-                                        <span className="ml-2">Processing...</span>
-                                    </>
-                                ) : isFollowing ? (
-                                    'Following'
-                                ) : (
-                                    'Follow'
-                                )}
-                            </button>
+                <div className="pt-10 flex justify-center items-center flex-col">
+                    <div className="w-full px-5">
+                        <div className="flex justify-between items-center">
+                            <img
+                                src={userProfileData.profilePicture}
+                                alt="Profile"
+                                className="w-24 h-24 rounded-full"
+                            />
+                            <div className="mt-3">
+                                <button
+                                    onClick={followUser}
+                                    className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''} ${followLoading ? 'bg-gray-300' : ''}`}
+                                    disabled={isFollowing || followLoading}
+                                    aria-pressed={isFollowing}
+                                    aria-busy={followLoading}
+                                >
+                                    {followLoading ? (
+                                        <>
+                                            <Loader2 className="h-4 w-4 animate-spin inline-block" />
+                                            <span className="ml-2">Processing...</span>
+                                        </>
+                                    ) : isFollowing ? (
+                                        'Following'
+                                    ) : (
+                                        'Follow'
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="mt-6">
+                            <p className="text-xl font-semibold">{userProfileData.fullname}</p>
+                            <p className="text-base text-gray-200 font-normal">{userProfileData.username}</p>
+                        </div>
+                        <div className="mt-5">
+                            <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{userProfileData.bio}</p>
+                        </div>
+                        <div className="mt-5 flex gap-7">
+                            <Link to={`/profile/following/${userProfileData._id}`}>
+                                <p className="text-base font-bold">
+                                    {followingCount} <span className="opacity-60 font-normal">Following</span>
+                                </p>
+                            </Link>
+                            <Link to={`/profile/followers/${userProfileData._id}`}>
+                                <p className="text-base font-bold">
+                                    {followersCount} <span className="opacity-60 font-normal">Followers</span>
+                                </p>
+                            </Link>
                         </div>
                     </div>
                     <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
@@ -203,7 +193,7 @@ const UsersProfile = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p className='pb-10 px-5 pt-4'>No posts available</p>
+                                <p className='pb-10 w-full h-screen px-5 pt-4'>No posts available</p>
                             )}
                         </div>
                     </div>
