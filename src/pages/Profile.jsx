@@ -22,6 +22,7 @@ function Profile() {
   const { updateProfile } = useUpdateProfile();
   const { handleDelete, loading: isDeletingPost } = useProfilePostDelete();
   const { handleLikePost } = useLikePost();
+  const { fetchProfileData } = useProfile();
 
   const navigate = useNavigate();
 
@@ -55,8 +56,6 @@ function Profile() {
       window.removeEventListener('scroll', controlNavbar);
     };
   }, [lastScrollY, controlNavbar]);
-
-  useProfile();
 
   const handleEditProfile = () => {
     setEditFormData({
@@ -125,7 +124,7 @@ function Profile() {
     const token = getToken();
     try {
       const data = { content: editPostFormData.content };
-  
+
       const response = await axios.patch(
         `${BACKEND_API_URL}/posts/update/${selectedPost}`,
         data,
@@ -136,31 +135,19 @@ function Profile() {
           },
         }
       );
-  
-      console.log("Response Data:", response.data);
-  
-      setPosts((prevPosts) => {
-        console.log("Previous posts:", prevPosts);
-  
-        const updatedPosts = prevPosts.map((post) =>
-          post._id === selectedPost
-            ? { ...post, content: response.data.data.post.content }
-            : post
-        );
-  
-        console.log("Updated posts:", updatedPosts);
-  
-        return updatedPosts;
-      });
-  
-      setIsEditPostModalOpen(false);
-      toast.success("Post updated successfully!");
+
+      if (response.status === 200) {
+        setIsEditPostModalOpen(false);
+        toast.success("Post updated fuck up successfully!");
+        await fetchProfileData();
+      }
+
     } catch (error) {
       toast.error("Failed to update post.");
     }
   };
-  
-  
+
+
   const handlePostDelete = async (postId) => {
     const success = await handleDelete(postId);
     if (success) {
@@ -189,47 +176,47 @@ function Profile() {
   if (loading) {
     return (
       <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col lg:mt-12 mt-[70px] space-y-6 justify-center items-center">
-      {/* Skeleton structure for the user profile */}
-      <div className="py-6 md:w-[45vw] w-full animate-pulse">
-        <div className="flex justify-between px-5 items-center mb-8">
-          <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-          <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
-        </div>
-        <div className="mt-6 px-5">
-          <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
-          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
-        </div>
-        <div className="mt-5 px-5">
-          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
-        </div>
-        <div className="mt-5 flex gap-7 mb-10 px-5">
-          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-          <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-        </div>
-      </div>
-      {/* Skeleton structure for posts */}
-      {[1, 2, 3].map((_, i) => (
-        <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
-          <div className="flex justify-between items-center mb-8">
-            <div className="flex gap-3 items-center">
-              <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-              <div>
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-              </div>
-            </div>
+        {/* Skeleton structure for the user profile */}
+        <div className="py-6 md:w-[45vw] w-full animate-pulse">
+          <div className="flex justify-between px-5 items-center mb-8">
+            <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+            <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
+          </div>
+          <div className="mt-6 px-5">
+            <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
+            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
+          </div>
+          <div className="mt-5 px-5">
+            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
+          </div>
+          <div className="mt-5 flex gap-7 mb-10 px-5">
+            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
             <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
           </div>
-          <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
-          <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
-          <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
-          <div className="mt-4 flex justify-between items-center">
-            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-          </div>
         </div>
-      ))}
-    </div>
+        {/* Skeleton structure for posts */}
+        {[1, 2, 3].map((_, i) => (
+          <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex gap-3 items-center">
+                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                <div>
+                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                </div>
+              </div>
+              <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+            </div>
+            <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
+            <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
+            <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
+            <div className="mt-4 flex justify-between items-center">
+              <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+              <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+            </div>
+          </div>
+        ))}
+      </div>
     );
   }
 
@@ -271,7 +258,7 @@ function Profile() {
                 />
                 <button
                   onClick={handleEditProfile}
-                  className="rounded-full border font-semibold border-white text-white py-2 px-5 border-opacity-40"
+                  className="rounded-full bg-white font-semibold text-black py-2 px-5"
                 >
                   Edit Profile
                 </button>
@@ -284,15 +271,15 @@ function Profile() {
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
               <div className="mt-5 flex gap-7  mb-10 px-5">
-              <Link to={`/profile/following`}>
-                <p className="text-base font-bold">
-                  {followingCount} <span className="opacity-60 font-normal">Following</span>
-                </p>
+                <Link to={`/profile/following`}>
+                  <p className="text-base font-bold">
+                    {followingCount} <span className="opacity-60 font-normal">Following</span>
+                  </p>
                 </Link>
                 <Link to={`/profile/followers`}>
-                <p className="text-base font-bold">
-                  {followersCount} <span className="opacity-60 font-normal">Followers</span>
-                </p>
+                  <p className="text-base font-bold">
+                    {followersCount} <span className="opacity-60 font-normal">Followers</span>
+                  </p>
                 </Link>
               </div>
               <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
