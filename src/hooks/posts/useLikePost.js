@@ -1,35 +1,27 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useGetPost } from './useGetPost';
 import { getToken } from "../../utils/token";
 import { useCallback, useState } from "react";
 import { BACKEND_API_URL } from '../../constant';
-import { usePostsStore } from "../../store/usePostsStore";
 
 export const useLikePost = () => {
 
-    const { posts, setPosts } = usePostsStore();
+    const { fetchBlogs } = useGetPost();
     const [loading, setLoading] = useState(false);
 
     const handleLikePost = useCallback(async (postId) => {
-        const post = posts.find((post) => post._id === postId);
-        const hasLiked = post.likedByUser;
 
-        setPosts(
-            posts.map((post) =>
-                post._id === postId
-                    ? {
-                        ...post,
-                        likes: hasLiked ? post.likes - 1 : post.likes + 1,
-                        likedByUser: !hasLiked,
-                    }
-                    : post
-            )
-        );
+        const token = getToken();
+        if (!token) {
+            toast.error("You must be logged in to like a post.");
+            return;
+        }
 
         try {
             setLoading(true);
-            const token = getToken();
-            await axios.post(
+
+            const response = await axios.post(
                 `${BACKEND_API_URL}/likes/${postId}/toggle-like`,
                 {},
                 {
@@ -39,25 +31,16 @@ export const useLikePost = () => {
                 }
             );
 
+            await fetchBlogs();
+
+            toast.success(response.data.message);
         } catch (error) {
             console.error("Error liking/unliking post:", error);
             toast.error("Error updating like. Please try again.");
-
-            setPosts(
-                posts.map((post) =>
-                    post._id === postId
-                        ? {
-                            ...post,
-                            likes: hasLiked ? post.likes + 1 : post.likes - 1,
-                            likedByUser: hasLiked,
-                        }
-                        : post
-                )
-            );
         } finally {
             setLoading(false);
         }
-    }, [posts, setPosts]);
+    }, [fetchBlogs]);
 
     return { handleLikePost, loading };
 };
