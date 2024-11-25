@@ -18,7 +18,7 @@ import { MdOutlineEdit, MdOutlineThumbUpOffAlt } from "react-icons/md";
 
 function Profile() {
 
-  const { profileData, posts, setPosts, loading } = useProfileStore();
+  const { profileData, posts, loading } = useProfileStore();
   const { updateProfile } = useUpdateProfile();
   const { handleDelete, loading: isDeletingPost } = useProfilePostDelete();
   const { handleLikePost } = useLikePost();
