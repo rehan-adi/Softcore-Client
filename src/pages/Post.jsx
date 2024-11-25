@@ -116,7 +116,7 @@ function Post() {
           <div>Error: {error}</div>
         ) : (
           <div className="md:w-[45vw] w-full pt-10 mt-10 lg:pt-4 border border-white md:border-opacity-20 border-opacity-0 rounded-3xl lg:pb-0 pb-[58px]">
-            {posts && posts.length > 0 ? (
+            {Array.isArray(posts) && posts.length > 0 ? (
               posts.map((post) => (
                 <div
                   key={post._id}
@@ -237,7 +237,7 @@ function Post() {
                 </div>
               ))
             ) : (
-              <div>No posts available.</div>
+              <div className="h-full w-full flex justify-center items-center">No posts available.</div>
             )}
           </div>
         )}
