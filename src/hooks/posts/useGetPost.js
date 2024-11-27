@@ -14,12 +14,12 @@ export const useGetPost = () => {
         try {
             const response = await axios.get(`${BACKEND_API_URL}/posts/allpost`);
             if (response.status === 200) {
-                setPosts(Array.isArray(response.data.data.blogPost) ? response.data.data.blogPost : []);
+                setPosts(Array.isArray(response.data.data) ? response.data.data : []);
             }
-        } catch (error) {~~
-            console.error("Error fetching blogs:", error);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
             setError(error.response?.data?.message || "Error fetching data");
-            toast.error("Failed to fetch blog posts");
+            toast.error("Failed to fetch posts");
         } finally {
             setLoading(false);
         }
