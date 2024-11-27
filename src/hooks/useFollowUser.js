@@ -23,7 +23,8 @@ const useFollowUser = (userId) => {
             }
         } catch (error) {
             console.error('Error checking following status:', error);
-            toast.error('Could not check following status. Please try again.');
+            const message = error.response.data.message;
+            toast.error(message);
         }
     }, [userId]);
 
