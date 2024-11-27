@@ -48,11 +48,32 @@ const useFollowUser = (userId) => {
         }
     }, [userId]);
 
+    const unfollowUser = useCallback(async () => {
+        setLoading(true);
+        try {
+            const token = getToken("token");
+            const response = await axios.post(`${BACKEND_API_URL}/user/unfollow/${userId}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.status === 200) {
+                setIsFollowing(false);
+                toast.success('You have unfollowed this user!');
+            }
+        } catch (error) {
+            console.error('Error unfollowing user:', error);
+            toast.error('Could not unfollow user. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    }, [userId]);
+
     useEffect(() => {
         checkFollowingStatus();
     }, [checkFollowingStatus]);
 
-    return { isFollowing, followUser, loading };
+    return { isFollowing, followUser, unfollowUser, loading };
 };
 
 export default useFollowUser;

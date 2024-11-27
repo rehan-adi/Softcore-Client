@@ -11,52 +11,52 @@ const UsersProfile = () => {
     const { userProfileData, userProfilePost, loading } = useGetUsersProfile();
 
     const userId = userProfileData?._id;
-    const { isFollowing, followUser, loading: followLoading } = useFollowUser(userId);
+    const { isFollowing, followUser, unfollowUser, loading: followLoading } = useFollowUser(userId);
 
     if (loading) {
         return (
             <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col space-y-6 justify-center items-center">
-            {/* Skeleton structure for the user profile */}
-            <div className="py-6 md:w-[45vw] w-full pt-10 animate-pulse">
-              <div className="flex justify-between px-5 items-center mb-8">
-                <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-                <div className="rounded-full h-10 w-28 bg-gray-200 dark:bg-[#27272A]"></div>
-              </div>
-              <div className="mt-6 px-5">
-                <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
-              </div>
-              <div className="mt-5 px-5">
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
-              </div>
-              <div className="mt-5 flex gap-7 mb-10 px-5">
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-                <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-              </div>
-            </div>
-            {/* Skeleton structure for posts */}
-            {[1, 2, 3].map((_, i) => (
-              <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
-                <div className="flex justify-between items-center mb-8">
-                  <div className="flex gap-3 items-center">
-                    <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-                    <div>
-                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
-                      <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                {/* Skeleton structure for the user profile */}
+                <div className="py-6 md:w-[45vw] w-full pt-10 animate-pulse">
+                    <div className="flex justify-between px-5 items-center mb-8">
+                        <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                        <div className="rounded-full h-10 w-28 bg-gray-200 dark:bg-[#27272A]"></div>
                     </div>
-                  </div>
-                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                    <div className="mt-6 px-5">
+                        <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
+                    </div>
+                    <div className="mt-5 px-5">
+                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
+                    </div>
+                    <div className="mt-5 flex gap-7 mb-10 px-5">
+                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                    </div>
                 </div>
-                <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
-                <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
-                <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
-                <div className="mt-4 flex justify-between items-center">
-                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-                  <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-                </div>
-              </div>
-            ))}
-          </div>
+                {/* Skeleton structure for posts */}
+                {[1, 2, 3].map((_, i) => (
+                    <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
+                        <div className="flex justify-between items-center mb-8">
+                            <div className="flex gap-3 items-center">
+                                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+                                <div>
+                                    <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
+                                    <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                                </div>
+                            </div>
+                            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+                        </div>
+                        <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
+                        <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
+                        <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
+                        <div className="mt-4 flex justify-between items-center">
+                            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         );
     }
 
@@ -82,19 +82,16 @@ const UsersProfile = () => {
                             />
                             <div className="mt-3">
                                 <button
-                                    onClick={followUser}
-                                    className={`px-4 py-2 text-black font-semibold bg-white rounded-full transition duration-200 ${isFollowing ? 'opacity-50 cursor-not-allowed' : ''} ${followLoading ? 'bg-gray-300' : ''}`}
-                                    disabled={isFollowing || followLoading}
-                                    aria-pressed={isFollowing}
-                                    aria-busy={followLoading}
+                                    onClick={isFollowing ? unfollowUser : followUser}
+                                    className="px-4 py-2 w-28 text-black font-semibold bg-white rounded-full transition duration-200"
+                                    disabled={followLoading}
                                 >
                                     {followLoading ? (
                                         <>
-                                            <Loader2 className="h-4 w-4 animate-spin inline-block" />
-                                            <span className="ml-2">Processing...</span>
+                                            <Loader2 className="h-6 w-6 animate-spin inline-block" />
                                         </>
                                     ) : isFollowing ? (
-                                        'Following'
+                                        'Unfollow'
                                     ) : (
                                         'Follow'
                                     )}
