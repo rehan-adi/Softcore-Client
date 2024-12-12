@@ -1,203 +1,230 @@
-import { Loader2 } from 'lucide-react';
-import { FaRegCommentDots } from 'react-icons/fa6';
-import useFollowUser from '../hooks/useFollowUser';
-import { Link, useNavigate } from 'react-router-dom';
-import { MdOutlineThumbUpOffAlt } from 'react-icons/md';
-import { useGetUsersProfile } from '../hooks/useGetUsersProfile';
+import { Loader2 } from 'lucide-react'
+import { FaRegCommentDots } from 'react-icons/fa6'
+import useFollowUser from '../hooks/useFollowUser'
+import { Link, useNavigate } from 'react-router-dom'
+import { MdOutlineThumbUpOffAlt } from 'react-icons/md'
+import { useGetUsersProfile } from '../hooks/useGetUsersProfile'
 
 const UsersProfile = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate()
 
-    const { userProfileData, userProfilePost, loading } = useGetUsersProfile();
+  const { userProfileData, userProfilePost, loading } = useGetUsersProfile()
 
-    const userId = userProfileData?._id;
-    const { isFollowing, followUser, unfollowUser, loading: followLoading } = useFollowUser(userId);
+  const userId = userProfileData?._id
+  const {
+    isFollowing,
+    followUser,
+    unfollowUser,
+    loading: followLoading
+  } = useFollowUser(userId)
 
-    if (loading) {
-        return (
-            <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col space-y-6 justify-center items-center">
-                {/* Skeleton structure for the user profile */}
-                <div className="py-6 md:w-[45vw] w-full pt-10 animate-pulse">
-                    <div className="flex justify-between px-5 items-center mb-8">
-                        <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-                        <div className="rounded-full h-10 w-28 bg-gray-200 dark:bg-[#27272A]"></div>
-                    </div>
-                    <div className="mt-6 px-5">
-                        <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
-                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
-                    </div>
-                    <div className="mt-5 px-5">
-                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
-                    </div>
-                    <div className="mt-5 flex gap-7 mb-10 px-5">
-                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-                        <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-                    </div>
-                </div>
-                {/* Skeleton structure for posts */}
-                {[1, 2, 3].map((_, i) => (
-                    <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
-                        <div className="flex justify-between items-center mb-8">
-                            <div className="flex gap-3 items-center">
-                                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-                                <div>
-                                    <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
-                                    <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-                                </div>
-                            </div>
-                            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-                        </div>
-                        <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
-                        <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
-                        <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
-                        <div className="mt-4 flex justify-between items-center">
-                            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-                            <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-    }
-
-    if (!userProfileData) {
-        return (
-            <div className="flex justify-center pt-80 items-centertext-center h-screen w-full text-gray-400">User not found</div>
-        );
-    }
-
-    const followersCount = userProfileData?.followers?.length || 0;
-    const followingCount = userProfileData?.following?.length || 0;
-
+  if (loading) {
     return (
-        <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
-            <div className="flex w-full md:w-auto justify-center items-center">
-                <div className="w-full pt-10 flex justify-center px-0 md:px-0 items-center flex-col">
-                    <div className="w-full md:px-0 px-5">
-                        <div className="flex justify-between items-center">
-                            <img
-                                src={userProfileData.profilePicture}
-                                alt="Profile"
-                                className="w-24 h-24 rounded-full"
-                            />
-                            <div className="mt-3">
-                                <button
-                                    onClick={isFollowing ? unfollowUser : followUser}
-                                    className="px-4 py-2 w-28 text-black font-semibold bg-white rounded-full transition duration-200"
-                                    disabled={followLoading}
-                                >
-                                    {followLoading ? (
-                                        <>
-                                            <Loader2 className="h-6 w-6 animate-spin inline-block" />
-                                        </>
-                                    ) : isFollowing ? (
-                                        'Unfollow'
-                                    ) : (
-                                        'Follow'
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                        <div className="mt-6">
-                            <p className="text-xl font-semibold">{userProfileData.fullname}</p>
-                            <p className="text-base text-gray-200 font-normal">{userProfileData.username}</p>
-                        </div>
-                        <div className="mt-5">
-                            <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{userProfileData.bio}</p>
-                        </div>
-                        <div className="mt-5 flex gap-7">
-                            <Link to={`/profile/following/${userProfileData._id}`}>
-                                <p className="text-base font-bold">
-                                    {followingCount} <span className="opacity-60 font-normal">Following</span>
-                                </p>
-                            </Link>
-                            <Link to={`/profile/followers/${userProfileData._id}`}>
-                                <p className="text-base font-bold">
-                                    {followersCount} <span className="opacity-60 font-normal">Followers</span>
-                                </p>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
-                        <h1 className="font-semibold pt-4 md:px-0 px-5 text-lg mb-5">Posts</h1>
-                        <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
-                            {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
-                                userProfilePost.map((post) => (
-                                    <div
-                                        key={post._id}
-                                        className="border-b border-white border-opacity-20 md:w-[45vw] px-5 py-4"
-                                    >
-                                        <div className="flex justify-between items-start mb-4">
-                                            <div className="flex gap-3 items-center justify-start">
-                                                {post.author && post.author.profilePicture && (
-                                                    <img
-                                                        src={post.author.profilePicture}
-                                                        alt={post.author.username || 'Author'}
-                                                        className="w-8 h-8 rounded-full mr-1"
-                                                    />
-                                                )}
-                                                <div>
-                                                    <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
-                                                    <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
-                                                </div>
-                                            </div>
-                                            <div className="text-white text-xs">
-                                                {new Date(post.createdAt).toLocaleDateString()}
-                                            </div>
-                                        </div>
-                                        <Link to={`/post/image/${post._id}`}>
-                                            {post.image && (
-                                                <img
-                                                    className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
-                                                    src={post.image}
-                                                    alt={post.title}
-                                                />
-                                            )}
-                                        </Link>
-                                        <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>
-                                        <div className="mt-7">
-                                            {post.tags.map((tag, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="inline-block text-[#1D9BF0] text-base font-bold mr-2 py-0.5 rounded"
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <div className="mt-8 flex justify-between items-center">
-                                            <button
-                                                className="font-semibold cursor-pointer"
-                                            >
-                                                <span className="flex text-white py-2 px-1 gap-2 items-center justify-center">
-                                                    <span>
-                                                        <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
-                                                    </span>
-                                                    <span className="text-sm md:text-base">{post.likes.length}</span>
-                                                </span>
-                                            </button>
-                                            <button className="text-white font-semibold cursor-pointer"
-                                                onClick={() => navigate(`/comments/${post._id}`)}
-                                            >
-                                                <span className="text-white flex py-2 px-1 gap-2 items-center justify-center">
-                                                    <span>
-                                                        <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
-                                                    </span>
-                                                    <span className="text-sm md:text-base">Comment</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className='pb-10 w-full h-screen px-5 pt-4'>No posts available</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div className='flex min-h-screen w-full flex-col items-center justify-center space-y-6 md:ml-[300px] md:w-[45vw]'>
+        {/* Skeleton structure for the user profile */}
+        <div className='w-full animate-pulse py-6 pt-10 md:w-[45vw]'>
+          <div className='mb-8 flex items-center justify-between px-5'>
+            <div className='h-24 w-24 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='h-10 w-28 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
+          </div>
+          <div className='mt-6 px-5'>
+            <div className='mb-2 h-6 w-36 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mb-4 h-4 w-28 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+          </div>
+          <div className='mt-5 px-5'>
+            <div className='mb-4 h-4 w-64 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+          </div>
+          <div className='mb-10 mt-5 flex gap-7 px-5'>
+            <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+          </div>
         </div>
-    );
-};
+        {/* Skeleton structure for posts */}
+        {[1, 2, 3].map((_, i) => (
+          <div
+            key={i}
+            className='mt-32 w-full animate-pulse border-b border-white border-opacity-20 p-6 md:mt-20 md:w-[45vw]'
+          >
+            <div className='mb-8 flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='h-8 w-8 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
+                <div>
+                  <div className='mb-1 h-4 w-24 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+                  <div className='h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+                </div>
+              </div>
+              <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            </div>
+            <div className='mb-4 h-36 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mb-2 h-6 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mt-6 h-4 w-44 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mt-4 flex items-center justify-between'>
+              <div className='inline-block h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+              <div className='inline-block h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
 
-export default UsersProfile;
+  if (!userProfileData) {
+    return (
+      <div className='items-centertext-center flex h-screen w-full justify-center pt-80 text-gray-400'>
+        User not found
+      </div>
+    )
+  }
+
+  const followersCount = userProfileData?.followers?.length || 0
+  const followingCount = userProfileData?.following?.length || 0
+
+  return (
+    <div className='z-10 flex min-h-screen w-full items-start justify-center bg-black text-white md:px-80'>
+      <div className='flex w-full items-center justify-center md:w-auto'>
+        <div className='flex w-full flex-col items-center justify-center px-0 pt-10 md:px-0'>
+          <div className='w-full px-5 md:px-0'>
+            <div className='flex items-center justify-between'>
+              <img
+                src={userProfileData.profilePicture}
+                alt='Profile'
+                className='h-24 w-24 rounded-full'
+              />
+              <div className='mt-3'>
+                <button
+                  onClick={isFollowing ? unfollowUser : followUser}
+                  className='w-28 rounded-full bg-white px-4 py-2 font-semibold text-black transition duration-200'
+                  disabled={followLoading}
+                >
+                  {followLoading ? (
+                    <>
+                      <Loader2 className='inline-block h-6 w-6 animate-spin' />
+                    </>
+                  ) : isFollowing ? (
+                    'Unfollow'
+                  ) : (
+                    'Follow'
+                  )}
+                </button>
+              </div>
+            </div>
+            <div className='mt-6'>
+              <p className='text-xl font-semibold'>
+                {userProfileData.fullname}
+              </p>
+              <p className='text-base font-normal text-gray-200'>
+                {userProfileData.username}
+              </p>
+            </div>
+            <div className='mt-5'>
+              <p className='w-[85vw] text-base font-normal lg:w-[31vw]'>
+                {userProfileData.bio}
+              </p>
+            </div>
+            <div className='mt-5 flex gap-7'>
+              <Link to={`/profile/following/${userProfileData._id}`}>
+                <p className='text-base font-bold'>
+                  {followingCount}{' '}
+                  <span className='font-normal opacity-60'>Following</span>
+                </p>
+              </Link>
+              <Link to={`/profile/followers/${userProfileData._id}`}>
+                <p className='text-base font-bold'>
+                  {followersCount}{' '}
+                  <span className='font-normal opacity-60'>Followers</span>
+                </p>
+              </Link>
+            </div>
+          </div>
+          <div className='mt-12 w-full pb-[58px] text-white md:pb-0'>
+            <h1 className='mb-5 px-5 pt-4 text-lg font-semibold md:px-0'>
+              Posts
+            </h1>
+            <div className='rounded-none border border-white border-opacity-0 md:rounded-3xl md:border-opacity-20'>
+              {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
+                userProfilePost.map(post => (
+                  <div
+                    key={post._id}
+                    className='border-b border-white border-opacity-20 px-5 py-4 md:w-[45vw]'
+                  >
+                    <div className='mb-4 flex items-start justify-between'>
+                      <div className='flex items-center justify-start gap-3'>
+                        {post.author && post.author.profilePicture && (
+                          <img
+                            src={post.author.profilePicture}
+                            alt={post.author.username || 'Author'}
+                            className='mr-1 h-8 w-8 rounded-full'
+                          />
+                        )}
+                        <div>
+                          <p className='font-semibold text-white'>
+                            {post.author?.username ?? 'anonymous'}
+                          </p>
+                          <p className='text-xs font-medium text-gray-200'>
+                            {post.author?.fullname ?? 'Unknown Author'}
+                          </p>
+                        </div>
+                      </div>
+                      <div className='text-xs text-white'>
+                        {new Date(post.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <Link to={`/post/image/${post._id}`}>
+                      {post.image && (
+                        <img
+                          className='mb-4 h-60 w-full rounded-xl border border-white border-opacity-15 object-cover md:h-80'
+                          src={post.image}
+                          alt={post.title}
+                        />
+                      )}
+                    </Link>
+                    <p className='ml-1.5 mt-2 text-[#E7E9EA]'>{post.content}</p>
+                    <div className='mt-7'>
+                      {post.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className='mr-2 inline-block rounded py-0.5 text-base font-bold text-[#1D9BF0]'
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className='mt-8 flex items-center justify-between'>
+                      <button className='cursor-pointer font-semibold'>
+                        <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
+                          <span>
+                            <MdOutlineThumbUpOffAlt className='inline-block text-xl md:text-2xl' />
+                          </span>
+                          <span className='text-sm md:text-base'>
+                            {post.likes.length}
+                          </span>
+                        </span>
+                      </button>
+                      <button
+                        className='cursor-pointer font-semibold text-white'
+                        onClick={() => navigate(`/comments/${post._id}`)}
+                      >
+                        <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
+                          <span>
+                            <FaRegCommentDots className='inline-block text-xl md:text-2xl' />
+                          </span>
+                          <span className='text-sm md:text-base'>Comment</span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className='h-screen w-full px-5 pb-10 pt-4'>
+                  No posts available
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default UsersProfile

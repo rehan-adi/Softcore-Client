@@ -1,63 +1,99 @@
-import { useState } from "react";
-import { IoSearch } from "react-icons/io5";
-import CreatePostModal from "./CreatePostModels";
-import { Link, useLocation } from "react-router-dom";
-import { Loader2, Settings, User2 } from "lucide-react";
-import { useProfileStore } from '../store/useProfileStore';
+import { useState } from 'react'
+import { IoSearch } from 'react-icons/io5'
+import CreatePostModal from './CreatePostModels'
+import { Link, useLocation } from 'react-router-dom'
+import { Loader2, Settings, User2 } from 'lucide-react'
+import { useProfileStore } from '../store/useProfileStore'
 
 function BottomNavbar() {
-  const location = useLocation();
-  const [showModal, setShowModal] = useState(false);
-  const { profileData, loading } = useProfileStore();
+  const location = useLocation()
+  const [showModal, setShowModal] = useState(false)
+  const { profileData, loading } = useProfileStore()
 
   const handleSubmit = () => {
-    closeModal();
-  };
+    closeModal()
+  }
 
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  const openModal = () => setShowModal(true)
+  const closeModal = () => setShowModal(false)
 
-  const getActiveClass = (path) => {
-    return location.pathname === path ? "bg-[#27272A] text-white rounded-lg px-3 py-2" : "text-white rounded-lg hover:bg-[#27272A] px-3 py-2";
-  };
+  const getActiveClass = path => {
+    return location.pathname === path
+      ? 'bg-[#27272A] text-white rounded-lg px-3 py-2'
+      : 'text-white rounded-lg hover:bg-[#27272A] px-3 py-2'
+  }
 
   return (
-    <div className="md:hidden fixed bottom-0 w-full z-50 bg-black bg-opacity-90 border-t border-white border-opacity-25 shadow-lg flex justify-around items-center py-3 px-5">
-      <nav className="flex justify-between items-center w-full max-w-sm mx-auto">
-
+    <div className='fixed bottom-0 z-50 flex w-full items-center justify-around border-t border-white border-opacity-25 bg-black bg-opacity-90 px-5 py-3 shadow-lg md:hidden'>
+      <nav className='mx-auto flex w-full max-w-sm items-center justify-between'>
         {/* Home icon */}
-        <Link to="/">
-          <button className={getActiveClass("/")}>
+        <Link to='/'>
+          <button className={getActiveClass('/')}>
             <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              aria-hidden="true"
-              className="lg:w-7 lg:h-7 w-6 h-6"
+              viewBox='0 0 24 24'
+              fill='currentColor'
+              aria-hidden='true'
+              className='h-6 w-6 lg:h-7 lg:w-7'
             >
               <g>
-                <path d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z"></path>
+                <path d='M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z'></path>
               </g>
             </svg>
           </button>
         </Link>
 
         {/* Search icon */}
-        <Link to="/search">
-          <button className={getActiveClass("/search")}>
-            <IoSearch className="lg:text-3xl text-2xl" />
+        <Link to='/search'>
+          <button className={getActiveClass('/search')}>
+            <IoSearch className='text-2xl lg:text-3xl' />
           </button>
         </Link>
 
         {/* post button  */}
         <button
           onClick={openModal}
-          className="font-semibold text-white rounded-full"
+          className='rounded-full font-semibold text-white'
         >
-          <svg aria-label="New post" className="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+          <svg
+            aria-label='New post'
+            className='x1lliihq x1n2onr6 x5n08af'
+            fill='currentColor'
+            height='24'
+            role='img'
+            viewBox='0 0 24 24'
+            width='24'
+          >
             <title>New post</title>
-            <path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-            <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line>
-            <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
+            <path
+              d='M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552Z'
+              fill='none'
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+            ></path>
+            <line
+              fill='none'
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              x1='6.545'
+              x2='17.455'
+              y1='12.001'
+              y2='12.001'
+            ></line>
+            <line
+              fill='none'
+              stroke='currentColor'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              x1='12.003'
+              x2='12.003'
+              y1='6.545'
+              y2='17.455'
+            ></line>
           </svg>
         </button>
         {showModal && (
@@ -65,26 +101,24 @@ function BottomNavbar() {
         )}
 
         {/* Profile icon */}
-        <Link to="/profile" className={getActiveClass("/profile")}>
+        <Link to='/profile' className={getActiveClass('/profile')}>
           {loading ? (
-            <Loader2 className="w-6 h-7 animate-spin" />
+            <Loader2 className='h-7 w-6 animate-spin' />
+          ) : profileData?.profilePicture ? (
+            <img
+              src={profileData.profilePicture}
+              alt='Profile'
+              className='h-7 w-7 rounded-full border-2 border-white'
+            />
           ) : (
-            profileData?.profilePicture ? (
-              <img
-                src={profileData.profilePicture}
-                alt="Profile"
-                className="w-7 h-7 rounded-full border-2 border-white"
-              />
-            ) : (
-              <User2 />
-            )
+            <User2 />
           )}
         </Link>
 
         {/* Settings icon */}
-        <Link to="/settings">
-          <button className={getActiveClass("/settings")}>
-            <Settings className="lg:text-3xl text-2xl" />
+        <Link to='/settings'>
+          <button className={getActiveClass('/settings')}>
+            <Settings className='text-2xl lg:text-3xl' />
           </button>
         </Link>
 
@@ -111,10 +145,9 @@ function BottomNavbar() {
             </svg>
           </button>
         </Link> */}
-
       </nav>
     </div>
-  );
+  )
 }
 
-export default BottomNavbar;
+export default BottomNavbar

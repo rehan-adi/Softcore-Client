@@ -1,132 +1,131 @@
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { getToken } from '../utils/token';
-import { BsThreeDots } from "react-icons/bs";
-import { BACKEND_API_URL } from '../constant';
-import { useNavigate } from 'react-router-dom';
-import { useProfile } from '../hooks/useProfile';
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { Loader2, X, UserPen } from 'lucide-react';
-import { useCallback, useEffect, useState } from "react";
-import { useLikePost } from "../hooks/posts/useLikePost";
-import { useProfileStore } from "../store/useProfileStore";
-import { useUpdateProfile } from "../hooks/useUpdateProfile";
-import { FaArrowLeftLong, FaRegCommentDots } from "react-icons/fa6";
-import { useProfilePostDelete } from "../hooks/useProfilePostDelete";
-import { MdOutlineEdit, MdOutlineThumbUpOffAlt } from "react-icons/md";
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
+import { getToken } from '../utils/token'
+import { BsThreeDots } from 'react-icons/bs'
+import { BACKEND_API_URL } from '../constant'
+import { useNavigate } from 'react-router-dom'
+import { useProfile } from '../hooks/useProfile'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import { Loader2, X, UserPen } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { useLikePost } from '../hooks/posts/useLikePost'
+import { useProfileStore } from '../store/useProfileStore'
+import { useUpdateProfile } from '../hooks/useUpdateProfile'
+import { FaArrowLeftLong, FaRegCommentDots } from 'react-icons/fa6'
+import { useProfilePostDelete } from '../hooks/useProfilePostDelete'
+import { MdOutlineEdit, MdOutlineThumbUpOffAlt } from 'react-icons/md'
 
 function Profile() {
+  const { profileData, posts, loading } = useProfileStore()
+  const { updateProfile } = useUpdateProfile()
+  const { handleDelete, loading: isDeletingPost } = useProfilePostDelete()
+  const { handleLikePost } = useLikePost()
+  const { fetchProfileData } = useProfile()
 
-  const { profileData, posts, loading } = useProfileStore();
-  const { updateProfile } = useUpdateProfile();
-  const { handleDelete, loading: isDeletingPost } = useProfilePostDelete();
-  const { handleLikePost } = useLikePost();
-  const { fetchProfileData } = useProfile();
+  const navigate = useNavigate()
 
-  const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [updatePostLoader, setUpdatePostLoader] = useState(false)
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [updatePostLoader, setUpdatePostLoader] = useState(false);
-
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [editFormData, setEditFormData] = useState({
-    username: "",
-    bio: "",
-    image: "",
-  });
-  const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false);
+    username: '',
+    bio: '',
+    image: ''
+  })
+  const [isEditPostModalOpen, setIsEditPostModalOpen] = useState(false)
   const [editPostFormData, setEditPostFormData] = useState({
-    content: "",
-  });
+    content: ''
+  })
 
   const controlNavbar = useCallback(() => {
     if (window.scrollY > lastScrollY) {
-      setIsScrolled(true);
+      setIsScrolled(true)
     } else {
-      setIsScrolled(false);
+      setIsScrolled(false)
     }
-    setLastScrollY(window.scrollY);
+    setLastScrollY(window.scrollY)
   }, [lastScrollY])
 
   useEffect(() => {
-    window.addEventListener('scroll', controlNavbar);
+    window.addEventListener('scroll', controlNavbar)
     return () => {
-      window.removeEventListener('scroll', controlNavbar);
-    };
-  }, [lastScrollY, controlNavbar]);
+      window.removeEventListener('scroll', controlNavbar)
+    }
+  }, [lastScrollY, controlNavbar])
 
   const handleEditProfile = () => {
     setEditFormData({
       username: profileData.username,
       bio: profileData.bio,
-      profilePicture: profileData.profilePicture,
-    });
-    setIsEditModalOpen(true);
-  };
+      profilePicture: profileData.profilePicture
+    })
+    setIsEditModalOpen(true)
+  }
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = async e => {
+    const file = e.target.files[0]
     if (file) {
       try {
-        setEditFormData((prevData) => ({
+        setEditFormData(prevData => ({
           ...prevData,
-          profilePicture: file,
-        }));
+          profilePicture: file
+        }))
       } catch (error) {
-        console.error("Error handling file:", error);
+        console.error('Error handling file:', error)
       }
     }
-  };
+  }
 
   const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-  };
+    setIsEditModalOpen(false)
+  }
 
-  const handleEditFormChange = (e) => {
+  const handleEditFormChange = e => {
     setEditFormData({
       ...editFormData,
-      [e.target.name]: e.target.value,
-    });
-  };
+      [e.target.name]: e.target.value
+    })
+  }
 
-  const handleEditFormSubmit = async (e) => {
-    e.preventDefault();
+  const handleEditFormSubmit = async e => {
+    e.preventDefault()
     try {
-      await updateProfile(editFormData);
-      setIsEditModalOpen(false);
-      toast.success("Profile updated successfully!");
+      await updateProfile(editFormData)
+      setIsEditModalOpen(false)
+      toast.success('Profile updated successfully!')
     } catch (error) {
-      console.error("Error updating profile:", error);
-      toast.error("Failed to update profile");
+      console.error('Error updating profile:', error)
+      toast.error('Failed to update profile')
     }
-  };
+  }
 
-  const handleEditPost = (postId) => {
-    const post = posts.find((post) => post._id === postId);
+  const handleEditPost = postId => {
+    const post = posts.find(post => post._id === postId)
     setEditPostFormData({
-      content: post.content,
-    });
-    setSelectedPost(postId);
-    setIsEditPostModalOpen(true);
-  };
+      content: post.content
+    })
+    setSelectedPost(postId)
+    setIsEditPostModalOpen(true)
+  }
 
-  const handleEditPostFormChange = (e) => {
+  const handleEditPostFormChange = e => {
     setEditPostFormData({
       ...editPostFormData,
-      [e.target.name]: e.target.value,
-    });
-  };
+      [e.target.name]: e.target.value
+    })
+  }
 
-  const handleEditPostFormSubmit = async (e) => {
-    e.preventDefault();
-    setUpdatePostLoader(true);
-    const token = getToken();
+  const handleEditPostFormSubmit = async e => {
+    e.preventDefault()
+    setUpdatePostLoader(true)
+    const token = getToken()
 
     try {
-      const data = { content: editPostFormData.content };
+      const data = { content: editPostFormData.content }
 
       const response = await axios.patch(
         `${BACKEND_API_URL}/posts/update/${selectedPost}`,
@@ -134,222 +133,248 @@ function Profile() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+            'Content-Type': 'application/json'
+          }
         }
-      );
+      )
 
       if (response.status === 200) {
-        setIsEditPostModalOpen(false);
-        toast.success("Post updated successfully!");
-        setSelectedPost(null);
-        await fetchProfileData();
+        setIsEditPostModalOpen(false)
+        toast.success('Post updated successfully!')
+        setSelectedPost(null)
+        await fetchProfileData()
       }
-
     } catch (error) {
-      toast.error("Failed to update post.");
+      toast.error('Failed to update post.')
     } finally {
-      setUpdatePostLoader(false);
+      setUpdatePostLoader(false)
     }
-  };
+  }
 
-  const handlePostDelete = async (postId) => {
-    const success = await handleDelete(postId);
+  const handlePostDelete = async postId => {
+    const success = await handleDelete(postId)
     if (success) {
-      await fetchProfileData();
-      toast.success("Post deleted successfully!");
+      await fetchProfileData()
+      toast.success('Post deleted successfully!')
     } else {
-      toast.error("Failed to delete post");
+      toast.error('Failed to delete post')
     }
-  };
+  }
 
   const closeModel = () => {
-    setSelectedPost(null);
-  };
+    setSelectedPost(null)
+  }
 
-
-  const handleLike = async (postId) => {
+  const handleLike = async postId => {
     try {
-      await handleLikePost(postId);
+      await handleLikePost(postId)
     } catch (error) {
-      toast.error("Error liking the post");
+      toast.error('Error liking the post')
     }
-  };
+  }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex w-full md:ml-[300px] md:w-[45vw] flex-col lg:mt-12 mt-[70px] space-y-6 justify-center items-center">
+      <div className='mt-[70px] flex min-h-screen w-full flex-col items-center justify-center space-y-6 md:ml-[300px] md:w-[45vw] lg:mt-12'>
         {/* Skeleton structure for the user profile */}
-        <div className="py-6 md:w-[45vw] w-full animate-pulse">
-          <div className="flex justify-between px-5 items-center mb-8">
-            <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-            <div className="rounded-full h-10 w-24 bg-gray-200 dark:bg-[#27272A]"></div>
+        <div className='w-full animate-pulse py-6 md:w-[45vw]'>
+          <div className='mb-8 flex items-center justify-between px-5'>
+            <div className='h-24 w-24 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='h-10 w-24 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
           </div>
-          <div className="mt-6 px-5">
-            <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
-            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-28 mb-4"></div>
+          <div className='mt-6 px-5'>
+            <div className='mb-2 h-6 w-36 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mb-4 h-4 w-28 rounded bg-gray-200 dark:bg-[#27272A]'></div>
           </div>
-          <div className="mt-5 px-5">
-            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-64 mb-4"></div>
+          <div className='mt-5 px-5'>
+            <div className='mb-4 h-4 w-64 rounded bg-gray-200 dark:bg-[#27272A]'></div>
           </div>
-          <div className="mt-5 flex gap-7 mb-10 px-5">
-            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
-            <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+          <div className='mb-10 mt-5 flex gap-7 px-5'>
+            <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
           </div>
         </div>
         {/* Skeleton structure for posts */}
         {[1, 2, 3].map((_, i) => (
-          <div key={i} className="p-6 border-b md:mt-20 mt-32 border-white border-opacity-20 md:w-[45vw] w-full animate-pulse">
-            <div className="flex justify-between items-center mb-8">
-              <div className="flex gap-3 items-center">
-                <div className="w-8 h-8 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
+          <div
+            key={i}
+            className='mt-32 w-full animate-pulse border-b border-white border-opacity-20 p-6 md:mt-20 md:w-[45vw]'
+          >
+            <div className='mb-8 flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='h-8 w-8 rounded-full bg-gray-200 dark:bg-[#27272A]'></div>
                 <div>
-                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-24 mb-1"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+                  <div className='mb-1 h-4 w-24 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+                  <div className='h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
                 </div>
               </div>
-              <div className="h-4 bg-gray-200 dark:bg-[#27272A] rounded w-20"></div>
+              <div className='h-4 w-20 rounded bg-gray-200 dark:bg-[#27272A]'></div>
             </div>
-            <div className="h-36 bg-gray-200 dark:bg-[#27272A] rounded mb-4"></div>
-            <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded mb-2"></div>
-            <div className="mt-6 h-4 bg-gray-200 dark:bg-[#27272A] rounded w-44"></div>
-            <div className="mt-4 flex justify-between items-center">
-              <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
-              <div className="inline-block h-4 bg-gray-200 dark:bg-[#27272A] rounded w-16"></div>
+            <div className='mb-4 h-36 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mb-2 h-6 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mt-6 h-4 w-44 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+            <div className='mt-4 flex items-center justify-between'>
+              <div className='inline-block h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
+              <div className='inline-block h-4 w-16 rounded bg-gray-200 dark:bg-[#27272A]'></div>
             </div>
           </div>
         ))}
       </div>
-    );
+    )
   }
 
-  const followersCount = profileData?.followers?.length || 0;
-  const followingCount = profileData?.following?.length || 0;
+  const followersCount = profileData?.followers?.length || 0
+  const followingCount = profileData?.following?.length || 0
 
   return (
     <div>
-      <div className="w-full md:px-80 z-10 items-center bg-black text-white min-h-screen">
+      <div className='z-10 min-h-screen w-full items-center bg-black text-white md:px-80'>
         {/*  Profile and Profile Posts */}
         {profileData ? (
-          <div className="text-white">
+          <div className='text-white'>
             <nav
-              className={`h-[70px] py-4 lg:px-10 px-3 items-center fixed top-0 z-40 border-b border-white w-full md:hidden flex gap-10 border-opacity-20 transition-transform duration-300 ${isScrolled ? '-translate-y-full' : 'translate-y-0'
-                }`}
+              className={`fixed top-0 z-40 flex h-[70px] w-full items-center gap-10 border-b border-white border-opacity-20 px-3 py-4 transition-transform duration-300 md:hidden lg:px-10 ${
+                isScrolled ? '-translate-y-full' : 'translate-y-0'
+              }`}
               style={{
                 backdropFilter: 'blur(10px)',
                 background: 'rgba(0, 0, 0, 0.5)', // Adjust transparency as needed
                 borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'
               }}
             >
-              <Link to="/">
+              <Link to='/'>
                 <span>
-                  <FaArrowLeftLong className="text-xl inline-block" />
+                  <FaArrowLeftLong className='inline-block text-xl' />
                 </span>
               </Link>
-              <div className="">
-                <p className="text-lg font-semibold">{profileData.fullname}</p>
-                <p className="text-sm font-normal">{posts.length} posts</p>
+              <div className=''>
+                <p className='text-lg font-semibold'>{profileData.fullname}</p>
+                <p className='text-sm font-normal'>{posts.length} posts</p>
               </div>
             </nav>
-            <div className="lg:pt-10 pt-24">
-              <div className="flex justify-between px-5 md:px-0 items-center">
+            <div className='pt-24 lg:pt-10'>
+              <div className='flex items-center justify-between px-5 md:px-0'>
                 <img
                   src={profileData.profilePicture}
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full"
+                  alt='Profile'
+                  className='h-24 w-24 rounded-full'
                 />
                 <button
                   onClick={handleEditProfile}
-                  className="rounded-full bg-white text-base font-semibold text-black py-2 px-4"
+                  className='rounded-full bg-white px-4 py-2 text-base font-semibold text-black'
                 >
-                  <UserPen size={22} className="inline-block mr-1" /> Edit
+                  <UserPen size={22} className='mr-1 inline-block' /> Edit
                 </button>
               </div>
-              <div className="mt-6 px-5 md:px-0">
-                <p className="text-xl font-semibold">{profileData.fullname}</p>
-                <p className="text-base text-gray-200 font-normal">{profileData.username}</p>
+              <div className='mt-6 px-5 md:px-0'>
+                <p className='text-xl font-semibold'>{profileData.fullname}</p>
+                <p className='text-base font-normal text-gray-200'>
+                  {profileData.username}
+                </p>
               </div>
-              <div className="mt-5 px-5 md:px-0">
-                <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
+              <div className='mt-5 px-5 md:px-0'>
+                <p className='w-[85vw] text-base font-normal lg:w-[31vw]'>
+                  {profileData.bio}
+                </p>
               </div>
-              <div className="mt-5 flex gap-7 mb-10 px-5 md:px-0">
+              <div className='mb-10 mt-5 flex gap-7 px-5 md:px-0'>
                 <Link to={`/profile/following`}>
-                  <p className="text-base font-bold">
-                    {followingCount} <span className="opacity-60 font-normal">Following</span>
+                  <p className='text-base font-bold'>
+                    {followingCount}{' '}
+                    <span className='font-normal opacity-60'>Following</span>
                   </p>
                 </Link>
                 <Link to={`/profile/followers`}>
-                  <p className="text-base font-bold">
-                    {followersCount} <span className="opacity-60 font-normal">Followers</span>
+                  <p className='text-base font-bold'>
+                    {followersCount}{' '}
+                    <span className='font-normal opacity-60'>Followers</span>
                   </p>
                 </Link>
               </div>
-              <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
-                <h1 className="text-lg px-5 md:px-0 pt-4 font-semibold mb-5">Posts</h1>
-                <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
+              <div className='mt-2 w-full pb-[58px] text-white md:pb-0'>
+                <h1 className='mb-5 px-5 pt-4 text-lg font-semibold md:px-0'>
+                  Posts
+                </h1>
+                <div className='rounded-none border border-white border-opacity-0 md:rounded-3xl md:border-opacity-20'>
                   {Array.isArray(posts) && posts.length > 0 ? (
-                    posts.map((post) => (
+                    posts.map(post => (
                       <div
                         key={post._id}
-                        className="border-b border-white border-opacity-20 px-5 py-4"
+                        className='border-b border-white border-opacity-20 px-5 py-4'
                       >
-                        <div className="flex justify-between mb-4 items-start">
-                          <div className="flex gap-3 items-center justify-start">
+                        <div className='mb-4 flex items-start justify-between'>
+                          <div className='flex items-center justify-start gap-3'>
                             {post.author && post.author.profilePicture && (
                               <img
                                 src={profileData.profilePicture}
                                 alt={post.author.username}
-                                className="w-8 h-8 rounded-full mr-1"
+                                className='mr-1 h-8 w-8 rounded-full'
                               />
                             )}
-                            <div className="flex items-start gap-4">
+                            <div className='flex items-start gap-4'>
                               <div>
-                                <p className="text-white font-semibold">{post.author?.username ?? "anonymous"}</p>
-                                <p className="font-medium text-xs text-gray-200">{post.author?.fullname ?? "Unknown Author"}</p>
+                                <p className='font-semibold text-white'>
+                                  {post.author?.username ?? 'anonymous'}
+                                </p>
+                                <p className='text-xs font-medium text-gray-200'>
+                                  {post.author?.fullname ?? 'Unknown Author'}
+                                </p>
                               </div>
-                              <p className="text-gray-400 mt-1 text-xs">
-                                Posted {new Date(post.createdAt).toLocaleDateString()}
+                              <p className='mt-1 text-xs text-gray-400'>
+                                Posted{' '}
+                                {new Date(post.createdAt).toLocaleDateString()}
                               </p>
                             </div>
                           </div>
-                          <div className="relative">
+                          <div className='relative'>
                             <button
-                              onClick={() => setSelectedPost(post._id === selectedPost ? null : post._id)}
-                              className="font-semibold cursor-pointer"
+                              onClick={() =>
+                                setSelectedPost(
+                                  post._id === selectedPost ? null : post._id
+                                )
+                              }
+                              className='cursor-pointer font-semibold'
                             >
-                              <BsThreeDots className="text-2xl" />
+                              <BsThreeDots className='text-2xl' />
                             </button>
                             {selectedPost === post._id && (
-                              <div className="absolute right-0 top-0">
-                                <div className="w-48 bg-black border border-white border-opacity-20 shadow-lg rounded-md z-10">
-                                  <div className="py-4 flex flex-col px-1 justify-center items-center gap-2 relative">
+                              <div className='absolute right-0 top-0'>
+                                <div className='z-10 w-48 rounded-md border border-white border-opacity-20 bg-black shadow-lg'>
+                                  <div className='relative flex flex-col items-center justify-center gap-2 px-1 py-4'>
                                     <button
                                       onClick={closeModel}
-                                      className="absolute top-1 right-3 transition-colors"
+                                      className='absolute right-3 top-1 transition-colors'
                                     >
-                                      <span className="text-white text-2xl">&times;</span>
+                                      <span className='text-2xl text-white'>
+                                        &times;
+                                      </span>
                                     </button>
                                     <button
                                       onClick={() => handleEditPost(post._id)}
-                                      className="w-[90%] px-4 py-3 mt-6 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg justify-center text-left flex items-center transition-colors duration-150"
+                                      className='mt-6 flex w-[90%] items-center justify-center rounded-lg bg-[#27272A] bg-opacity-70 px-4 py-3 text-left text-white transition-colors duration-150 hover:bg-opacity-80'
                                     >
-                                      <MdOutlineEdit className="mr-3 text-2xl" />
-                                      <span className="text-base font-medium">Edit Post</span>
+                                      <MdOutlineEdit className='mr-3 text-2xl' />
+                                      <span className='text-base font-medium'>
+                                        Edit Post
+                                      </span>
                                     </button>
                                     <button
                                       onClick={() => handlePostDelete(post._id)}
                                       disabled={isDeletingPost}
-                                      className="w-[90%] px-4 py-3 text-white bg-opacity-70 hover:bg-opacity-80 bg-[#27272A] rounded-lg text-left flex justify-center items-center transition-colors duration-150"
+                                      className='flex w-[90%] items-center justify-center rounded-lg bg-[#27272A] bg-opacity-70 px-4 py-3 text-left text-white transition-colors duration-150 hover:bg-opacity-80'
                                     >
-                                      {isDeletingPost && selectedPost === post._id ? (
+                                      {isDeletingPost &&
+                                      selectedPost === post._id ? (
                                         <>
-                                          <Loader2 className="text-xl animate-spin" />
+                                          <Loader2 className='animate-spin text-xl' />
                                         </>
                                       ) : (
                                         <>
-                                          <RiDeleteBin6Line className="mr-2 text-xl" />
-                                          <span className="text-base font-medium">Delete Post</span>
+                                          <RiDeleteBin6Line className='mr-2 text-xl' />
+                                          <span className='text-base font-medium'>
+                                            Delete Post
+                                          </span>
                                         </>
                                       )}
                                     </button>
@@ -362,144 +387,163 @@ function Profile() {
                         <Link to={`/post/image/${post._id}`}>
                           {post.image && (
                             <img
-                              className="w-full h-60 md:h-80 object-cover border border-white border-opacity-15 rounded-xl mb-4"
+                              className='mb-4 h-60 w-full rounded-xl border border-white border-opacity-15 object-cover md:h-80'
                               src={post.image}
                               alt={post.title}
                             />
                           )}
                         </Link>
-                        <p className="mt-2 ml-1.5 text-[#E7E9EA]">{post.content}</p>
-                        <div className="mt-7">
+                        <p className='ml-1.5 mt-2 text-[#E7E9EA]'>
+                          {post.content}
+                        </p>
+                        <div className='mt-7'>
                           {post.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="inline-block text-[#1D9BF0] text-base font-bold mr-2 py-0.5 rounded"
+                              className='mr-2 inline-block rounded py-0.5 text-base font-bold text-[#1D9BF0]'
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
-                        <div className="flex justify-between mt-8 items-center">
+                        <div className='mt-8 flex items-center justify-between'>
                           <button
                             onClick={() => handleLike(post._id)}
-                            className="font-semibold cursor-pointer"
+                            className='cursor-pointer font-semibold'
                           >
-                            <span className="flex text-white py-2 px-1 gap-2 items-center justify-center">
+                            <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                               <span>
-                                <MdOutlineThumbUpOffAlt className="inline-block text-xl md:text-2xl" />
+                                <MdOutlineThumbUpOffAlt className='inline-block text-xl md:text-2xl' />
                               </span>
-                              <span className="text-sm md:text-base">{post.likes.length}</span>
+                              <span className='text-sm md:text-base'>
+                                {post.likes.length}
+                              </span>
                             </span>
                           </button>
-                          <button className="font-semibold cursor-pointer"
+                          <button
+                            className='cursor-pointer font-semibold'
                             onClick={() => navigate(`/comments/${post._id}`)}
                           >
-                            <span className="text-white flex py-2 px-1 gap-2 items-center justify-center">
+                            <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                               <span>
-                                <FaRegCommentDots className="inline-block text-xl md:text-2xl" />
+                                <FaRegCommentDots className='inline-block text-xl md:text-2xl' />
                               </span>
-                              <span className="text-sm md:text-base">Comment</span>
+                              <span className='text-sm md:text-base'>
+                                Comment
+                              </span>
                             </span>
                           </button>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="px-5 pt-5 pb-32">No posts available</p>
+                    <p className='px-5 pb-32 pt-5'>No posts available</p>
                   )}
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="h-screen w-full flex flex-col px-5 justify-center items-center text-center space-y-5">
-            <p className="text-lg font-semibold">You need to sign in to access your profile</p>
+          <div className='flex h-screen w-full flex-col items-center justify-center space-y-5 px-5 text-center'>
+            <p className='text-lg font-semibold'>
+              You need to sign in to access your profile
+            </p>
             <button
-              className="px-5 py-2 bg-white font-semibold text-black rounded-lg"
+              className='rounded-lg bg-white px-5 py-2 font-semibold text-black'
               onClick={() => navigate('/signin')}
             >
               Sign In
             </button>
           </div>
-
         )}
       </div>
 
       {/* Edit profile  */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-3xl">
-            <div className="flex justify-between mb-5 lg:mb-6 items-center">
-              <h2 className="text-xl font-medium">Edit Profile</h2>
+        <div className='fixed inset-0 top-[-75px] z-50 flex items-center justify-center bg-black bg-opacity-75 lg:top-0'>
+          <div className='h-[82vh] w-[90vw] rounded-3xl border border-white border-opacity-20 bg-black p-6 lg:h-[78vh] lg:w-[35vw]'>
+            <div className='mb-5 flex items-center justify-between lg:mb-6'>
+              <h2 className='text-xl font-medium'>Edit Profile</h2>
               <button
-                type="button"
+                type='button'
                 onClick={handleCloseEditModal}
-                className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
+                className='focus:shadow-outline rounded-full p-1 text-white hover:bg-neutral-700 focus:outline-none'
               >
                 <X />
               </button>
             </div>
-            <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2" htmlFor="username">
+            <form onSubmit={handleEditFormSubmit} encType='multipart/form-data'>
+              <div className='mb-4'>
+                <label
+                  className='mb-2 block text-sm font-semibold'
+                  htmlFor='username'
+                >
                   Username
                 </label>
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
+                  type='text'
+                  id='username'
+                  name='username'
                   value={editFormData.username}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-30 bg-black rounded-2xl w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline"
+                  className='focus:shadow-outline w-full appearance-none rounded-2xl border border-white border-opacity-30 bg-black px-4 py-3 leading-tight focus:outline-none'
                 />
               </div>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2" htmlFor="bio">
+              <div className='mb-4'>
+                <label
+                  className='mb-2 block text-sm font-semibold'
+                  htmlFor='bio'
+                >
                   Bio
                 </label>
                 <textarea
-                  id="bio"
-                  name="bio"
+                  id='bio'
+                  name='bio'
                   value={editFormData.bio}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-30 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
+                  className='focus:shadow-outline h-28 w-full appearance-none rounded-2xl border border-white border-opacity-30 bg-black px-4 py-3 leading-tight text-white focus:outline-none lg:h-24'
                 />
               </div>
-              <div className="flex flex-col items-center">
-                <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-2xl cursor-pointer hover:border-gray-400 transition-colors">
+              <div className='flex flex-col items-center'>
+                <label className='w-full cursor-pointer rounded-2xl border-2 border-dashed border-gray-500 p-4 transition-colors hover:border-gray-400'>
                   <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
+                    type='file'
+                    accept='image/*'
+                    className='hidden'
                     onChange={handleFileChange}
                   />
-                  <div className="flex flex-col items-center justify-center">
+                  <div className='flex flex-col items-center justify-center'>
                     <svg
-                      className="w-12 h-12 text-gray-400 mb-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
+                      className='mb-2 h-12 w-12 text-gray-400'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                      xmlns='http://www.w3.org/2000/svg'
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 16l3-3m0 0l3 3m-3-3v8m13-12a2 2 0 00-2-2h-3.5a2 2 0 01-1.41-.59l-1.5-1.5A2 2 0 0010 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2v-5a2 2 0 00-2-2h-5.5"
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth='2'
+                        d='M3 16l3-3m0 0l3 3m-3-3v8m13-12a2 2 0 00-2-2h-3.5a2 2 0 01-1.41-.59l-1.5-1.5A2 2 0 0010 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2v-5a2 2 0 00-2-2h-5.5'
                       ></path>
                     </svg>
-                    <p className="text-gray-400">Click to browse files</p>
+                    <p className='text-gray-400'>Click to browse files</p>
                   </div>
                 </label>
               </div>
-              <div className="flex mt-10 items-center justify-between">
+              <div className='mt-10 flex items-center justify-between'>
                 <button
-                  type="submit"
-                  className="text-black bg-white font-semibold text-base py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                  type='submit'
+                  className='focus:shadow-outline rounded-full bg-white px-5 py-2 text-base font-semibold text-black focus:outline-none'
                 >
-                  {loading ? <>
-                    <Loader2 className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
-                  </> : "Save Changes"}
+                  {loading ? (
+                    <>
+                      <Loader2 className='mr-3 inline-block h-5 w-5 animate-spin' />{' '}
+                      saving....
+                    </>
+                  ) : (
+                    'Save Changes'
+                  )}
                 </button>
               </div>
             </form>
@@ -509,41 +553,49 @@ function Profile() {
 
       {/* Edit Post model  */}
       {isEditPostModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[60vh] lg:h-[59vh] border-white p-6 rounded-3xl">
-            <div className="flex justify-between items-start">
-              <h2 className="text-xl font-medium mb-10 lg:mb-6">Edit Post</h2>
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75'>
+          <div className='h-[60vh] w-[90vw] rounded-3xl border border-white border-opacity-20 bg-black p-6 lg:h-[59vh] lg:w-[35vw]'>
+            <div className='flex items-start justify-between'>
+              <h2 className='mb-10 text-xl font-medium lg:mb-6'>Edit Post</h2>
               <button
-                type="button"
+                type='button'
                 onClick={() => setIsEditPostModalOpen(false)}
-                className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
+                className='focus:shadow-outline rounded-full p-1 text-white hover:bg-neutral-700 focus:outline-none'
               >
-                < X />
+                <X />
               </button>
             </div>
-            <form encType="multipart/form-data">
-              <div className="mb-4">
-                <label className="block text-sm font-semibold mb-2" htmlFor="content">
+            <form encType='multipart/form-data'>
+              <div className='mb-4'>
+                <label
+                  className='mb-2 block text-sm font-semibold'
+                  htmlFor='content'
+                >
                   Content
                 </label>
                 <textarea
-                  id="content"
-                  name="content"
-                  rows="8"
+                  id='content'
+                  name='content'
+                  rows='8'
                   value={editPostFormData.content}
                   onChange={handleEditPostFormChange}
-                  className="appearance-none border border-white border-opacity-30 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className='focus:shadow-outline w-full appearance-none rounded-2xl border border-white border-opacity-30 bg-black px-4 py-3 leading-tight text-white focus:outline-none'
                 />
               </div>
-              <div className="flex mt-10 items-center justify-between">
+              <div className='mt-10 flex items-center justify-between'>
                 <button
-                  type="button"
+                  type='button'
                   onClick={handleEditPostFormSubmit}
-                  className="bg-white text-black text-base font-semibold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline w-40"
+                  className='focus:shadow-outline w-40 rounded-full bg-white px-5 py-2 text-base font-semibold text-black focus:outline-none'
                 >
-                  {updatePostLoader
-                    ? <> <Loader2 className="w-5 h-5 animate-spin inline-block" /></>
-                    : <>Save Changes</>}
+                  {updatePostLoader ? (
+                    <>
+                      {' '}
+                      <Loader2 className='inline-block h-5 w-5 animate-spin' />
+                    </>
+                  ) : (
+                    <>Save Changes</>
+                  )}
                 </button>
               </div>
             </form>
@@ -551,7 +603,7 @@ function Profile() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Profile;
+export default Profile

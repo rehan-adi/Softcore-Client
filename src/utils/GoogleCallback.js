@@ -1,20 +1,19 @@
-import { useEffect } from "react";
-import { setToken } from "./token";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react'
+import { setToken } from './token'
+import { useNavigate } from 'react-router-dom'
 
 function GoogleCallback() {
-
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const token = new URLSearchParams(window.location.search).get('token');
+    const token = new URLSearchParams(window.location.search).get('token')
     if (token) {
-      setToken(token);
-      navigate('/');
+      setToken(token)
+      navigate('/')
     }
-  }, [navigate]);
+  }, [navigate])
 
-  return null;
+  return null
 }
 
-export default GoogleCallback;
+export default GoogleCallback

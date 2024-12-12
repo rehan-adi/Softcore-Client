@@ -1,17 +1,17 @@
-import { Outlet } from "react-router-dom";
-import SideNavbar from "../components/SideNavbar";
-import BottomNavbar from "../components/BottomNavbar";
+import { Outlet } from 'react-router-dom'
+import SideNavbar from '../components/SideNavbar'
+import BottomNavbar from '../components/BottomNavbar'
 
 function Layout() {
   return (
-    <div className="relative">
+    <div className='relative'>
       <SideNavbar />
-      <div className="absolute bg-black text-white min-h-screen top-0 w-full lg:w-[85vw] right-0">
+      <div className='absolute right-0 top-0 min-h-screen w-full bg-black text-white lg:w-[85vw]'>
         <Outlet />
       </div>
       <BottomNavbar />
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout
