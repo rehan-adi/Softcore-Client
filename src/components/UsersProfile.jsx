@@ -62,7 +62,7 @@ const UsersProfile = () => {
 
     if (!userProfileData) {
         return (
-            <div className="text-center text-gray-400">User not found</div>
+            <div className="flex justify-center pt-80 items-centertext-center h-screen w-full text-gray-400">User not found</div>
         );
     }
 
@@ -71,9 +71,9 @@ const UsersProfile = () => {
 
     return (
         <div className="w-full md:px-80 z-10 flex justify-center items-start bg-black text-white min-h-screen">
-            <div className="flex justify-center items-center">
-                <div className="pt-10 flex justify-center items-center flex-col">
-                    <div className="w-full px-5">
+            <div className="flex w-full md:w-auto justify-center items-center">
+                <div className="w-full pt-10 flex justify-center px-0 md:px-0 items-center flex-col">
+                    <div className="w-full md:px-0 px-5">
                         <div className="flex justify-between items-center">
                             <img
                                 src={userProfileData.profilePicture}
@@ -119,7 +119,7 @@ const UsersProfile = () => {
                         </div>
                     </div>
                     <div className="w-full mt-12 pb-[58px] md:pb-0 text-white">
-                        <h1 className="font-semibold pt-4 px-5 text-lg mb-5">Posts</h1>
+                        <h1 className="font-semibold pt-4 md:px-0 px-5 text-lg mb-5">Posts</h1>
                         <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
                             {Array.isArray(userProfilePost) && userProfilePost.length > 0 ? (
                                 userProfilePost.map((post) => (
