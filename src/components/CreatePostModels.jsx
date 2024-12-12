@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreatePost } from "../hooks/posts/useCreatePost";
@@ -16,7 +16,7 @@ function CreatePostModal({ onClose }) {
       image: null,
     }
   });
-  
+
   const { loading, onSubmitForm } = useCreatePost();
 
   const handleFormSubmit = (data) => {
@@ -32,34 +32,23 @@ function CreatePostModal({ onClose }) {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-70 z-50">
-      <div className="md:w-[45vw] w-[90%] bg-black border border-white border-opacity-20 shadow-md md:p-6 p-4 rounded-lg">
+      <div className="md:w-[40vw] w-[90%] bg-black border border-white border-opacity-20 shadow-md md:p-6 p-4 rounded-3xl">
         <div className="flex items-center md:mb-5 mb-4 justify-between">
-          <h2 className="text-xl font-semibold text-white">Create a Post</h2>
-          <button className=" text-white" onClick={onClose}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+          <h2 className="text-xl font-medium text-white">Create a Post</h2>
+          <button
+            className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
+            onClick={onClose}>
+            <X />
           </button>
         </div>
         <form onSubmit={handleSubmit(handleFormSubmit)} encType="multipart/form-data">
           <div className="mb-4">
-            <label htmlFor="content" className="block mb-3 text-gray-300">
+            <label htmlFor="content" className="block text-sm font-semibold mb-2">
               Content
             </label>
             <textarea
               id="content"
-              className="form-textarea bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2 rounded-md mt-1 block w-full text-white placeholder:text-white"
+              className="form-textarea bg-black focus:outline-none border border-white border-opacity-30 px-4 py-3 rounded-2xl mt-1 block w-full text-white placeholder:text-white"
               rows="5"
               placeholder="What do you want to talk about ?"
               {...register("content", { required: "Content is required" })}
@@ -68,12 +57,12 @@ function CreatePostModal({ onClose }) {
           </div>
           <div className="flex justify-between lg:flex-row md:gap-5 gap-3 flex-col mb-5 items-center">
             <div className="w-full">
-              <label htmlFor="category" className="block text-gray-300">
+              <label htmlFor="category" className="block text-sm font-semibold mb-2">
                 Category
               </label>
               <select
                 id="category"
-                className="form-select bg-black border text-white border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md focus:outline-none mt-1 block w-full"
+                className="form-select bg-black border text-white border-white border-opacity-30 px-4 py-3 rounded-2xl focus:outline-none mt-1 block w-full"
                 {...register("category")}
               >
                 <option value="">Select category...</option>
@@ -90,13 +79,13 @@ function CreatePostModal({ onClose }) {
               {errors.category && <span className="text-red-500">{errors.category.message}</span>}
             </div>
             <div className="w-full">
-              <label htmlFor="tags" className="block text-gray-300">
+              <label htmlFor="tags" className="block text-sm font-semibold mb-2">
                 Tags
               </label>
               <input
                 type="text"
                 id="tags"
-                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-20 px-3 md:py-3 py-2.5 rounded-md block text-white placeholder:text-white w-full"
+                className="form-input mt-1 bg-black focus:outline-none border border-white border-opacity-30 px-4 py-3 rounded-2xl block text-white placeholder:text-white w-full"
                 placeholder="Separate tags with commas ..."
                 {...register("tags")}
               />
@@ -104,7 +93,7 @@ function CreatePostModal({ onClose }) {
           </div>
           <div className="mb-4 mt-4">
             <div className="flex flex-col items-center">
-              <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-lg cursor-pointer hover:border-gray-400 transition-colors">
+              <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-2xl cursor-pointer hover:border-gray-400 transition-colors">
                 <input
                   type="file"
                   accept="image/*"
@@ -135,7 +124,7 @@ function CreatePostModal({ onClose }) {
           </div>
           <div className="flex justify-start mt-10">
             <button
-              className="bg-white text-black w-36 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              className="bg-white text-black w-36 text-base font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
               disabled={loading}
             >
               {loading ? (
