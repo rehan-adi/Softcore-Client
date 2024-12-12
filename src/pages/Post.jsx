@@ -244,19 +244,20 @@ function Post() {
       </div>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 lg:w-[35vw] w-[90vw] h-[60vh] lg:h-[58vh] border-white p-6 rounded-lg">
+          <div className="bg-black border border-opacity-20 lg:w-[35vw] w-[90vw] h-[60vh] lg:h-[58vh] border-white p-6 rounded-3xl">
             <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-semibold mb-8 lg:mb-4">Edit Post</h2>
+              <h2 className="text-xl font-medium mb-8 lg:mb-4">Edit Post</h2>
               <button
                 type="button"
                 onClick={handleCloseModal}
+                className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
               >
                 < X />
               </button>
             </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="bio">
+                <label className="block text-sm font-semibold mb-2" htmlFor="bio">
                   Content
                 </label>
                 <textarea
@@ -265,14 +266,14 @@ function Post() {
                   rows='8'
                   value={editFormData.content}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="flex lg:mt-10 mt-8 items-center justify-between">
                 <button
                   type="submit"
                   disabled={isUpdatingPost}
-                  className="bg-white text-black font-bold py-2 px-5 w-36 rounded-full focus:outline-none focus:shadow-outline"
+                  className="bg-white text-black text-base font-semibold py-2 px-5 w-36 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   {isUpdatingPost ? (
                     <>

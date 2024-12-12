@@ -263,7 +263,7 @@ function Profile() {
                   onClick={handleEditProfile}
                   className="rounded-full bg-white text-base font-semibold text-black py-2 px-4"
                 >
-                  <UserPen size={22} className="inline-block mr-1"/> Edit
+                  <UserPen size={22} className="inline-block mr-1" /> Edit
                 </button>
               </div>
               <div className="mt-6 px-5 md:px-0">
@@ -430,7 +430,7 @@ function Profile() {
         <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
           <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-3xl">
             <div className="flex justify-between mb-5 lg:mb-6 items-center">
-              <h2 className="lg:text-2xl text-xl font-medium">Edit Profile</h2>
+              <h2 className="text-xl font-medium">Edit Profile</h2>
               <button
                 type="button"
                 onClick={handleCloseEditModal}
@@ -450,7 +450,7 @@ function Profile() {
                   name="username"
                   value={editFormData.username}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 bg-black rounded-2xl w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-30 bg-black rounded-2xl w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
@@ -462,11 +462,11 @@ function Profile() {
                   name="bio"
                   value={editFormData.bio}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-30 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
                 />
               </div>
               <div className="flex flex-col items-center">
-                <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-lg cursor-pointer hover:border-gray-400 transition-colors">
+                <label className="w-full border-2 border-dashed border-gray-500 p-4 rounded-2xl cursor-pointer hover:border-gray-400 transition-colors">
                   <input
                     type="file"
                     accept="image/*"
@@ -495,7 +495,7 @@ function Profile() {
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="submit"
-                  className="text-black bg-white font-semibold text-base py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
+                  className="text-black bg-white font-semibold text-base py-2 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   {loading ? <>
                     <Loader2 className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
@@ -510,35 +510,36 @@ function Profile() {
       {/* Edit Post model  */}
       {isEditPostModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[60vh] lg:h-[59vh] border-white p-6 rounded-lg">
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[60vh] lg:h-[59vh] border-white p-6 rounded-3xl">
             <div className="flex justify-between items-start">
-              <h2 className="text-2xl font-semibold mb-10 lg:mb-6">Edit Post</h2>
+              <h2 className="text-xl font-medium mb-10 lg:mb-6">Edit Post</h2>
               <button
                 type="button"
                 onClick={() => setIsEditPostModalOpen(false)}
+                className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
               >
                 < X />
               </button>
             </div>
             <form encType="multipart/form-data">
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="content">
+                <label className="block text-sm font-semibold mb-2" htmlFor="content">
                   Content
                 </label>
                 <textarea
                   id="content"
                   name="content"
-                  rows="7"
+                  rows="8"
                   value={editPostFormData.content}
                   onChange={handleEditPostFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-30 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="button"
                   onClick={handleEditPostFormSubmit}
-                  className="bg-white text-black font-bold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline w-40"
+                  className="bg-white text-black text-base font-semibold py-2 px-5 rounded-full focus:outline-none focus:shadow-outline w-40"
                 >
                   {updatePostLoader
                     ? <> <Loader2 className="w-5 h-5 animate-spin inline-block" /></>
