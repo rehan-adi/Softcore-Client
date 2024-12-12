@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { Loader2, X } from 'lucide-react';
 import { getToken } from '../utils/token';
 import { BsThreeDots } from "react-icons/bs";
 import { BACKEND_API_URL } from '../constant';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../hooks/useProfile';
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { Loader2, X, UserPen } from 'lucide-react';
 import { useCallback, useEffect, useState } from "react";
 import { useLikePost } from "../hooks/posts/useLikePost";
 import { useProfileStore } from "../store/useProfileStore";
@@ -161,7 +161,7 @@ function Profile() {
     } else {
       toast.error("Failed to delete post");
     }
-  };  
+  };
 
   const closeModel = () => {
     setSelectedPost(null);
@@ -183,7 +183,7 @@ function Profile() {
         <div className="py-6 md:w-[45vw] w-full animate-pulse">
           <div className="flex justify-between px-5 items-center mb-8">
             <div className="w-24 h-24 bg-gray-200 dark:bg-[#27272A] rounded-full"></div>
-            <div className="rounded-full h-10 w-32 bg-gray-200 dark:bg-[#27272A]"></div>
+            <div className="rounded-full h-10 w-24 bg-gray-200 dark:bg-[#27272A]"></div>
           </div>
           <div className="mt-6 px-5">
             <div className="h-6 bg-gray-200 dark:bg-[#27272A] rounded w-36 mb-2"></div>
@@ -252,8 +252,8 @@ function Profile() {
                 <p className="text-sm font-normal">{posts.length} posts</p>
               </div>
             </nav>
-            <div className="lg:pt-20 pt-24">
-              <div className="flex justify-between px-5 items-center">
+            <div className="lg:pt-10 pt-24">
+              <div className="flex justify-between px-5 md:px-0 items-center">
                 <img
                   src={profileData.profilePicture}
                   alt="Profile"
@@ -261,19 +261,19 @@ function Profile() {
                 />
                 <button
                   onClick={handleEditProfile}
-                  className="rounded-full bg-white font-semibold text-black py-2 px-5"
+                  className="rounded-full bg-white text-base font-semibold text-black py-2 px-4"
                 >
-                  Edit Profile
+                  <UserPen size={22} className="inline-block mr-1"/> Edit
                 </button>
               </div>
-              <div className="mt-6 px-5">
+              <div className="mt-6 px-5 md:px-0">
                 <p className="text-xl font-semibold">{profileData.fullname}</p>
                 <p className="text-base text-gray-200 font-normal">{profileData.username}</p>
               </div>
-              <div className="mt-5 px-5">
+              <div className="mt-5 px-5 md:px-0">
                 <p className="text-base lg:w-[31vw] w-[85vw] font-normal">{profileData.bio}</p>
               </div>
-              <div className="mt-5 flex gap-7  mb-10 px-5">
+              <div className="mt-5 flex gap-7 mb-10 px-5 md:px-0">
                 <Link to={`/profile/following`}>
                   <p className="text-base font-bold">
                     {followingCount} <span className="opacity-60 font-normal">Following</span>
@@ -286,7 +286,7 @@ function Profile() {
                 </Link>
               </div>
               <div className="mt-2 pb-[58px] md:pb-0 w-full text-white">
-                <h1 className="text-lg px-5 pt-4 font-semibold mb-5">Posts</h1>
+                <h1 className="text-lg px-5 md:px-0 pt-4 font-semibold mb-5">Posts</h1>
                 <div className='border border-white md:border-opacity-20 border-opacity-0 md:rounded-3xl rounded-none'>
                   {Array.isArray(posts) && posts.length > 0 ? (
                     posts.map((post) => (
@@ -428,20 +428,20 @@ function Profile() {
       {/* Edit profile  */}
       {isEditModalOpen && (
         <div className="fixed inset-0 flex lg:top-0 top-[-75px] items-center justify-center z-50 bg-black bg-opacity-75">
-          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-lg">
+          <div className="bg-black border border-opacity-20 w-[90vw] lg:w-[35vw] h-[82vh] lg:h-[78vh] border-white p-6 rounded-3xl">
             <div className="flex justify-between mb-5 lg:mb-6 items-center">
-              <h2 className="lg:text-2xl text-xl font-semibold">Edit Profile</h2>
+              <h2 className="lg:text-2xl text-xl font-medium">Edit Profile</h2>
               <button
                 type="button"
                 onClick={handleCloseEditModal}
-                className="bg-white text-black font-bold py-1 px-1 rounded-full focus:outline-none focus:shadow-outline"
+                className="text-white p-1 rounded-full hover:bg-neutral-700 focus:outline-none focus:shadow-outline"
               >
                 <X />
               </button>
             </div>
             <form onSubmit={handleEditFormSubmit} encType="multipart/form-data">
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="username">
+                <label className="block text-sm font-semibold mb-2" htmlFor="username">
                   Username
                 </label>
                 <input
@@ -450,11 +450,11 @@ function Profile() {
                   name="username"
                   value={editFormData.username}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 bg-black rounded w-full py-3 px-3 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 bg-black rounded-2xl w-full py-3 px-4 leading-tight focus:outline-none focus:shadow-outline"
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-bold mb-2" htmlFor="bio">
+                <label className="block text-sm font-semibold mb-2" htmlFor="bio">
                   Bio
                 </label>
                 <textarea
@@ -462,7 +462,7 @@ function Profile() {
                   name="bio"
                   value={editFormData.bio}
                   onChange={handleEditFormChange}
-                  className="appearance-none border border-white border-opacity-20 rounded bg-black w-full py-3 px-3 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
+                  className="appearance-none border border-white border-opacity-20 rounded-2xl bg-black w-full py-3 px-4 text-white leading-tight focus:outline-none lg:h-24 h-28 focus:shadow-outline"
                 />
               </div>
               <div className="flex flex-col items-center">
@@ -495,7 +495,7 @@ function Profile() {
               <div className="flex mt-10 items-center justify-between">
                 <button
                   type="submit"
-                  className="text-white font-semibold text-sm py-3 px-5 rounded-full border border-white border-opacity-40 focus:outline-none focus:shadow-outline"
+                  className="text-black bg-white font-semibold text-base py-3 px-5 rounded-full focus:outline-none focus:shadow-outline"
                 >
                   {loading ? <>
                     <Loader2 className="w-5 h-5 animate-spin mr-3 inline-block" /> saving....
