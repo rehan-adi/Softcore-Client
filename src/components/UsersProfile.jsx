@@ -215,7 +215,7 @@ const UsersProfile = () => {
                   </div>
                 ))
               ) : (
-                <p className='h-screen w-full px-5 pb-10 pt-4'>
+                <p className='h-auto w-full px-5 pb-10 pt-4'>
                   No posts available
                 </p>
               )}
