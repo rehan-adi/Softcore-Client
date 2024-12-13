@@ -233,9 +233,8 @@ function Profile() {
         {profileData ? (
           <div className='text-white'>
             <nav
-              className={`fixed top-0 z-40 flex h-[70px] w-full items-center gap-10 border-b border-white border-opacity-20 px-3 py-4 transition-transform duration-300 md:hidden lg:px-10 ${
-                isScrolled ? '-translate-y-full' : 'translate-y-0'
-              }`}
+              className={`fixed top-0 z-40 flex h-[70px] w-full items-center gap-10 border-b border-white border-opacity-20 px-3 py-4 transition-transform duration-300 md:hidden lg:px-10 ${isScrolled ? '-translate-y-full' : 'translate-y-0'
+                }`}
               style={{
                 backdropFilter: 'blur(10px)',
                 background: 'rgba(0, 0, 0, 0.5)', // Adjust transparency as needed
@@ -365,7 +364,7 @@ function Profile() {
                                       className='flex w-[90%] items-center justify-center rounded-lg bg-[#27272A] bg-opacity-70 px-4 py-3 text-left text-white transition-colors duration-150 hover:bg-opacity-80'
                                     >
                                       {isDeletingPost &&
-                                      selectedPost === post._id ? (
+                                        selectedPost === post._id ? (
                                         <>
                                           <Loader2 className='animate-spin text-xl' />
                                         </>
@@ -413,9 +412,9 @@ function Profile() {
                           >
                             <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                               <span>
-                                <MdOutlineThumbUpOffAlt className='inline-block text-xl md:text-2xl' />
+                                <MdOutlineThumbUpOffAlt className='inline-block text-xl' />
                               </span>
-                              <span className='text-sm md:text-base'>
+                              <span className='text-sm'>
                                 {post.likes.length}
                               </span>
                             </span>
@@ -426,9 +425,9 @@ function Profile() {
                           >
                             <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                               <span>
-                                <FaRegCommentDots className='inline-block text-xl md:text-2xl' />
+                                <FaRegCommentDots className='inline-block text-xl' />
                               </span>
-                              <span className='text-sm md:text-base'>
+                              <span className='text-sm'>
                                 Comment
                               </span>
                             </span>

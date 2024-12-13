@@ -193,9 +193,9 @@ const UsersProfile = () => {
                       <button className='cursor-pointer font-semibold'>
                         <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                           <span>
-                            <MdOutlineThumbUpOffAlt className='inline-block text-xl md:text-2xl' />
+                            <MdOutlineThumbUpOffAlt className='inline-block text-xl' />
                           </span>
-                          <span className='text-sm md:text-base'>
+                          <span className='text-sm'>
                             {post.likes.length}
                           </span>
                         </span>
@@ -206,9 +206,9 @@ const UsersProfile = () => {
                       >
                         <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                           <span>
-                            <FaRegCommentDots className='inline-block text-xl md:text-2xl' />
+                            <FaRegCommentDots className='inline-block text-xl' />
                           </span>
-                          <span className='text-sm md:text-base'>Comment</span>
+                          <span className='text-sm'>Comment</span>
                         </span>
                       </button>
                     </div>

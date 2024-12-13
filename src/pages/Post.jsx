@@ -165,7 +165,7 @@ function Post() {
                         <BsThreeDots className='text-2xl' />
                       </button>
                       {selectedBlog && selectedBlog._id === post._id && (
-                        <div className='absolute right-0 top-0'>
+                        <div className='absolute z-50 right-0 top-0'>
                           <div className='z-10 w-48 rounded-md border border-white border-opacity-20 bg-black shadow-lg'>
                             <div className='relative flex flex-col items-center justify-center gap-2 px-1 py-4'>
                               <button
@@ -231,8 +231,8 @@ function Post() {
                       className='flex cursor-pointer items-center gap-2 font-semibold'
                     >
                       <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
-                        <MdOutlineThumbUpOffAlt className='inline-block text-xl text-white md:text-2xl' />
-                        <span className='text-sm md:text-base'>
+                        <MdOutlineThumbUpOffAlt className='inline-block text-xl text-white' />
+                        <span className='text-sm'>
                           {post.likes.length}
                         </span>
                       </span>
@@ -243,9 +243,9 @@ function Post() {
                     >
                       <span className='flex items-center justify-center gap-2 px-1 py-2 text-white'>
                         <span>
-                          <FaRegCommentDots className='inline-block text-xl md:text-2xl' />
+                          <FaRegCommentDots className='inline-block text-xl' />
                         </span>
-                        <span className='text-sm md:text-base'>Comment</span>
+                        <span className='text-sm'>Comment</span>
                       </span>
                     </button>
                   </div>
