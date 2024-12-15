@@ -110,7 +110,7 @@ const Settings = () => {
             </button>
             {showConfirmation && (
               <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70'>
-                <div className='w-[33vw] rounded-lg border border-white border-opacity-20 bg-black p-6'>
+                <div className='md:w-[33vw] w-[95%] rounded-lg border border-white border-opacity-20 bg-black p-6'>
                   <h2 className='mb-2 text-lg font-semibold text-white'>
                     Are you absolutely sure?
                   </h2>
